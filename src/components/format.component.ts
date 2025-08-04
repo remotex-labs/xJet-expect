@@ -48,7 +48,7 @@ export function hintComponent(chain: Array<string>, parameters: Array<string> = 
     if (parameters.length > 0) {
         parts.push('(');
         parts.push(
-            parameters.map(value => value === 'expected' ? EXPECTED(value) : value).join(', ')
+            parameters.map(value => EXPECTED(value)).join(', ')
         );
         parts.push(')');
     } else {

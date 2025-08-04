@@ -50,13 +50,13 @@ describe('hintComponent', () => {
     test('should handle custom parameter names', () => {
         const result = hintComponent([ 'toBeGreaterThan' ], [ 'threshold' ]);
 
-        expect(result).toBe('DIM(expect()RECEIVED(received)DIM()).toBeGreaterThan(threshold)');
+        expect(result).toBe('DIM(expect()RECEIVED(received)DIM()).toBeGreaterThan(EXPECTED(threshold))');
     });
 
     test('should handle multiple parameters', () => {
         const result = hintComponent([ 'toBeWithin' ], [ 'min', 'max' ]);
 
-        expect(result).toBe('DIM(expect()RECEIVED(received)DIM()).toBeWithin(min, max)');
+        expect(result).toBe('DIM(expect()RECEIVED(received)DIM()).toBeWithin(EXPECTED(min), EXPECTED(max))');
     });
 
     test('should handle empty parameters array', () => {
@@ -68,7 +68,7 @@ describe('hintComponent', () => {
     test('should apply special formatting to expected parameter', () => {
         const result = hintComponent([ 'toEqual' ], [ 'expected', 'options' ]);
 
-        expect(result).toBe('DIM(expect()RECEIVED(received)DIM()).toEqual(EXPECTED(expected), options)');
+        expect(result).toBe('DIM(expect()RECEIVED(received)DIM()).toEqual(EXPECTED(expected), EXPECTED(options))');
         expect(EXPECTED).toHaveBeenCalledWith('expected');
     });
 
