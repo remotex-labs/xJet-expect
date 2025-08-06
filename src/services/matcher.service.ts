@@ -16,14 +16,14 @@ import { isPromise } from '@components/promise.component';
 import { getType } from '@diff/components/diff.component';
 
 
-export class MatcherService {
+export class MatcherService<T = unknown> {
     protected promise?: 'resolves' | 'rejects';
     protected hintChain: Array<string> = [];
     protected notModifiers: boolean = false;
     protected rejectsModifiers: boolean = false;
     protected resolvesModifiers: boolean = false;
 
-    constructor(protected actual: unknown) {
+    constructor(protected actual: T) {
     }
 
     get not(): Omit<this & PromisifiedMatchersType, 'not' | 'rejects' | 'resolved'> {
@@ -80,7 +80,7 @@ export class MatcherService {
         }
 
         try {
-            this.actual = await valueOrPromise;
+            this.actual = <T> await valueOrPromise;
             isResolved = true;
         } catch(error) {
             if(this.resolvesModifiers) {
@@ -92,7 +92,7 @@ export class MatcherService {
                 });
             }
 
-            this.actual = error;
+            this.actual = <T> error;
         }
 
         if(isResolved && this.rejectsModifiers) {

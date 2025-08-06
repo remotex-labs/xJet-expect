@@ -6,6 +6,7 @@ export interface HandleFailureInterface {
     params?: Array<string>;
     expected?: unknown;
     hintLabel?: string;
+    receivedName?: string;
     handleNot?(this: MatcherService, info: Array<string>): void;
     handleInfo?(this: MatcherService, info: Array<string>): void;
 }

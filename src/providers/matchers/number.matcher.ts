@@ -22,7 +22,7 @@ export function ensureNumber(expected: unknown, actual: unknown, hintChain: Arra
         throw new xJetTypeError({
             hintChain: hintChain,
             message: `${ EXPECTED('Expected') } value must be a number`,
-            received: { type: expectedType, value: expected }
+            expected: { type: expectedType, value: expected }
         });
     }
 

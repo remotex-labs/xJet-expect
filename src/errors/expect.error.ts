@@ -30,7 +30,7 @@ export class xJetExpectError extends xJetBaseError {
     matcherResult?: AssertionResultInterface;
 
     constructor(options: OptionsExpectErrorInterface) {
-        const lines = [ `${ hintComponent(options.hintChain, options.params || [], options.hintLabel) }\n` ];
+        const lines = [ `${ hintComponent(options.name, options.hintChain, options.params || [], options.hintLabel) }\n` ];
         if (options.info) lines.push(...options.info);
 
         super(lines.join('\n'));

@@ -83,21 +83,21 @@ export class xJetTypeError extends xJetBaseError {
 
     constructor(options: OptionsTypeErrorInterface) {
         const lines = [
-            `${ hintComponent(options.hintChain, options?.params ?? []) }\n`,
+            `${ hintComponent(options.name, options.hintChain, options?.params ?? []) }\n`,
             `Matcher error: ${ options.message }\n`
         ];
 
         if (options.expected) {
             if(options.expected.type) lines.push(`Expected has type:  ${ options.expected.type }`);
             lines.push(`Expected has value: ${
-                EXPECTED(serialize(options.expected.value, '').join(' '))
+                EXPECTED(serialize(options.expected.value).join('\n'))
             }`);
         }
 
         if (options.received) {
             if(options.received.type) lines.push(`Received has type:  ${ options.received.type }`);
             lines.push(`Received has value: ${
-                RECEIVED(serialize(options.received.value, '').join(' '))
+                RECEIVED(serialize(options.received.value).join('\n'))
             }`);
         }
 

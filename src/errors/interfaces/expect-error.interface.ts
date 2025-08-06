@@ -52,6 +52,7 @@ export interface AssertionResultInterface {
 }
 
 export interface OptionsExpectErrorInterface {
+    name?: string;
     info?: Array<string>;
     params?: Array<string>;
     hintChain: Array<string>;

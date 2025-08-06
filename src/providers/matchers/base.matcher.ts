@@ -31,6 +31,7 @@ export function handleFailure(this: MatcherService, options: HandleFailureInterf
         assertion,
         hintLabel,
         hintChain: this.hintChain,
+        name: options.receivedName,
         params: params !== undefined ? params : []
     };
 

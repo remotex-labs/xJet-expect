@@ -4,6 +4,7 @@ export interface TypeInfoInterface {
 }
 
 export interface OptionsTypeErrorInterface {
+    name?: string;
     message: string;
     params?: Array<string>;
     hintChain: Array<string>;

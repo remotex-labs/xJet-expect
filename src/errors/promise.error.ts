@@ -74,7 +74,7 @@ export class xJetPromiseError extends xJetBaseError {
 
     constructor(options: OptionsPromiseErrorInterface) {
         const lines = [
-            `${ hintComponent(options.hintChain, []) }\n`,
+            `${ hintComponent(undefined, options.hintChain, []) }\n`,
             `Matcher error: ${ options.message }`,
             `${ options.valueKind } to value: ${
                 RECEIVED(serialize(options.value, '').join(' '))
