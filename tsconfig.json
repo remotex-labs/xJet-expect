@@ -24,10 +24,38 @@
             "node"
         ],
         "paths": {
+            "@errors/*": [
+                "src/errors/*"
+            ],
+            "@handlers/*": [
+                "src/handlers/*"
+            ],
+            "@services/*": [
+                "src/services/*"
+            ],
+            "@providers/*": [
+                "src/providers/*"
+            ],
+            "@components/*": [
+                "src/components/*"
+            ],
+            "@interfaces/*": [
+                "src/interfaces/*"
+            ],
+            "@diff/*": [
+                "src/modules/diff/*"
+            ],
+            "@matchers/*": [
+                "src/providers/matchers/*"
+            ],
+            "@patterns/*": [
+                "src/providers/patterns/*"
+            ]
         }
     },
     "include": [
         "src/index.ts",
+        "includes/*.d.ts",
         "xbuild.config.ts"
     ],
     "exclude": [
