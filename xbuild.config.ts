@@ -26,6 +26,7 @@ const config: Array<xBuildConfig> = [
             target: [ `node${ version.slice(1) }` ],
             platform: 'browser',
             packages: 'external',
+            keepNames: true,
             sourcemap: true,
             sourceRoot: `https://github.com/remotex-labs/xjet-expect/tree/v${ pkg.version }/`,
             entryPoints: {
