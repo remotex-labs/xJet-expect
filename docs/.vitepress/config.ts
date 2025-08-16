@@ -15,10 +15,10 @@ export default defineVersionedConfig({
     head: [
         [ 'link', { rel: 'icon', type: 'image/png', href: '/xJet-expect/xbuild2.png' }],
         [ 'meta', { name: 'theme-color', content: '#ff7e17' }],
-        [ 'script', { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-PXPEYPM3R0' }],
+        [ 'script', { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-LZ4KRNH629' }],
         [
             'script', {},
-            'window.dataLayer = window.dataLayer || [];function gtag(){ dataLayer.push(arguments); }gtag(\'js\', new Date());gtag(\'config\', \'G-PXPEYPM3R0\');'
+            'window.dataLayer = window.dataLayer || [];function gtag(){ dataLayer.push(arguments); }gtag(\'js\', new Date());gtag(\'config\', \'G-LZ4KRNH629\');'
         ]
     ],
     themeConfig: {
