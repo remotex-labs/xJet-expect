@@ -8,7 +8,7 @@
     "version": "1.0.0-local",
     "license": "Mozilla Public License Version 2.0",
     "description": "xJet-Expect: Powerful Assertions for Seamless xJet Testing",
-    "homepage": "https://github.com/remotex-labs/xJet-expect",
+    "homepage": "https://remotex-labs.github.io/xJet-expect/",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/remotex-labs/xJet-expect.git"
