@@ -37,7 +37,23 @@ export default defineVersionedConfig({
         ],
 
         sidebar: {
-            '/': [{ text: 'Guide', link: '.' }]
+            '/': [
+                { text: 'Guide', link: '.' },
+                { text: 'Modifiers', link: './modifiers' },
+                { text: 'Asymmetric', link: './asymmetric' },
+                {
+                    text: 'Matchers',
+                    collapsed: false,
+                    items: [
+                        { text: 'Mock', link: './mock' },
+                        { text: 'Number', link: './number' },
+                        { text: 'Object', link: './object' },
+                        { text: 'String', link: './string' },
+                        { text: 'Equality', link: './equality' },
+                        { text: 'Functions', link: './functions' }
+                    ]
+                }
+            ]
         },
 
         socialLinks: [
