@@ -14,7 +14,7 @@ import { equals } from '@components/object.component';
 import { getType } from '@diff/components/diff.component';
 import { serialize } from '@components/serialize.component';
 import { handleFailure, serializeOneLine } from '@handlers/matchers.handler';
-import { DIM, EXPECTED, INVERSE, RECEIVED } from '@components/color.component';
+import { DIM, EXPECTED, INVERSE, MARK, RECEIVED } from '@components/color.component';
 import { ensureNotNullish, ensureType, handleDiffFailure } from '@handlers/matchers.handler';
 
 /**
@@ -209,8 +209,8 @@ export function toContain(this: MatcherService<Array<unknown> | string>, expecte
                 if (x !== -1) {
                     info.push(
                         DIM(
-                            'Looks like you wanted to test for object/array equality with the stricter `toContain` matcher. ' +
-                            'You probably need to use `toContainEqual` instead.\n'
+                            'Looks like you wanted to test for object/array equality with the stricter `toContain` matcher.\n' +
+                            `You probably need to use \`${ MARK('toContainEqual') }\` instead.\n`
                         )
                     );
                 }
