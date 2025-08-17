@@ -126,4 +126,4 @@ const coreExpect = (received: unknown, ...rest: Array<never>): MatcherService & 
  * @since 1.0.0
  */
 
-export const expect = Object.assign(coreExpect, Patterns);
+export const expect: typeof coreExpect & typeof Patterns = Object.assign(coreExpect, Patterns);
