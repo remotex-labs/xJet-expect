@@ -20,7 +20,7 @@ export default defineVersionedConfig({
     srcDir: 'src',
     description: 'A versatile JavaScript and TypeScript toolchain build system',
     head: [
-        [ 'link', { rel: 'icon', type: 'image/png', href: '/xJet-expect/xbuild2.png' }],
+        [ 'link', { rel: 'icon', type: 'image/png', href: '/xJet-expect/xjet-expect2.png' }],
         [ 'meta', { name: 'theme-color', content: '#ff7e17' }],
         [ 'script', { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-LZ4KRNH629' }],
         [
