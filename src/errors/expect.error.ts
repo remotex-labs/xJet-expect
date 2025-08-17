@@ -61,7 +61,7 @@ export class xJetExpectError extends xJetBaseError {
      */
 
     constructor(options: OptionsExpectErrorInterface) {
-        const lines = [ `${ composeStatement(options) }\n` ];
+        const lines = [ `${ composeStatement(options) }` ];
         if (options.info) lines.push(...options.info);
 
         super(lines.join('\n'));

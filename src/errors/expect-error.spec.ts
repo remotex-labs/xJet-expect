@@ -65,7 +65,7 @@ describe('xJetExpectError', () => {
 
         const error = new xJetExpectError(options);
 
-        expect(error.message).toBe('formatted statement\n');
+        expect(error.message).toBe('formatted statement');
         expect(error.matcherResult).toBe(options.assertion);
         expect(error.matcherResult!.message).toBe(error.message);
     });
