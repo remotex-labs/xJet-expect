@@ -222,7 +222,7 @@ export function equals(a: unknown, b: unknown, strictCheck = false): boolean {
     if (a instanceof RegExp && b instanceof RegExp)
         return a.source === b.source && a.flags === b.flags;
 
-    if (a instanceof URL && b instanceof URL)
+    if (globalThis.URL && a instanceof globalThis.URL && b instanceof globalThis.URL)
         return a.href === b.href;
 
     if (typeof a === 'object' && typeof b === 'object') {
