@@ -102,5 +102,5 @@ export function handleNumericComparison(
             pass = false;
     }
 
-    handleComparisonFailure.call(this, { pass, expectedLabels }, operator);
+    handleComparisonFailure.call(this, { pass, expectedLabels, expected }, operator);
 }
