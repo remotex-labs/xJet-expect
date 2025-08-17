@@ -2,12 +2,17 @@
  * Imports
  */
 
-import * as mocks from '@matchers/mock.matcher';
-import * as number from '@matchers/number.matcher';
-import * as objects from '@matchers/object.matcher';
-import * as strings from '@matchers/string.matcher';
-import * as equality from '@matchers/equality.matcher';
-import * as functions from '@matchers/functions.matcher';
+import { toThrow } from '@matchers/functions.matcher';
+import { toHaveLength, toMatch } from '@matchers/string.matcher';
+import { toBeCloseTo, toBeGreaterThan } from '@matchers/number.matcher';
+import { toHaveReturned, toHaveReturnedTimes } from '@matchers/mock.matcher';
+import { toBeTruthy, toBeFalsy, toBeDefined } from '@matchers/equality.matcher';
+import { toHaveLastReturnedWith, toHaveNthReturnedWith } from '@matchers/mock.matcher';
+import { toHaveBeenLastCalledWith, toHaveBeenNthCalledWith } from '@matchers/mock.matcher';
+import { toBe, toEqual, toBeNull, toBeUndefined, toBeNaN } from '@matchers/equality.matcher';
+import { toBeGreaterThanOrEqual, toBeLessThan, toBeLessThanOrEqual } from '@matchers/number.matcher';
+import { toHaveBeenCalled, toHaveBeenCalledTimes, toHaveBeenCalledWith } from '@matchers/mock.matcher';
+import { toHaveProperty, toBeInstanceOf, toContain, toContainEqual, toMatchObject } from '@matchers/object.matcher';
 
 /**
  * Unified collection of matcher factories for use in the xJet framework.
@@ -30,10 +35,45 @@ import * as functions from '@matchers/functions.matcher';
  */
 
 export const Matchers = {
-    ...mocks,
-    ...number,
-    ...strings,
-    ...objects,
-    ...equality,
-    ...functions
+    // functions
+    toThrow,
+
+    // strings
+    toMatch,
+    toHaveLength,
+
+    // objects
+    toContain,
+    toMatchObject,
+    toHaveProperty,
+    toBeInstanceOf,
+    toContainEqual,
+
+    // equality
+    toBe,
+    toEqual,
+    toBeNaN,
+    toBeNull,
+    toBeFalsy,
+    toBeTruthy,
+    toBeDefined,
+    toBeUndefined,
+
+    // numbers
+    toBeCloseTo,
+    toBeLessThan,
+    toBeGreaterThan,
+    toBeLessThanOrEqual,
+    toBeGreaterThanOrEqual,
+
+    // mock
+    toHaveReturned,
+    toHaveBeenCalled,
+    toHaveReturnedTimes,
+    toHaveBeenCalledWith,
+    toHaveBeenCalledTimes,
+    toHaveNthReturnedWith,
+    toHaveLastReturnedWith,
+    toHaveBeenNthCalledWith,
+    toHaveBeenLastCalledWith
 } as const;
