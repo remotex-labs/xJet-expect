@@ -11,6 +11,7 @@ import defineVersionedConfig from 'vitepress-versioning-plugin';
 export default defineVersionedConfig({
     title: 'xJet-expect',
     base: '/xJet-expect/',
+    srcDir: 'src',
     description: 'A versatile JavaScript and TypeScript toolchain build system',
     head: [
         [ 'link', { rel: 'icon', type: 'image/png', href: '/xJet-expect/xbuild2.png' }],
