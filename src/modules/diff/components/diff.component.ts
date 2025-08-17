@@ -82,7 +82,7 @@ export function normalizeStrings(a: string, b: string, clean: boolean = true): [
     let resultA = '';
     let resultB = '';
     let diffs = diffStringsRaw(a || '\t', b || '\t');
-    if(clean) diffs = cleanupSemantic(diffs);
+    if (clean) diffs = cleanupSemantic(diffs);
 
     for (const [ type, text ] of diffs) {
         if (type === DiffTypes.EQUAL) {
@@ -124,13 +124,16 @@ export function normalizeStrings(a: string, b: string, clean: boolean = true): [
  * @since 1.0.0
  */
 
-export function normalizeArrays(a: unknown[], b: unknown[]): [ unknown[], unknown[] ] {
+export function normalizeArrays(a: Array<unknown>, b: Array<unknown>): [ Array<unknown>, Array<unknown> ] {
+    const aResult = [ ...a ];
+    const bResult = [ ...b ];
+
     const len = Math.max(a.length, b.length);
     for (let i = 0; i < len; i++) {
-        [ a[i], b[i] ] = normalizeAsymmetric(a[i], b[i]);
+        [ aResult[i], bResult[i] ] = normalizeAsymmetric(a[i], b[i]);
     }
 
-    return [ a, b ];
+    return [ aResult, bResult ];
 }
 
 /**
@@ -163,14 +166,17 @@ export function normalizeArrays(a: unknown[], b: unknown[]): [ unknown[], unknow
  */
 
 export function normalizeObjects(a: Record<string, unknown>, b: Record<string, unknown>): [ Record<string, unknown>, Record<string, unknown> ] {
+    const aResult = { ...a };
+    const bResult = { ...b };
+
     const keys = new Set([ ...Object.keys(a), ...Object.keys(b) ]);
     for (const key of keys) {
         if (key in a && key in b) {
-            [ a[key], b[key] ] = normalizeAsymmetric(a[key], b[key]);
+            [ aResult[key], bResult[key] ] = normalizeAsymmetric(a[key], b[key]);
         }
     }
 
-    return [ a, b ];
+    return [ aResult, bResult ];
 }
 
 /**
@@ -226,8 +232,8 @@ export function normalizeAsymmetric(a: unknown, b: unknown, clean: boolean = tru
     const bType = typeof b;
     const match = asymmetricMatch(a, b);
     if (match === true) {
-        if (isAsymmetric(a)) return [ b, b ];
-        if (isAsymmetric(b)) return [ a, a ];
+        if (isAsymmetric(a)) a = b;
+        if (isAsymmetric(b)) b = a;
     }
 
     if (aType === 'string' && bType === 'string') return normalizeStrings(<string> a, <string> b, clean);
@@ -468,9 +474,9 @@ export function diffComponent(a: unknown, b: unknown, clean: boolean = true): st
         return diffStrings(<string>a, <string>b, result, clean);
     }
 
-    [ a, b ] = normalizeAsymmetric(a, b, clean);
-    const aLines = serialize(a);
-    const bLines = serialize(b);
+    const [ aNormalize, bNormalize ] = normalizeAsymmetric(a, b, clean);
+    const aLines = serialize(aNormalize);
+    const bLines = serialize(bNormalize);
     result.push(CYAN(`\n@@ -1,${ aLines.length } +1,${ bLines.length } @@\n`));
 
     const diffs = diffLinesRaw(aLines, bLines);

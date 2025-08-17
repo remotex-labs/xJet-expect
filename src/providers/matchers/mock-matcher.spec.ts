@@ -3,7 +3,7 @@
  */
 
 import { xJetExpectError } from '@errors/expect.error';
-import { EXPECTED, INVERSE, RECEIVED } from '@components/color.component';
+import { EXPECTED, RECEIVED } from '@components/color.component';
 import { toHaveNthReturnedWith, toHaveReturned, toHaveReturnedTimes } from '@matchers/mock.matcher';
 import { toHaveBeenCalled, toHaveBeenCalledTimes, toHaveBeenCalledWith } from '@matchers/mock.matcher';
 import { toHaveBeenLastCalledWith, toHaveBeenNthCalledWith, toHaveLastReturnedWith } from '@matchers/mock.matcher';
@@ -1250,7 +1250,7 @@ describe('toHaveBeenLastCalledWith', () => {
                 expect(error.matcherResult?.pass).toBe(false);
                 expect(error.matcherResult?.name).toBe('toHaveBeenLastCalledWith');
                 expect(error.matcherResult?.received).toBe(mockState);
-                expect(error.matcherResult?.expected).toEqual([ INVERSE('expected') + '1', INVERSE('expected') + '2' ]);
+                expect(error.matcherResult?.expected).toEqual([ 'expected1', 'expected2' ]);
             } else {
                 throw error;
             }
