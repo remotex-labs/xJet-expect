@@ -18,7 +18,7 @@ export default defineVersionedConfig({
     title: 'xJet-expect',
     base: '/xJet-expect/',
     srcDir: 'src',
-    description: 'A versatile JavaScript and TypeScript toolchain build system',
+    description: 'xJet-Expect: Powerful Assertions for Seamless xJet Testing',
     head: [
         [ 'link', { rel: 'icon', type: 'image/png', href: '/xJet-expect/xjet-expect2.png' }],
         [ 'meta', { name: 'theme-color', content: '#ff7e17' }],
