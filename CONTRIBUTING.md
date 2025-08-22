@@ -114,16 +114,6 @@ We follow [Semantic Versioning](https://semver.org/):
 - MINOR version for backwards-compatible functionality
 - PATCH version for backwards-compatible bug fixes
 
-## Release Process
-
-Releases are managed by the core maintainers. The general process is:
-
-1. Finalize and merge all changes for the release
-2. Update version in package.json
-3. Update CHANGELOG.md
-4. Create a tagged release
-5. Publish to npm
-
 ## Questions?
 
 If you have questions about contributing, please:
