@@ -72,11 +72,6 @@ export class xJetTypeError extends xJetBaseError {
             }`);
         }
 
-        super(lines.join('\n'));
-        if (Error.captureStackTrace) {
-            Error.captureStackTrace(this, this.constructor);
-        }
-
-        this.name = 'xJetTypeError';
+        super(lines.join('\n'), 'xJetTypeError');
     }
 }

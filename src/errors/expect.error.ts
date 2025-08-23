@@ -64,12 +64,10 @@ export class xJetExpectError extends xJetBaseError {
         const lines = [ `${ composeStatement(options) }` ];
         if (options.info) lines.push(...options.info);
 
-        super(lines.join('\n'));
+        super(lines.join('\n'), 'xJetExpectError');
         if (options.assertion) {
             this.matcherResult = options.assertion;
             this.matcherResult.message = this.message;
         }
-
-        this.name = 'xJetExpectError';
     }
 }

@@ -1,12 +1,12 @@
 /**
  * Base abstract error class for all xJet-specific errors
  *
- * Extends the native Error class with improved stack trace handling
+ * Extends the native `Error` class with improved stack trace handling
  * and serialization capabilities for better error reporting.
  *
  * @remarks
  * This class serves as the foundation for all custom error types in the xJet framework.
- * It provides consistent error behavior, proper prototype chain setup, and serialization
+ * It ensures consistent error behavior, proper prototype chain setup, and serialization
  * to support error logging and transmission across boundaries.
  *
  * @example
@@ -25,23 +25,30 @@
 
 export abstract class xJetBaseError extends Error {
     /**
-     * Creates a new instance of the base error class
+     * Creates a new instance of the base error class.
      *
-     * @param message - The error message to display
+     * @param message - The error message describing the problem.
+     * @param name - Optional name for the error class; defaults to `'xJetError'`.
      *
      * @remarks
-     * This constructor properly sets up the prototype chain for derived error classes
-     * and captures the stack trace if the runtime environment supports it. This ensures
-     * that stack traces will show the correct error source and inheritance.
+     * This constructor ensures the correct prototype chain for proper `instanceof` checks.
+     * It also captures the stack trace if supported by the runtime environment.
+     *
+     * @example
+     * ```ts
+     * class MyError extends xJetBaseError {}
+     * throw new MyError('Something went wrong');
+     * ```
      *
      * @since 1.0.0
      */
 
-    protected constructor(message: string) {
+    protected constructor(message: string, name: string = 'xJetError') {
         super(message);
 
         // Ensure correct prototype chain (important for `instanceof`)
         Object.setPrototypeOf(this, new.target.prototype);
+        this.name = name;
 
         if (Error.captureStackTrace) {
             Error.captureStackTrace(this, this.constructor);

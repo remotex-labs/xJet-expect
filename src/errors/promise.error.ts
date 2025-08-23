@@ -73,11 +73,6 @@ export class xJetPromiseError extends xJetBaseError {
             }`
         ];
 
-        super(lines.join('\n'));
-        if (Error.captureStackTrace) {
-            Error.captureStackTrace(this, this.constructor);
-        }
-
-        this.name = 'xJetPromiseError';
+        super(lines.join('\n'), 'xJetPromiseError');
     }
 }
