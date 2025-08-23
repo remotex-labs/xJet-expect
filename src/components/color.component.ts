@@ -35,7 +35,7 @@ export const MARK = xterm.lightOrange;
  * @since 1.0.0
  */
 
-export const RECEIVED = xterm.red;
+export const RECEIVED = xterm.lightCoral;
 
 /**
  * Formats text in green, typically used for labeling expected values.
@@ -46,7 +46,7 @@ export const RECEIVED = xterm.red;
  * @since 1.0.0
  */
 
-export const EXPECTED = xterm.green;
+export const EXPECTED = xterm.oliveGreen;
 
 /**
  * Formats text in cyan color.
