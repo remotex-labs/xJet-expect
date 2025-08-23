@@ -69,5 +69,7 @@ export class xJetExpectError extends xJetBaseError {
             this.matcherResult = options.assertion;
             this.matcherResult.message = this.message;
         }
+
+        this.name = 'xJetExpectError';
     }
 }

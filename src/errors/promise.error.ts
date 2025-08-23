@@ -77,5 +77,7 @@ export class xJetPromiseError extends xJetBaseError {
         if (Error.captureStackTrace) {
             Error.captureStackTrace(this, this.constructor);
         }
+
+        this.name = 'xJetPromiseError';
     }
 }

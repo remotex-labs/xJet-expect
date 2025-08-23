@@ -40,6 +40,9 @@ export abstract class xJetBaseError extends Error {
     protected constructor(message: string) {
         super(message);
 
+        // Ensure correct prototype chain (important for `instanceof`)
+        Object.setPrototypeOf(this, new.target.prototype);
+
         if (Error.captureStackTrace) {
             Error.captureStackTrace(this, this.constructor);
         }
