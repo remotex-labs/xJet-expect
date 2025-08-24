@@ -234,6 +234,8 @@ export function normalizeAsymmetric(a: unknown, b: unknown, clean: boolean = tru
     if (match === true) {
         if (isAsymmetric(a)) a = b;
         if (isAsymmetric(b)) b = a;
+
+        return [ a, b ];
     }
 
     if (aType === 'string' && bType === 'string') return normalizeStrings(<string> a, <string> b, clean);
