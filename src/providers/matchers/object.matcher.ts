@@ -60,7 +60,7 @@ export function toHaveProperty(this: MatcherService<object>, path: string | Arra
     }
 
     if (pass && expectedValue !== undefined)
-        pass = Object.is(current, expectedValue);
+        pass = equals(current, expectedValue);
 
     handleFailure.call(this, {
         pass,
