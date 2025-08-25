@@ -84,11 +84,10 @@ export function toHaveProperty(this: MatcherService<object>, path: string | Arra
                 info.push(`Expected value: ${ EXPECTED(serializeOneLine(expectedValue)) }`);
             }
 
-            info.push(`Expected value: ${ RECEIVED(serializeOneLine(current)) }`);
+            info.push(`Received value: ${ RECEIVED(serializeOneLine(current)) }`);
         }
     });
 }
-
 
 /**
  * Asserts that the received value is an instance of the provided constructor.
