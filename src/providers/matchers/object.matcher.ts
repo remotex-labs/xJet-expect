@@ -175,7 +175,7 @@ export function toContain(this: MatcherService<Array<unknown> | string>, expecte
         });
     }
 
-    const index = received.indexOf(<string>expected);
+    const index = received.indexOf(<string> expected);
     const pass = index !== -1;
 
     handleFailure.call(this, {
@@ -306,7 +306,7 @@ export function toMatchObject(this: MatcherService<object>, expected: object): v
     ensureType.call(this, expected, [ 'object' ], 'Expected', expectedLabels);
 
     const received = this.received;
-    const pass = equals(received, expected);
+    const pass = equals(expected, received, false);
 
     handleDiffFailure.call(this, {
         pass,

@@ -142,24 +142,54 @@ describe('toContainEqual', () => {
 });
 
 describe('toMatchObject', () => {
-    test('passes for equal objects', () => {
+    test('passes for exactly equal objects', () => {
         const ms = createMatcherService({ a: 1, b: 2 });
         expect(() => toMatchObject.call(ms, { a: 1, b: 2 })).not.toThrow();
     });
 
-    test('fails for unequal objects', () => {
+    test('passes for partial match', () => {
         const ms = createMatcherService({ a: 1, b: 2 });
-        expect(() => toMatchObject.call(ms, { a: 2, b: 2 })).toThrow(xJetExpectError);
+        expect(() => toMatchObject.call(ms, { a: 1 })).not.toThrow();
     });
 
-    test('throws xJetTypeError for non-object received', () => {
-        const ms = createMatcherService(123 as any);
+    test('fails if any expected key does not match', () => {
+        const ms = createMatcherService({ a: 1, b: 2 });
+        expect(() => toMatchObject.call(ms, { a: 2 })).toThrow(xJetExpectError);
+    });
+
+    test('fails if expected key is missing in received', () => {
+        const ms = createMatcherService({ a: 1 });
+        expect(() => toMatchObject.call(ms, { a: 1, b: 2 })).toThrow(xJetExpectError);
+    });
+
+    test('passes for deep partial match', () => {
+        const ms = createMatcherService({ user: { id: 1, name: 'John' } });
+        expect(() => toMatchObject.call(ms, { user: { id: 1 } })).not.toThrow();
+    });
+
+    test('fails for deep mismatch', () => {
+        const ms = createMatcherService({ user: { id: 1, name: 'John' } });
+        expect(() => toMatchObject.call(ms, { user: { id: 2 } })).toThrow(xJetExpectError);
+    });
+
+    test('throws xJetTypeError if received is not an object', () => {
+        const ms = createMatcherService(null as any);
         expect(() => toMatchObject.call(ms, { a: 1 })).toThrow(xJetTypeError);
     });
 
-    test('inverts behavior when notModifier is true', () => {
-        const ms = createMatcherService({ a: 1, b: 2 }, true);
+    test('throws xJetTypeError if expected is not an object', () => {
+        const ms = createMatcherService({ a: 1 });
+        expect(() => toMatchObject.call(ms, null as any)).toThrow(xJetExpectError);
+    });
+
+    test('not modifier inverts passing condition', () => {
+        const ms = createMatcherService({ a: 1, b: 2 }, true); // not = true
         expect(() => toMatchObject.call(ms, { a: 2 })).not.toThrow();
         expect(() => toMatchObject.call(ms, { a: 1, b: 2 })).toThrow(xJetExpectError);
+    });
+
+    test('ignores extra keys in received', () => {
+        const ms = createMatcherService({ a: 1, b: 2, extra: 123 });
+        expect(() => toMatchObject.call(ms, { a: 1, b: 2 })).not.toThrow();
     });
 });
