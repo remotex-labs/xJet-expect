@@ -65,7 +65,6 @@ export function toHaveProperty(this: MatcherService<object>, path: string | Arra
     handleFailure.call(this, {
         pass,
         expectedLabels,
-        name: 'toHaveProperty',
         handleNot(info) {
             info.push(`Expected: not ${ EXPECTED(serializeOneLine(pathArray)) }\n`);
 
@@ -121,7 +120,6 @@ export function toBeInstanceOf(this: MatcherService, instance: FunctionType | Co
     handleFailure.call(this, {
         pass,
         expectedLabels,
-        name: 'toBeInstanceOf',
         handleNot(info) {
             info.push(`Expected constructor: not ${ EXPECTED(instance.name) }\n`);
         },
