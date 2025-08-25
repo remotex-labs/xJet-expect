@@ -7,6 +7,11 @@ Checks if an object has a specified property path, and optionally that the value
 ``` ts
 expect(object).toHaveProperty(path, value?)
 ```
+
+::: info
+:rocket: **Supports asymmetric matchers**
+:::
+
 ### Parameters
 - `path`: String with dot notation or array of strings representing the property path
 - `value`: (Optional) Expected value at the given path
@@ -87,7 +92,6 @@ Checks if an array contains a specific element or if a string contains a specifi
 ``` ts
 expect(arrayOrString).toContain(value)
 ```
-
 
 ### Parameters
 - `value`: The expected item or substring to find
