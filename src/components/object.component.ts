@@ -120,47 +120,51 @@ export function asymmetricMatch(a: unknown, b: unknown): boolean | undefined {
 }
 
 /**
- * Performs a deep equality check between two objects.
+ * Performs a deep equality comparison between two objects or arrays.
  *
- * @param a - The first object to compare
- * @param b - The second object to compare
- * @param strictCheck - Whether to perform a strict comparison (e.g., considering types)
+ * @param a - The first object or array to compare.
+ * @param b - The second object or array to compare.
+ * @param strictCheck - Whether to require exact shape matching (default: true).
+ *                      If false, `b` can be a superset of `a`.
  *
- * @returns A boolean indicating whether the two objects are deeply equal
+ * @returns A boolean indicating whether the two inputs are deeply equal.
  *
  * @remarks
- * This function compares the constructors of both objects first. If they differ, it returns false.
- * For arrays, it compares length and each element recursively using the `equals` function.
- * For plain objects, it compares keys length, ensures all keys exist in both objects, and
- * recursively compares their values using `equals`.
+ * This function is used internally by `equals` to recursively compare arrays and objects.
  *
- * Note: The helper functions `equals` and `hasKey` are assumed to be defined elsewhere and
- * handle equality and key presence checks respectively.
+ * - For arrays:
+ *   - If `strictCheck` is true, their lengths must match.
+ *   - If false, only the elements of `a` must match the corresponding elements in `b`.
+ *
+ * - For objects:
+ *   - If `strictCheck` is true, both must have exactly the same keys.
+ *   - If false, `b` may contain extra keys, but all keys in `a` must match.
+ *
+ * Keys and values are compared recursively using `equals`, which supports deep matching.
  *
  * @example
  * ```ts
- * const obj1 = { x: 1, y: { z: 3 } };
- * const obj2 = { x: 1, y: { z: 3 } };
- * const isEqual = deepEquals(obj1, obj2, true);
- * console.log(isEqual); // true
+ * deepEquals({ a: 1 }, { a: 1 }, true);         // true
+ * deepEquals({ a: 1 }, { a: 1, b: 2 }, false);  // true
+ * deepEquals([1, 2], [1, 2, 3], false);         // true
+ * deepEquals([1, 2], [2, 1], true);             // false
  * ```
  *
- * @see equals - Function that performs an equality check between two values
+ * @see equals - Performs a general equality comparison (shallow or deep)
  *
  * @since 1.0.0
  */
 
-function deepEquals(a: object, b: object, strictCheck: boolean): boolean {
+function deepEquals(a: object, b: object, strictCheck: boolean = true): boolean {
     if (Array.isArray(a) && Array.isArray(b)) {
-        if (a.length !== b.length) return false;
+        if(strictCheck && a.length !== b.length) return false;
 
         return a.every((val, i) => equals(val, b[i], strictCheck));
     }
 
     const aKeys = Object.keys(a);
     const bKeys = Object.keys(b);
-
-    if (aKeys.length !== bKeys.length) return false;
+    if (strictCheck && aKeys.length !== bKeys.length) return false;
 
     for (const key of aKeys) {
         if (!hasKey(b, key)) return false;
@@ -173,48 +177,46 @@ function deepEquals(a: object, b: object, strictCheck: boolean): boolean {
 }
 
 /**
- * Determines whether two values are equal, with optional strictness.
+ * Determines whether two values are equal, supporting both strict and partial deep equality.
  *
- * @param a - The first value to compare
- * @param b - The second value to compare
- * @param strictCheck - If true, performs a strict equality check; defaults to false
+ * @param a - The first value to compare.
+ * @param b - The second value to compare.
+ * @param strictCheck - If true (default), requires exact deep equality.
+ *                      If false, allows partial (asymmetric) matching.
  *
- * @returns A boolean indicating whether the two values are considered equal
+ * @returns `true` if the values are considered equal; otherwise, `false`.
  *
  * @remarks
- * This function provides deep equality checks for various types, including primitives,
- * Dates, RegExps, URLs, arrays, and objects. It uses `Object.is` for strict equality and
- * supports asymmetric matching when `strictCheck` is false.
+ * This function performs a deep comparison between two values:
  *
- * Specialized handling includes:
- * - Fast path for strict equality using `===`
- * - Null checks
- * - Asymmetric matching via `asymmetricMatch` helper
- * - Type checks to prevent mismatches
- * - Recursive deep equality for arrays and objects using `deepEquals`
+ * - Primitives are compared using `Object.is`.
+ * - Special objects (Date, RegExp, URL) are compared by value.
+ * - Arrays and plain objects are compared recursively via `deepEquals`.
+ * - Supports asymmetric matching when `strictCheck` is false (e.g., partial matching).
  *
- * The helpers `asymmetricMatch` and `deepEquals` are assumed to be defined elsewhere.
+ * The following helper functions are assumed to exist:
+ * - `asymmetricMatch`: handles custom matchers or partial match behavior
+ * - `deepEquals`: recursively compares arrays and objects
  *
  * @example
  * ```ts
- * equals(42, '42');        // false
- * equals(42, 42);          // true
- * equals([1, 2], [1, 2]);  // true
- * equals({a: 1}, {a: 1});  // true
+ * equals(1, 1);                             // true
+ * equals(1, '1');                           // false
+ * equals({ x: 1 }, { x: 1 });               // true
+ * equals({ x: 1 }, { x: 1, y: 2 }, false);  // true (partial match)
+ * equals([1, 2], [1, 2, 3], false);         // true (partial match)
  * ```
  *
  * @since 1.0.0
  */
 
-export function equals(a: unknown, b: unknown, strictCheck = false): boolean {
+export function equals(a: unknown, b: unknown, strictCheck = true): boolean {
     if (a === b) return true;                   // Fast path for strict equality
     if (Object.is(a, b)) return true;           // Handle identical references or primitive equality
     if (a === null || b === null) return false; // Handle null or undefined cases
 
-    if (!strictCheck) {
-        const asymmetricResult = asymmetricMatch(a, b);
-        if (asymmetricResult !== undefined) return asymmetricResult;
-    }
+    const asymmetricResult = asymmetricMatch(a, b);
+    if (asymmetricResult !== undefined) return asymmetricResult;
 
     if (a instanceof Date && b instanceof Date)
 

@@ -65,7 +65,6 @@ export function toHaveProperty(this: MatcherService<object>, path: string | Arra
     handleFailure.call(this, {
         pass,
         expectedLabels,
-        name: 'toHaveProperty',
         handleNot(info) {
             info.push(`Expected: not ${ EXPECTED(serializeOneLine(pathArray)) }\n`);
 
@@ -121,7 +120,6 @@ export function toBeInstanceOf(this: MatcherService, instance: FunctionType | Co
     handleFailure.call(this, {
         pass,
         expectedLabels,
-        name: 'toBeInstanceOf',
         handleNot(info) {
             info.push(`Expected constructor: not ${ EXPECTED(instance.name) }\n`);
         },
@@ -177,7 +175,7 @@ export function toContain(this: MatcherService<Array<unknown> | string>, expecte
         });
     }
 
-    const index = received.indexOf(<string>expected);
+    const index = received.indexOf(<string> expected);
     const pass = index !== -1;
 
     handleFailure.call(this, {
@@ -308,7 +306,7 @@ export function toMatchObject(this: MatcherService<object>, expected: object): v
     ensureType.call(this, expected, [ 'object' ], 'Expected', expectedLabels);
 
     const received = this.received;
-    const pass = equals(received, expected);
+    const pass = equals(expected, received, false);
 
     handleDiffFailure.call(this, {
         pass,
