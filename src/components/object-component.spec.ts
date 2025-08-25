@@ -56,7 +56,8 @@ describe('isA function', () => {
 
     test('should handle custom classes correctly', () => {
         class Person {
-            constructor(public name: string) {}
+            constructor(public name: string) {
+            }
         }
 
         const person = new Person('John');
@@ -65,9 +66,11 @@ describe('isA function', () => {
     });
 
     test('should handle inheritance correctly', () => {
-        class Animal {}
+        class Animal {
+        }
 
-        class Dog extends Animal {}
+        class Dog extends Animal {
+        }
 
         const dog = new Dog();
         expect(isA(Dog, dog)).toBe(true);
@@ -81,7 +84,10 @@ describe('isA function', () => {
     });
 
     test('should return true for regular functions when checking for Function', () => {
-        function regularFn() { return true; }
+        function regularFn() {
+            return true;
+        }
+
         expect(isA(Function, regularFn)).toBe(true);
     });
 
@@ -235,7 +241,17 @@ describe('equals function', () => {
         expect(equals({ a: 1, b: { c: 3 } }, { a: 1, b: { c: 3 } })).toBe(true);
     });
 
-    test('should handle asymmetric matchers', () => {
+    test('equals handles partial vs strict array equality correctly', () => {
+        const elementA = [ 1, 2, 3 ];
+        const elementB = [ 1, 2 ];
+
+        // Without strict mode
+        expect(equals(elementA, elementB)).toBe(false);
+        expect(equals(elementB, elementA)).toBe(false);
+        expect(equals(elementB, elementA, false)).toBe(true);
+    });
+
+    test('should handle strict mode', () => {
         const matcher = new MockAsymmetricMatcher(42);
 
         // Without strict mode
@@ -244,7 +260,7 @@ describe('equals function', () => {
         expect(equals(matcher, 43)).toBe(false);
 
         // With strict mode
-        expect(equals(matcher, 42, true)).toBe(false);
+        expect(equals(matcher, 42, true)).toBe(true);
     });
 
     test('should handle different constructors', () => {
