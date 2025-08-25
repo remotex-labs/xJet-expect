@@ -145,8 +145,9 @@ export type PromiseResolveType<T = unknown> = (value: T | PromiseLike<T>) => voi
  * @since 1.0.0
  */
 
-export type ConstructorType<T = object> =
-    | (new (...args: Array<unknown>) => T)
+export type ConstructorType =
+    | (new (...args: Array<unknown>) => unknown)
+    | (new (...args: [unknown, ...unknown[]]) => unknown)
     | ConstructorLikeType
     | ErrorConstructor
     | DateConstructor
@@ -154,4 +155,5 @@ export type ConstructorType<T = object> =
     | BigIntConstructor
     | SymbolConstructor
     | PromiseConstructor
-    | FunctionConstructor;
+    | FunctionConstructor
+    | FinalizationRegistryConstructor;
