@@ -8,6 +8,7 @@ import type { UserConfig } from 'vitepress';
  * Imports
  */
 
+import { join } from 'path';
 import defineVersionedConfig from 'vitepress-versioning-plugin';
 
 /**
@@ -76,4 +77,4 @@ export default defineVersionedConfig({
     versioning: {
         latestVersion: 'v1.0.x'
     }
-}, __dirname) as UserConfig;
+}, join(__dirname, '../src', 'versions')) as UserConfig;

@@ -7,7 +7,7 @@ Mock matchers help you test the behavior of mock functions by verifying they wer
 Verifies that a mock function has been called at least once.
 
 ```ts
-xExpect(mockFn).toHaveBeenCalled()
+expect(mockFn).toHaveBeenCalled()
 ```
 
 ### Examples
@@ -18,18 +18,18 @@ const mockFn = xJet.fn()
 
 // After calling the mock
 mockFn()
-xExpect(mockFn).toHaveBeenCalled() // Passes
+expect(mockFn).toHaveBeenCalled() // Passes
 
 // When the mock hasn't been called
 const unusedMock = xJet.fn()
-xExpect(unusedMock).not.toHaveBeenCalled() // Passes
+expect(unusedMock).not.toHaveBeenCalled() // Passes
 ```
 
 ## toHaveBeenCalledTimes
 Verifies that a mock function has been called an exact number of times.
 
 ```ts
-xExpect(mockFn).toHaveBeenCalledTimes(expectedCount)
+expect(mockFn).toHaveBeenCalledTimes(expectedCount)
 ```
 
 ### Parameters
@@ -41,21 +41,21 @@ xExpect(mockFn).toHaveBeenCalledTimes(expectedCount)
 const mockFn = xJet.fn()
 
 // No calls
-xExpect(mockFn).toHaveBeenCalledTimes(0) // Passes
+expect(mockFn).toHaveBeenCalledTimes(0) // Passes
 
 // After multiple calls
 mockFn()
 mockFn()
 mockFn()
-xExpect(mockFn).toHaveBeenCalledTimes(3) // Passes
-xExpect(mockFn).not.toHaveBeenCalledTimes(2) // Passes
+expect(mockFn).toHaveBeenCalledTimes(3) // Passes
+expect(mockFn).not.toHaveBeenCalledTimes(2) // Passes
 ```
 
 ## toHaveBeenCalledWith
 Verifies that a mock function has been called with specified arguments at least once.
 
 ```ts
-xExpect(mockFn).toHaveBeenCalledWith(...expectedArgs)
+expect(mockFn).toHaveBeenCalledWith(...expectedArgs)
 ```
 
 ::: info
@@ -73,24 +73,24 @@ const mockFn = xJet.fn()
 
 // Basic usage
 mockFn('hello', 123)
-xExpect(mockFn).toHaveBeenCalledWith('hello', 123) // Passes
+expect(mockFn).toHaveBeenCalledWith('hello', 123) // Passes
 
 // Multiple calls with different arguments
 mockFn('first call')
 mockFn('second call')
-xExpect(mockFn).toHaveBeenCalledWith('first call') // Passes
-xExpect(mockFn).toHaveBeenCalledWith('second call') // Passes
-xExpect(mockFn).not.toHaveBeenCalledWith('never called') // Passes
+expect(mockFn).toHaveBeenCalledWith('first call') // Passes
+expect(mockFn).toHaveBeenCalledWith('second call') // Passes
+expect(mockFn).not.toHaveBeenCalledWith('never called') // Passes
 
 // With objects
 mockFn({ name: 'John', age: 30 })
-xExpect(mockFn).toHaveBeenCalledWith({ name: 'John', age: 30 }) // Passes
+expect(mockFn).toHaveBeenCalledWith({ name: 'John', age: 30 }) // Passes
 
 // With asymmetric matchers
 mockFn('hello world', { id: 123, data: [1, 2, 3] })
-xExpect(mockFn).toHaveBeenCalledWith(
-  xExpect.stringContaining('hello'),
-  xExpect.objectContaining({ id: 123 })
+expect(mockFn).toHaveBeenCalledWith(
+  expect.stringContaining('hello'),
+  expect.objectContaining({ id: 123 })
 ) // Passes
 ```
 
@@ -99,7 +99,7 @@ xExpect(mockFn).toHaveBeenCalledWith(
 Verifies that the last call to a mock function was with specified arguments.
 
 ```ts
-xExpect(mockFn).toHaveBeenLastCalledWith(...expectedArgs)
+expect(mockFn).toHaveBeenLastCalledWith(...expectedArgs)
 ```
 
 ::: info
@@ -119,13 +119,13 @@ mockFn('first call')
 mockFn('second call')
 mockFn('last call')
 
-xExpect(mockFn).toHaveBeenLastCalledWith('last call') // Passes
-xExpect(mockFn).not.toHaveBeenLastCalledWith('first call') // Passes
+expect(mockFn).toHaveBeenLastCalledWith('last call') // Passes
+expect(mockFn).not.toHaveBeenLastCalledWith('first call') // Passes
 
 // With asymmetric matchers
 mockFn({ type: 'final', id: 42 })
-xExpect(mockFn).toHaveBeenLastCalledWith(
-  xExpect.objectContaining({ type: 'final' })
+expect(mockFn).toHaveBeenLastCalledWith(
+  expect.objectContaining({ type: 'final' })
 ) // Passes
 ```
 
@@ -134,7 +134,7 @@ xExpect(mockFn).toHaveBeenLastCalledWith(
 Verifies that the nth call to a mock function was with specified arguments.
 
 ```ts
-xExpect(mockFn).toHaveBeenNthCalledWith(n, ...expectedArgs)
+expect(mockFn).toHaveBeenNthCalledWith(n, ...expectedArgs)
 ```
 
 ::: info
@@ -155,18 +155,18 @@ mockFn('first')
 mockFn('second')
 mockFn('third')
 
-xExpect(mockFn).toHaveBeenNthCalledWith(1, 'first') // Passes
-xExpect(mockFn).toHaveBeenNthCalledWith(2, 'second') // Passes
-xExpect(mockFn).toHaveBeenNthCalledWith(3, 'third') // Passes
-xExpect(mockFn).not.toHaveBeenNthCalledWith(2, 'first') // Passes
+expect(mockFn).toHaveBeenNthCalledWith(1, 'first') // Passes
+expect(mockFn).toHaveBeenNthCalledWith(2, 'second') // Passes
+expect(mockFn).toHaveBeenNthCalledWith(3, 'third') // Passes
+expect(mockFn).not.toHaveBeenNthCalledWith(2, 'first') // Passes
 
 // With complex arguments and asymmetric matchers
 mockFn(1, { a: 'one' })
 mockFn(2, { a: 'two' })
-xExpect(mockFn).toHaveBeenNthCalledWith(
+expect(mockFn).toHaveBeenNthCalledWith(
   5, 
   2, 
-  xExpect.objectContaining({ a: 'two' })
+  expect.objectContaining({ a: 'two' })
 ) // Passes
 ```
 
@@ -174,7 +174,7 @@ xExpect(mockFn).toHaveBeenNthCalledWith(
 Verifies that a mock function successfully returned at least once (did not throw).
 
 ```ts
-xExpect(mockFn).toHaveReturned()
+expect(mockFn).toHaveReturned()
 ```
 
 ### Examples
@@ -182,7 +182,7 @@ xExpect(mockFn).toHaveReturned()
 // Mock that returns normally
 const successMock = xJet.fn(() => true)
 successMock()
-xExpect(successMock).toHaveReturned() // Passes
+expect(successMock).toHaveReturned() // Passes
 
 // Mock that throws
 const failMock = xJet.fn(() => { throw new Error('Failed') })
@@ -191,7 +191,7 @@ try {
 } catch (e) {
   // Ignore error
 }
-xExpect(failMock).not.toHaveReturned() // Passes
+expect(failMock).not.toHaveReturned() // Passes
 
 // Mixed behavior
 const mixedMock = xJet.fn(x => {
@@ -202,7 +202,7 @@ const mixedMock = xJet.fn(x => {
 try { mixedMock(-1) } catch (e) { /* Ignore */ }
 mixedMock(5)
 
-xExpect(mixedMock).toHaveReturned() // Passes - returned at least once
+expect(mixedMock).toHaveReturned() // Passes - returned at least once
 ```
 
 
@@ -210,7 +210,7 @@ xExpect(mixedMock).toHaveReturned() // Passes - returned at least once
 Verifies that a mock function successfully returned exactly n times.
 
 ```ts
-xExpect(mockFn).toHaveReturnedTimes(expectedCount)
+expect(mockFn).toHaveReturnedTimes(expectedCount)
 ```
 
 ### Parameters
@@ -224,7 +224,7 @@ mockFn(1)
 mockFn(2)
 mockFn(3)
 
-xExpect(mockFn).toHaveReturnedTimes(3) // Passes
+expect(mockFn).toHaveReturnedTimes(3) // Passes
 
 // With some errors
 const mixedMock = xJet.fn(x => {
@@ -236,7 +236,7 @@ mixedMock(1)
 try { mixedMock(-1) } catch (e) { /* Ignore */ }
 mixedMock(2)
 
-xExpect(mixedMock).toHaveReturnedTimes(2) // Passes - only counts successful returns
+expect(mixedMock).toHaveReturnedTimes(2) // Passes - only counts successful returns
 ```
 
 
@@ -244,7 +244,7 @@ xExpect(mixedMock).toHaveReturnedTimes(2) // Passes - only counts successful ret
 Verifies that the last return value of a mock function matches the expected value.
 
 ```ts
-xExpect(mockFn).toHaveLastReturnedWith(expectedValue)
+expect(mockFn).toHaveLastReturnedWith(expectedValue)
 ```
 
 ::: info
@@ -265,14 +265,14 @@ mockFn() // Returns 'first result'
 mockFn() // Returns 'second result'
 mockFn() // Returns 'default result'
 
-xExpect(mockFn).toHaveLastReturnedWith('default result') // Passes
-xExpect(mockFn).not.toHaveLastReturnedWith('second result') // Passes
+expect(mockFn).toHaveLastReturnedWith('default result') // Passes
+expect(mockFn).not.toHaveLastReturnedWith('second result') // Passes
 
 // With asymmetric matchers
 const dataMock = xJet.fn().mockReturnValue({ id: 42, timestamp: Date.now() })
 dataMock()
-xExpect(dataMock).toHaveLastReturnedWith(
-  xExpect.objectContaining({ id: 42 })
+expect(dataMock).toHaveLastReturnedWith(
+  expect.objectContaining({ id: 42 })
 ) // Passes
 ```
 
@@ -281,7 +281,7 @@ xExpect(dataMock).toHaveLastReturnedWith(
 Verifies that the nth return value of a mock function matches the expected value.
 
 ```ts
-xExpect(mockFn).toHaveNthReturnedWith(n, expectedValue)
+expect(mockFn).toHaveNthReturnedWith(n, expectedValue)
 ```
 
 ::: info
@@ -303,10 +303,10 @@ mockFn() // Returns 'first'
 mockFn() // Returns 'second'
 mockFn() // Returns 'third'
 
-xExpect(mockFn).toHaveNthReturnedWith(1, 'first') // Passes
-xExpect(mockFn).toHaveNthReturnedWith(2, 'second') // Passes
-xExpect(mockFn).toHaveNthReturnedWith(3, 'third') // Passes
-xExpect(mockFn).not.toHaveNthReturnedWith(2, 'third') // Passes
+expect(mockFn).toHaveNthReturnedWith(1, 'first') // Passes
+expect(mockFn).toHaveNthReturnedWith(2, 'second') // Passes
+expect(mockFn).toHaveNthReturnedWith(3, 'third') // Passes
+expect(mockFn).not.toHaveNthReturnedWith(2, 'third') // Passes
 
 // With asymmetric matchers
 const complexMock = xJet.fn()
@@ -316,9 +316,9 @@ const complexMock = xJet.fn()
 complexMock()
 complexMock()
 
-xExpect(complexMock).toHaveNthReturnedWith(
+expect(complexMock).toHaveNthReturnedWith(
   1, 
-  xExpect.objectContaining({ type: 'user' })
+  expect.objectContaining({ type: 'user' })
 ) // Passes
 ```
 
@@ -338,7 +338,7 @@ test('callback is called with correct arguments', () => {
   
   processData({ id: 123, value: 'test' }, mockCallback)
   
-  xExpect(mockCallback).toHaveBeenCalledWith(123, 'test')
+  expect(mockCallback).toHaveBeenCalledWith(123, 'test')
 })
 ```
 
@@ -356,11 +356,11 @@ test('API endpoint is called with correct parameters', async () => {
   await fetchUserData(42, 'full')
   
   // Verify the API was called correctly
-  xExpect(fetch).toHaveBeenCalledWith(
+  expect(fetch).toHaveBeenCalledWith(
     'https://api.example.com/users/42?profile=full',
-    xExpect.objectContaining({
+    expect.objectContaining({
       method: 'GET',
-      headers: xExpect.objectContaining({
+      headers: expect.objectContaining({
         'Content-Type': 'application/json'
       })
     })
@@ -383,10 +383,10 @@ test('operations are performed in the correct sequence', () => {
   
   performOperations()
   
-  xExpect(logger).toHaveBeenNthCalledWith(1, 'Starting')
-  xExpect(logger).toHaveBeenNthCalledWith(2, 'Processing')
-  xExpect(logger).toHaveBeenNthCalledWith(3, 'Completed')
-  xExpect(logger).toHaveBeenCalledTimes(3)
+  expect(logger).toHaveBeenNthCalledWith(1, 'Starting')
+  expect(logger).toHaveBeenNthCalledWith(2, 'Processing')
+  expect(logger).toHaveBeenNthCalledWith(3, 'Completed')
+  expect(logger).toHaveBeenCalledTimes(3)
 })
 ```
 
@@ -409,10 +409,10 @@ test('conditional function calls', () => {
   processValue(-3)
   processValue(0)
   
-  xExpect(mockFn).toHaveBeenCalledWith('Positive: 5')
-  xExpect(mockFn).toHaveBeenCalledWith('Negative: -3')
-  xExpect(mockFn).toHaveBeenCalledWith('Zero')
-  xExpect(mockFn).toHaveBeenCalledTimes(3)
+  expect(mockFn).toHaveBeenCalledWith('Positive: 5')
+  expect(mockFn).toHaveBeenCalledWith('Negative: -3')
+  expect(mockFn).toHaveBeenCalledWith('Zero')
+  expect(mockFn).toHaveBeenCalledTimes(3)
 })
 ```
 
@@ -426,9 +426,9 @@ test('function returns expected values', () => {
   const result1 = transformData({ id: 1 })
   const result2 = transformData({ id: 2 })
   
-  xExpect(transformData).toHaveNthReturnedWith(1, { transformed: true, id: 1 })
-  xExpect(transformData).toHaveLastReturnedWith({ transformed: true, id: 2 })
-  xExpect(transformData).toHaveReturnedTimes(2)
+  expect(transformData).toHaveNthReturnedWith(1, { transformed: true, id: 1 })
+  expect(transformData).toHaveLastReturnedWith({ transformed: true, id: 2 })
+  expect(transformData).toHaveReturnedTimes(2)
 })
 ```
 
@@ -456,17 +456,17 @@ test('event handlers are called correctly', () => {
   
   // Test success path
   processWithEvents({ valid: true, result: 'success' })
-  xExpect(onSuccess).toHaveBeenCalledWith('success')
-  xExpect(onError).not.toHaveBeenCalled()
-  xExpect(onComplete).toHaveBeenCalled()
+  expect(onSuccess).toHaveBeenCalledWith('success')
+  expect(onError).not.toHaveBeenCalled()
+  expect(onComplete).toHaveBeenCalled()
   
   // Reset mocks
   xJet.clearAllMocks()
   
   // Test error path
   processWithEvents({ valid: false })
-  xExpect(onSuccess).not.toHaveBeenCalled()
-  xExpect(onError).toHaveBeenCalledWith(xExpect.any(Error))
-  xExpect(onComplete).toHaveBeenCalled()
+  expect(onSuccess).not.toHaveBeenCalled()
+  expect(onError).toHaveBeenCalledWith(expect.any(Error))
+  expect(onComplete).toHaveBeenCalled()
 })
 ```

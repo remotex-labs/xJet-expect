@@ -5,7 +5,7 @@ Equality matchers provide different ways to compare values in your tests, from s
 Checks if the received value is strictly equal to the expected value using `Object.is()`.
 
 ```ts
-xExpect(value).toBe(expected)
+expect(value).toBe(expected)
 ```
 
 `toBe` is most appropriate when testing exact identity rather than structure.
@@ -16,27 +16,27 @@ xExpect(value).toBe(expected)
 ### Examples
 ```ts
 // Primitives
-xExpect(2 + 2).toBe(4)
-xExpect('hello').toBe('hello')
-xExpect(true).toBe(true)
+expect(2 + 2).toBe(4)
+expect('hello').toBe('hello')
+expect(true).toBe(true)
 
 // Same object reference
 const obj = { a: 1 }
-xExpect(obj).toBe(obj)
+expect(obj).toBe(obj)
 
 // With asymmetric matchers
-xExpect('hello world').toBe(xExpect.stringContaining('hello'))
-xExpect(42).toBe(xExpect.any(Number))
+expect('hello world').toBe(expect.stringContaining('hello'))
+expect(42).toBe(expect.any(Number))
 
 ```
 
 ### Common Mistakes
 ```ts
 // This fails because they're different object references
-xExpect({ a: 1 }).toBe({ a: 1 })
+expect({ a: 1 }).toBe({ a: 1 })
 
 // This fails because they're different array references
-xExpect([1, 2, 3]).toBe([1, 2, 3])
+expect([1, 2, 3]).toBe([1, 2, 3])
 ```
 
 If you want to compare value equality for objects or arrays, use `toEqual` instead.
@@ -47,10 +47,10 @@ If you want to compare value equality for objects or arrays, use `toEqual` inste
 
 ```ts
 // Use toBe for primitives
-xExpect(2 + 2).toBe(4)
+expect(2 + 2).toBe(4)
 
 // Use toEqual for objects/arrays with the same content
-xExpect({ id: 1, name: 'Test' }).toEqual({ id: 1, name: 'Test' })
+expect({ id: 1, name: 'Test' }).toEqual({ id: 1, name: 'Test' })
 ```
 
 
@@ -58,7 +58,7 @@ xExpect({ id: 1, name: 'Test' }).toEqual({ id: 1, name: 'Test' })
 Performs a deep equality check between the received and expected values.
 
 ```ts
-xExpect(value).toEqual(expected)
+expect(value).toEqual(expected)
 ```
 
 `toEqual` recursively compares all properties of objects and elements of arrays, making it perfect for data structure validation.
@@ -71,32 +71,32 @@ xExpect(value).toEqual(expected)
 
 ```ts
 // Objects with the same properties
-xExpect({ name: 'Alice', age: 30 }).toEqual({ name: 'Alice', age: 30 })
+expect({ name: 'Alice', age: 30 }).toEqual({ name: 'Alice', age: 30 })
 
 // Nested objects
-xExpect({ user: { name: 'Bob', permissions: ['read', 'write'] } })
+expect({ user: { name: 'Bob', permissions: ['read', 'write'] } })
   .toEqual({ user: { name: 'Bob', permissions: ['read', 'write'] } })
 
 // Arrays
-xExpect([1, 2, 3]).toEqual([1, 2, 3])
+expect([1, 2, 3]).toEqual([1, 2, 3])
 
 // With asymmetric matchers
-xExpect({ name: 'Alice', created: new Date() }).toEqual({
+expect({ name: 'Alice', created: new Date() }).toEqual({
   name: 'Alice',
-  created: xExpect.any(Date)
+  created: expect.any(Date)
 })
 
 // Nested asymmetric matchers
-xExpect({ 
+expect({ 
   user: { 
     id: 123, 
     posts: [{ title: 'Hello' }, { title: 'World' }] 
   } 
 }).toEqual({
   user: {
-    id: xExpect.any(Number),
-    posts: xExpect.arrayContaining([
-      xExpect.objectContaining({ title: 'Hello' })
+    id: expect.any(Number),
+    posts: expect.arrayContaining([
+      expect.objectContaining({ title: 'Hello' })
     ])
   }
 })
@@ -107,16 +107,16 @@ xExpect({
 Checks if the received value is exactly `null`.
 
 ```ts
-xExpect(value).toBeNull()
+expect(value).toBeNull()
 ```
 
 ### Examples
 
 ```ts
-xExpect(null).toBeNull()
-xExpect(undefined).not.toBeNull()
-xExpect(0).not.toBeNull()
-xExpect('').not.toBeNull()
+expect(null).toBeNull()
+expect(undefined).not.toBeNull()
+expect(0).not.toBeNull()
+expect('').not.toBeNull()
 
 ```
 
@@ -124,15 +124,15 @@ xExpect('').not.toBeNull()
 Checks if the received value is exactly `undefined`.
 
 ```ts
-xExpect(value).toBeUndefined()
+expect(value).toBeUndefined()
 ```
 
 ### Examples
 ```ts
-xExpect(undefined).toBeUndefined()
-xExpect(void 0).toBeUndefined()
-xExpect(null).not.toBeUndefined()
-xExpect(0).not.toBeUndefined()
+expect(undefined).toBeUndefined()
+expect(void 0).toBeUndefined()
+expect(null).not.toBeUndefined()
+expect(0).not.toBeUndefined()
 ```
 
 ## toBeDefined
@@ -140,11 +140,11 @@ Checks if the received value is not `undefined`.
 
 ### Examples
 ```ts
-xExpect(null).toBeDefined()
-xExpect(0).toBeDefined()
-xExpect('').toBeDefined()
-xExpect(false).toBeDefined()
-xExpect(undefined).not.toBeDefined()
+expect(null).toBeDefined()
+expect(0).toBeDefined()
+expect('').toBeDefined()
+expect(false).toBeDefined()
+expect(undefined).not.toBeDefined()
 
 ```
 
@@ -152,37 +152,37 @@ xExpect(undefined).not.toBeDefined()
 Checks if the received value is `NaN`.
 
 ```ts
-xExpect(value).toBeNaN()
+expect(value).toBeNaN()
 ```
 
 ### Examples
 ```ts
-xExpect(NaN).toBeNaN()
-xExpect(0/0).toBeNaN()
-xExpect(parseInt('not a number')).toBeNaN()
-xExpect(42).not.toBeNaN()
+expect(NaN).toBeNaN()
+expect(0/0).toBeNaN()
+expect(parseInt('not a number')).toBeNaN()
+expect(42).not.toBeNaN()
 ```
 
 ## toBeTruthy
 Checks if the received value is truthy (evaluates to true in a boolean context).
 
 ```ts
-xExpect(value).toBeTruthy()
+expect(value).toBeTruthy()
 ```
 
 ### Examples
 ```ts
-xExpect(true).toBeTruthy()
-xExpect(1).toBeTruthy()
-xExpect('hello').toBeTruthy()
-xExpect({}).toBeTruthy()
-xExpect([]).toBeTruthy()
+expect(true).toBeTruthy()
+expect(1).toBeTruthy()
+expect('hello').toBeTruthy()
+expect({}).toBeTruthy()
+expect([]).toBeTruthy()
 
-xExpect(false).not.toBeTruthy()
-xExpect(0).not.toBeTruthy()
-xExpect('').not.toBeTruthy()
-xExpect(null).not.toBeTruthy()
-xExpect(undefined).not.toBeTruthy()
+expect(false).not.toBeTruthy()
+expect(0).not.toBeTruthy()
+expect('').not.toBeTruthy()
+expect(null).not.toBeTruthy()
+expect(undefined).not.toBeTruthy()
 ```
 
 ## toBeFalsy
@@ -190,17 +190,17 @@ Checks if the received value is falsy (evaluates to false in a boolean context).
 
 ### Examples
 ```ts
-xExpect(false).toBeFalsy()
-xExpect(0).toBeFalsy()
-xExpect('').toBeFalsy()
-xExpect(null).toBeFalsy()
-xExpect(undefined).toBeFalsy()
-xExpect(NaN).toBeFalsy()
+expect(false).toBeFalsy()
+expect(0).toBeFalsy()
+expect('').toBeFalsy()
+expect(null).toBeFalsy()
+expect(undefined).toBeFalsy()
+expect(NaN).toBeFalsy()
 
-xExpect(true).not.toBeFalsy()
-xExpect(1).not.toBeFalsy()
-xExpect('hello').not.toBeFalsy()
-xExpect({}).not.toBeFalsy()
-xExpect([]).not.toBeFalsy()
+expect(true).not.toBeFalsy()
+expect(1).not.toBeFalsy()
+expect('hello').not.toBeFalsy()
+expect({}).not.toBeFalsy()
+expect([]).not.toBeFalsy()
 
 ```

@@ -1,7 +1,7 @@
 # Modifiers
 
 Modifiers enhance your test assertions by adapting matcher behavior for different scenarios. T
-hey connect your `xExpect()` statement to the actual matcher, allowing for more flexible and powerful tests in your xJet test suites.
+hey connect your `expect()` statement to the actual matcher, allowing for more flexible and powerful tests in your xJet test suites.
 
 ## not
 Inverts your assertion to verify that something is false rather than true.
@@ -9,10 +9,10 @@ Inverts your assertion to verify that something is false rather than true.
 ```ts
 test('verifies incorrect password is rejected', () => {
     // Check authentication fails with wrong credentials
-    xExpect(authenticate('user', 'wrong_password')).not.toBeTruthy();
+    expect(authenticate('user', 'wrong_password')).not.toBeTruthy();
 
     // Verify element is not in the expected state
-    xExpect(component.getStatus()).not.toBe('ready');
+    expect(component.getStatus()).not.toBe('ready');
 });
 
 ```
@@ -23,13 +23,13 @@ Unwraps a fulfilled promise's value so you can test the resolved result directly
 ```ts
 test('API request completes successfully', async () => {
     // Using async/await - recommended approach
-    await xExpect(api.fetchData('/users')).resolves.toMatchObject({
+    await expect(api.fetchData('/users')).resolves.toMatchObject({
         success: true,
-        count: xExpect.any(Number)
+        count: expect.any(Number)
     });
 
     // Alternative approach with Promise.then()
-    return xExpect(api.fetchConfig()).resolves.toHaveProperty('version');
+    return expect(api.fetchConfig()).resolves.toHaveProperty('version');
 });
 
 ```
@@ -64,8 +64,8 @@ function throwInPromise(): Promise<any> {
 
 // Both can be tested the same way
 test('promise rejection patterns', async () => {
-    await xExpect(explicitReject()).rejects.toBe('error message');
-    await xExpect(throwInPromise()).rejects.toBe('error message');
+    await expect(explicitReject()).rejects.toBe('error message');
+    await expect(throwInPromise()).rejects.toBe('error message');
 });
 
 ```
@@ -81,8 +81,8 @@ test('different assertion styles with rejects', async () => {
   }
   
   // These assertions are equivalent
-  await xExpect(rejectWithString()).rejects.toBe('validation failed');
-  await xExpect(rejectWithString()).rejects.toThrow('validation failed');
+  await expect(rejectWithString()).rejects.toBe('validation failed');
+  await expect(rejectWithString()).rejects.toThrow('validation failed');
   
   // When rejecting with an Error object
   function rejectWithError(): Promise<any> {
@@ -92,8 +92,8 @@ test('different assertion styles with rejects', async () => {
   }
   
   // These assertions work for Error objects
-  await xExpect(rejectWithError()).rejects.toThrow('network error');
-  await xExpect(rejectWithError()).rejects.toBeInstanceOf(Error);
+  await expect(rejectWithError()).rejects.toThrow('network error');
+  await expect(rejectWithError()).rejects.toBeInstanceOf(Error);
 });
 
 ```
@@ -109,13 +109,13 @@ You can use modifiers together with various matchers to create powerful assertio
 ```ts
 test('demonstrates advanced modifier usage', async () => {
   // Verify a promise resolves to a non-null value
-  await xExpect(storage.getSettings()).resolves.not.toBeNull();
+  await expect(storage.getSettings()).resolves.not.toBeNull();
   
   // Verify a function doesn't throw under valid conditions
-  xExpect(() => parser.parseConfig('{"valid": true}')).not.toThrow();
+  expect(() => parser.parseConfig('{"valid": true}')).not.toThrow();
   
   // Verify an async operation doesn't resolve with a specific error state
-  await xExpect(permissions.check('admin')).resolves.not.toEqual({
+  await expect(permissions.check('admin')).resolves.not.toEqual({
     denied: true
   });
 });
