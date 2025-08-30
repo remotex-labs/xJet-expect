@@ -32,8 +32,8 @@ import { ensureNotNullish, ensureType, handleDiffFailure } from '@handlers/match
  *
  * @example
  * ```ts
- * expect({ a: { b: 42 } }).toHaveProperty('a.b', 42); // Passes
- * expect({ a: {} }).toHaveProperty(['a', 'b']); // Fails
+ * xExpect({ a: { b: 42 } }).toHaveProperty('a.b', 42); // Passes
+ * xExpect({ a: {} }).toHaveProperty(['a', 'b']); // Fails
  * ```
  *
  * @since 1.0.0
@@ -102,8 +102,8 @@ export function toHaveProperty(this: MatcherService<object>, path: string | Arra
  *
  * @example
  * ```ts
- * expect(new Date()).toBeInstanceOf(Date); // Passes
- * expect({}).toBeInstanceOf(Array); // Fails
+ * xExpect(new Date()).toBeInstanceOf(Date); // Passes
+ * xExpect({}).toBeInstanceOf(Array); // Fails
  * ```
  *
  * @since 1.0.0
@@ -150,8 +150,8 @@ export function toBeInstanceOf(this: MatcherService, instance: FunctionType | Co
  *
  * @example
  * ```ts
- * expect([1, 2, 3]).toContain(2); // Passes
- * expect('hello world').toContain('world'); // Passes
+ * xExpect([1, 2, 3]).toContain(2); // Passes
+ * xExpect('hello world').toContain('world'); // Passes
  * ```
  *
  * @since 1.0.0
@@ -232,7 +232,7 @@ export function toContain(this: MatcherService<Array<unknown> | string>, expecte
  *
  * @example
  * ```ts
- * expect([{ a: 1 }, { b: 2 }]).toContainEqual({ a: 1 }); // Passes
+ * xExpect([{ a: 1 }, { b: 2 }]).toContainEqual({ a: 1 }); // Passes
  * ```
  *
  * @since 1.0.0
@@ -291,8 +291,8 @@ export function toContainEqual(this: MatcherService<Array<unknown>>, expected: u
  *
  * @example
  * ```ts
- * expect({ a: 1, b: 2 }).toMatchObject({ a: 1 }); // Passes
- * expect({ a: 1 }).toMatchObject({ a: 1, b: 2 }); // Fails
+ * xExpect({ a: 1, b: 2 }).toMatchObject({ a: 1 }); // Passes
+ * xExpect({ a: 1 }).toMatchObject({ a: 1, b: 2 }); // Fails
  * ```
  *
  * @since 1.0.0

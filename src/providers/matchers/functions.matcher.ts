@@ -219,10 +219,10 @@ export function toThrowExpectedObject(this: MatcherService, expected: object, th
  *
  * @example
  * ```ts
- * expect(() => { throw new Error('Oops'); }).toThrow('Oops');
- * expect(() => { throw new TypeError(); }).toThrow(TypeError);
- * expect(() => { throw { code: 123 }; }).toThrow({ code: 123 });
- * expect(() => { throw new Error('fail'); }).not.toThrow('pass');
+ * xExpect(() => { throw new Error('Oops'); }).toThrow('Oops');
+ * xExpect(() => { throw new TypeError(); }).toThrow(TypeError);
+ * xExpect(() => { throw { code: 123 }; }).toThrow({ code: 123 });
+ * xExpect(() => { throw new Error('fail'); }).not.toThrow('pass');
  * ```
  *
  * @see MatcherService

@@ -37,7 +37,7 @@ import { MatcherService } from '@services/matcher.service';
  * };
  *
  * // The above code will automatically make this available:
- * expect(value).isTrue();
+ * xExpect(value).isTrue();
  * ```
  *
  * @see Matchers - The object containing all matcher functions
@@ -69,7 +69,7 @@ for (const key of Object.keys(Matchers) as Array<keyof typeof Matchers>) {
  * @throws Error - When more than one argument is provided to the function
  *
  * @remarks
- * This function serves as the core implementation of the expect function. It creates a new
+ * This function serves as the core implementation of the xExpect function. It creates a new
  * MatcherService instance with the provided value and augments it with all available matcher
  * methods defined in the BoundMatchersType. The resulting object provides a fluent API for
  * writing test assertions.
@@ -106,24 +106,24 @@ const coreExpect = (received: unknown, ...rest: Array<never>): MatcherService & 
  * This is the primary entry point for the assertion library. It combines the core expect
  * functionality with pattern matchers that allow for powerful asymmetric matching.
  * The `Object.assign` merges the core assertion function with pattern matchers, making
- * them available as properties on the expect function itself.
+ * them available as properties on the xExpect function itself.
  *
  * @example
  * ```ts
  * // Basic value assertion
- * expect(value).toBe(expected);
+ * xExpect(value).toBe(expected);
  *
  * // Using pattern matchers
- * expect(value).toEqual(expect.any(Number));
+ * xExpect(value).toEqual(xExpect.any(Number));
  *
  * // Direct use of patterns
- * const matcher = expect.any(String);
+ * const matcher = xExpect.any(String);
  * ```
  *
  * @see coreExpect - The base assertion function
  * @see Patterns - Collection of asymmetric matcher patterns
  *
- * @since 1.0.0
+ * @since 2.0.0
  */
 
-export const expect: typeof coreExpect & typeof Patterns = Object.assign(coreExpect, Patterns);
+export const xExpect: typeof coreExpect & typeof Patterns = Object.assign(coreExpect, Patterns);

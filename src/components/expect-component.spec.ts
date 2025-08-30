@@ -2,9 +2,9 @@
  * Imports
  */
 
+import { xExpect } from '@components/expect.component';
 import { Matchers } from '@providers/matchers.provider';
 import { MatcherService } from '@services/matcher.service';
-import { expect as customExpect } from '@components/expect.component';
 
 /**
  * Mock dependencies
@@ -29,14 +29,14 @@ jest.mock('@providers/matchers.provider', () => {
 
 describe('coreExpect function', () => {
     test('throws if more than one argument is passed', () => {
-        expect(() => (customExpect as any)(1, 2)).toThrow(
+        expect(() => (xExpect as any)(1, 2)).toThrow(
             'Expect takes at most one argument. Received 2 arguments instead.'
         );
     });
 
     test('returns a MatcherService instance augmented with matcher methods', () => {
         const received = 42;
-        const result = customExpect(received);
+        const result = xExpect(received);
 
         // Should be an instance of MatcherService
         expect(result).toBeInstanceOf(MatcherService);
@@ -53,7 +53,7 @@ describe('coreExpect function', () => {
         const matcherFn = (Matchers as any)[matcherName];
 
         // Spy on invoke method of MatcherService
-        const result = customExpect(received);
+        const result = xExpect(received);
         const invokeSpy = jest.spyOn(result as any, 'invoke');
 
         // Call the matcher method dynamically added

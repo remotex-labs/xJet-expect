@@ -30,13 +30,13 @@ import { ensureMock, serializeCallArgs, serializeCallList } from '@handlers/mock
  * ```ts
  * const mockFn = xJet.fn();
  * mockFn();
- * expect(mockFn).toHaveBeenCalled(); // Passes
+ * xExpect(mockFn).toHaveBeenCalled(); // Passes
  * ```
  *
  * @example
  * ```ts
  * const mockFn = xJet.fn();
- * expect(mockFn).toHaveBeenCalled(); // Fails
+ * xExpect(mockFn).toHaveBeenCalled(); // Fails
  * ```
  *
  * @since 1.0.0
@@ -81,13 +81,13 @@ export function toHaveBeenCalled(this: MatcherService<MockStateInterface>): void
  * ```ts
  * const mockFn = xJet.fn();
  * mockFn();
- * expect(mockFn).toHaveBeenCalledTimes(1); // Passes
+ * xExpect(mockFn).toHaveBeenCalledTimes(1); // Passes
  * ```
  *
  * @example
  * ```ts
  * const mockFn = xJet.fn();
- * expect(mockFn).toHaveBeenCalledTimes(2); // Fails
+ * xExpect(mockFn).toHaveBeenCalledTimes(2); // Fails
  * ```
  *
  * @since 1.0.0
@@ -135,14 +135,14 @@ export function toHaveBeenCalledTimes(this: MatcherService<MockStateInterface>, 
  * ```ts
  * const mockFn = xJet.fn();
  * mockFn(1, 'test');
- * expect(mockFn).toHaveBeenCalledWith(1, 'test'); // Passes
+ * xExpect(mockFn).toHaveBeenCalledWith(1, 'test'); // Passes
  * ```
  *
  * @example
  * ```ts
  * const mockFn = xJet.fn();
  * mockFn(2, 'test');
- * expect(mockFn).toHaveBeenCalledWith(1, 'test'); // Fails
+ * xExpect(mockFn).toHaveBeenCalledWith(1, 'test'); // Fails
  * ```
  *
  * @since 1.0.0
@@ -202,7 +202,7 @@ export function toHaveBeenCalledWith(this: MatcherService<MockStateInterface>, .
  * const mockFn = xJet.fn();
  * mockFn(1, 'first');
  * mockFn(2, 'last');
- * expect(mockFn).toHaveBeenLastCalledWith(2, 'last'); // Passes
+ * xExpect(mockFn).toHaveBeenLastCalledWith(2, 'last'); // Passes
  * ```
  *
  * @example
@@ -210,7 +210,7 @@ export function toHaveBeenCalledWith(this: MatcherService<MockStateInterface>, .
  * const mockFn = xJet.fn();
  * mockFn(1, 'first');
  * mockFn(2, 'last');
- * expect(mockFn).toHaveBeenLastCalledWith(1, 'first'); // Fails
+ * xExpect(mockFn).toHaveBeenLastCalledWith(1, 'first'); // Fails
  * ```
  *
  * @since 1.0.0
@@ -266,7 +266,7 @@ export function toHaveBeenLastCalledWith(this: MatcherService<MockStateInterface
  * const mockFn = xJet.fn();
  * mockFn('first');
  * mockFn('second');
- * expect(mockFn).toHaveBeenNthCalledWith(2, 'second'); // Passes
+ * xExpect(mockFn).toHaveBeenNthCalledWith(2, 'second'); // Passes
  * ```
  *
  * @example
@@ -274,7 +274,7 @@ export function toHaveBeenLastCalledWith(this: MatcherService<MockStateInterface
  * const mockFn = xJet.fn();
  * mockFn('first');
  * mockFn('second');
- * expect(mockFn).toHaveBeenNthCalledWith(1, 'second'); // Fails
+ * xExpect(mockFn).toHaveBeenNthCalledWith(1, 'second'); // Fails
  * ```
  *
  * @since 1.0.0
@@ -327,13 +327,13 @@ export function toHaveBeenNthCalledWith(this: MatcherService<MockStateInterface>
  * ```ts
  * const mockFn = xJet.fn();
  * mockFn();
- * expect(mockFn).toHaveReturned(); // Passes if the function returned at least once
+ * xExpect(mockFn).toHaveReturned(); // Passes if the function returned at least once
  * ```
  *
  * @example
  * ```ts
  * const mockFn = xJet.fn();
- * expect(mockFn).toHaveReturned(); // Fails if the function was never called or never returned
+ * xExpect(mockFn).toHaveReturned(); // Fails if the function was never called or never returned
  * ```
  *
  * @since 1.0.0
@@ -392,13 +392,13 @@ export function toHaveReturned(this: MatcherService<MockStateInterface>): void {
  * ```ts
  * const mockFn = xJet.fn();
  * mockFn();
- * expect(mockFn).toHaveReturnedTimes(1); // Passes
+ * xExpect(mockFn).toHaveReturnedTimes(1); // Passes
  * ```
  *
  * @example
  * ```ts
  * const mockFn = xJet.fn();
- * expect(mockFn).toHaveReturnedTimes(2); // Fails if the function returned fewer or more times
+ * xExpect(mockFn).toHaveReturnedTimes(2); // Fails if the function returned fewer or more times
  * ```
  *
  * @since 1.0.0
@@ -451,14 +451,14 @@ export function toHaveReturnedTimes(this: MatcherService<MockStateInterface>, ex
  * const mockFn = xJet.fn();
  * mockFn(1);
  * mockFn(2);
- * expect(mockFn).toHaveLastReturnedWith(2); // Passes
+ * xExpect(mockFn).toHaveLastReturnedWith(2); // Passes
  * ```
  *
  * @example
  * ```ts
  * const mockFn = xJet.fn();
  * mockFn(1);
- * expect(mockFn).toHaveLastReturnedWith(2); // Fails
+ * xExpect(mockFn).toHaveLastReturnedWith(2); // Fails
  * ```
  *
  * @since 1.0.0
@@ -532,14 +532,14 @@ export function toHaveLastReturnedWith(this: MatcherService<MockStateInterface>,
  * const mockFn = xJet.fn();
  * mockFn('a');
  * mockFn('b');
- * expect(mockFn).toHaveNthReturnedWith(2, 'b'); // Passes
+ * xExpect(mockFn).toHaveNthReturnedWith(2, 'b'); // Passes
  * ```
  *
  * @example
  * ```ts
  * const mockFn = xJet.fn();
  * mockFn('a');
- * expect(mockFn).toHaveNthReturnedWith(2, 'b'); // Fails, only one call
+ * xExpect(mockFn).toHaveNthReturnedWith(2, 'b'); // Fails, only one call
  * ```
  *
  * @since 1.0.0

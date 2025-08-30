@@ -14,7 +14,7 @@ import { DIM, EXPECTED, RECEIVED } from '@components/color.component';
  * Constructs a formatted Jest-style matcher statement string with optional ANSI coloring.
  *
  * Builds a string that resembles a Jest assertion call, e.g.:
- * `expect(received).toEqual(expected)` or `expect(received).rejects.toThrow()`,
+ * `xExpect(received).toEqual(expected)` or `xExpect(received).rejects.toThrow()`,
  * with the ability to include multiple expected values and an optional trailing comment.
  *
  * @param options - Configuration options for composing the matcher statement.
@@ -41,13 +41,13 @@ import { DIM, EXPECTED, RECEIVED } from '@components/color.component';
  *   expectedLabels: [],
  *   comment: 'should throw an error'
  * });
- * // Returns: expect(received).rejects.toThrow() // should throw an error (with ANSI colors)
+ * // Returns: xExpect(received).rejects.toThrow() // should throw an error (with ANSI colors)
  *
  * composeStatement({
  *   assertionChain: ['toEqual'],
  *   expectedLabels: ['expectedValue']
  * });
- * // Returns: expect(received).toEqual(expectedValue) (with ANSI colors)
+ * // Returns: xExpect(received).toEqual(expectedValue) (with ANSI colors)
  * ```
  *
  * @default options.expectedLabels - []

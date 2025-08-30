@@ -11,7 +11,7 @@ export type * from '@interfaces/functions.interface';
 export * from '@components/object.component';
 export * from '@components/promise.component';
 export * from '@components/serialize.component';
-export { expect } from '@components/expect.component';
+export { xExpect } from '@components/expect.component';
 
 /**
  * Modules

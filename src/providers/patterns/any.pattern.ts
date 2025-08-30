@@ -24,7 +24,7 @@ import { AbstractPattern } from '@patterns/abstract.pattern';
  *
  * @example
  * ```ts
- * expect(value).toEqual(expect.any(Number));
+ * xExpect(value).toEqual(xExpect.any(Number));
  * ```
  *
  * @since 1.0.0

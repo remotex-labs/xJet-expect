@@ -54,8 +54,8 @@ export type BoundMatchersType = {
  *   toBe: (expected: unknown) => Promise<void>
  * };
  *
- * // Usage with `expect().resolves`:
- * await expect(Promise.resolve(42)).resolves.toBe(42);
+ * // Usage with `xExpect().resolves`:
+ * await xExpect(Promise.resolve(42)).resolves.toBe(42);
  * ```
  *
  * @see Matchers - The source object containing all matcher implementations

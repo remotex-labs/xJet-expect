@@ -5,7 +5,7 @@ Object matchers allow you to test properties, structures, and relationships of o
 Checks if an object has a specified property path, and optionally that the value at that path equals the expected value.
 
 ``` ts
-xExpect(object).toHaveProperty(path, value?)
+expect(object).toHaveProperty(path, value?)
 ```
 
 ::: info
@@ -19,20 +19,20 @@ xExpect(object).toHaveProperty(path, value?)
 ### Examples
 ``` ts
 // Basic property checks
-xExpect({ name: 'John' }).toHaveProperty('name')
-xExpect({ user: { id: 123 } }).toHaveProperty('user.id')
+expect({ name: 'John' }).toHaveProperty('name')
+expect({ user: { id: 123 } }).toHaveProperty('user.id')
 
 // With arrays
-xExpect({ users: ['John', 'Jane'] }).toHaveProperty('users.0', 'John')
-xExpect({ data: [{ id: 1 }] }).toHaveProperty(['data', 0, 'id'], 1)
+expect({ users: ['John', 'Jane'] }).toHaveProperty('users.0', 'John')
+expect({ data: [{ id: 1 }] }).toHaveProperty(['data', 0, 'id'], 1)
 
 // With expected values
-xExpect({ age: 25 }).toHaveProperty('age', 25)
-xExpect({ settings: { theme: 'dark' } }).toHaveProperty('settings.theme', 'dark')
+expect({ age: 25 }).toHaveProperty('age', 25)
+expect({ settings: { theme: 'dark' } }).toHaveProperty('settings.theme', 'dark')
 
 // Negated cases
-xExpect({ name: 'John' }).not.toHaveProperty('age')
-xExpect({ user: { role: 'admin' } }).not.toHaveProperty('user.permissions')
+expect({ name: 'John' }).not.toHaveProperty('age')
+expect({ user: { role: 'admin' } }).not.toHaveProperty('user.permissions')
 ```
 
 ### Using Array Notation
@@ -40,18 +40,18 @@ You can use either dot notation or array notation for nested properties:
 
 ``` ts
 // These are equivalent
-xExpect(obj).toHaveProperty('user.profile.name')
-xExpect(obj).toHaveProperty(['user', 'profile', 'name'])
+expect(obj).toHaveProperty('user.profile.name')
+expect(obj).toHaveProperty(['user', 'profile', 'name'])
 
 // Array notation is useful when property names contain dots
-xExpect({ 'user.name': 'John' }).toHaveProperty(['user.name'])
+expect({ 'user.name': 'John' }).toHaveProperty(['user.name'])
 ```
 
 ## toBeInstanceOf
 Checks if a value is an instance of a specified class or constructor function.
 
 ``` ts
-xExpect(value).toBeInstanceOf(constructor)
+expect(value).toBeInstanceOf(constructor)
 ```
 
 ### Parameters
@@ -60,12 +60,12 @@ xExpect(value).toBeInstanceOf(constructor)
 ### Examples
 ``` ts
 // Built-in JavaScript classes
-xExpect(new Date()).toBeInstanceOf(Date)
-xExpect([1, 2, 3]).toBeInstanceOf(Array)
-xExpect(new Map()).toBeInstanceOf(Map)
-xExpect(new Set([1, 2])).toBeInstanceOf(Set)
-xExpect(new Error()).toBeInstanceOf(Error)
-xExpect(/abc/).toBeInstanceOf(RegExp)
+expect(new Date()).toBeInstanceOf(Date)
+expect([1, 2, 3]).toBeInstanceOf(Array)
+expect(new Map()).toBeInstanceOf(Map)
+expect(new Set([1, 2])).toBeInstanceOf(Set)
+expect(new Error()).toBeInstanceOf(Error)
+expect(/abc/).toBeInstanceOf(RegExp)
 
 // Custom classes
 class User {
@@ -73,24 +73,24 @@ class User {
     this.name = name
   }
 }
-xExpect(new User('John')).toBeInstanceOf(User)
+expect(new User('John')).toBeInstanceOf(User)
 
 // Inheritance
 class Admin extends User {}
-xExpect(new Admin('Jane')).toBeInstanceOf(User)
-xExpect(new Admin('Jane')).toBeInstanceOf(Admin)
+expect(new Admin('Jane')).toBeInstanceOf(User)
+expect(new Admin('Jane')).toBeInstanceOf(Admin)
 
 // Negative cases
-xExpect({}).not.toBeInstanceOf(Array)
-xExpect('string').not.toBeInstanceOf(Number)
-xExpect(null).not.toBeInstanceOf(Object)
+expect({}).not.toBeInstanceOf(Array)
+expect('string').not.toBeInstanceOf(Number)
+expect(null).not.toBeInstanceOf(Object)
 ```
 
 ## toContain
 Checks if an array contains a specific element or if a string contains a specific substring.
 
 ``` ts
-xExpect(arrayOrString).toContain(value)
+expect(arrayOrString).toContain(value)
 ```
 
 ### Parameters
@@ -101,27 +101,27 @@ xExpect(arrayOrString).toContain(value)
 #### With Arrays
 ``` ts
 // Simple values in array
-xExpect([1, 2, 3]).toContain(2)
-xExpect(['apple', 'banana', 'orange']).toContain('banana')
+expect([1, 2, 3]).toContain(2)
+expect(['apple', 'banana', 'orange']).toContain('banana')
 
 // Reference equality for objects
 const obj = { id: 1 }
-xExpect([obj, { id: 2 }]).toContain(obj)  // Passes - same reference
-xExpect([{ id: 1 }, { id: 2 }]).not.toContain({ id: 1 })  // Fails - different reference
+expect([obj, { id: 2 }]).toContain(obj)  // Passes - same reference
+expect([{ id: 1 }, { id: 2 }]).not.toContain({ id: 1 })  // Fails - different reference
 
 // With strings in arrays
-xExpect(['hello', 'world']).toContain('hello')
+expect(['hello', 'world']).toContain('hello')
 ```
 
 #### With Strings
 ``` ts
 // Substring matching
-xExpect('hello world').toContain('world')
-xExpect('testing is important').toContain('testing')
-xExpect('apple banana orange').toContain('banana')
+expect('hello world').toContain('world')
+expect('testing is important').toContain('testing')
+expect('apple banana orange').toContain('banana')
 
 // Case sensitivity
-xExpect('Hello World').not.toContain('hello')  // Case-sensitive by default
+expect('Hello World').not.toContain('hello')  // Case-sensitive by default
 ```
 
 ### Common Mistakes
@@ -129,17 +129,17 @@ When checking for objects or arrays in an array, `toContain` uses reference equa
 
 ``` ts
 // This will fail despite structural equality
-xExpect([{ a: 1 }, { b: 2 }]).toContain({ a: 1 })
+expect([{ a: 1 }, { b: 2 }]).toContain({ a: 1 })
 
 // Use toContainEqual instead for structural equality
-xExpect([{ a: 1 }, { b: 2 }]).toContainEqual({ a: 1 })
+expect([{ a: 1 }, { b: 2 }]).toContainEqual({ a: 1 })
 ```
 
 ## toContainEqual
 Checks if an array contains an element that is deeply equal to the expected value.
 
 ``` ts
-xExpect(array).toContainEqual(value)
+expect(array).toContainEqual(value)
 ```
 
 ::: info
@@ -152,35 +152,35 @@ xExpect(array).toContainEqual(value)
 ### Examples
 ``` ts
 // Basic object equality
-xExpect([{ a: 1 }, { b: 2 }]).toContainEqual({ a: 1 })
-xExpect([{ name: 'John', age: 30 }]).toContainEqual({ name: 'John', age: 30 })
+expect([{ a: 1 }, { b: 2 }]).toContainEqual({ a: 1 })
+expect([{ name: 'John', age: 30 }]).toContainEqual({ name: 'John', age: 30 })
 
 // Nested objects
-xExpect([
+expect([
   { user: { name: 'John', role: 'admin' } }
 ]).toContainEqual({ 
   user: { name: 'John', role: 'admin' } 
 })
 
 // With arrays
-xExpect([[1, 2], [3, 4]]).toContainEqual([1, 2])
+expect([[1, 2], [3, 4]]).toContainEqual([1, 2])
 
 // With asymmetric matchers
-xExpect([
+expect([
   { id: 1, name: 'John' },
   { id: 2, name: 'Jane' }
 ]).toContainEqual(
-  xExpect.objectContaining({ name: 'John' })
+  expect.objectContaining({ name: 'John' })
 )
 
 // Multiple properties
-xExpect([
+expect([
   { id: 1, status: 'active', role: 'admin' },
   { id: 2, status: 'inactive', role: 'user' }
 ]).toContainEqual(
-  xExpect.objectContaining({
+  expect.objectContaining({
     status: 'active',
-    role: xExpect.stringContaining('admin')
+    role: expect.stringContaining('admin')
   })
 )
 ```
@@ -189,7 +189,7 @@ xExpect([
 Checks if an object matches the expected object by performing a deep partial equality comparison.
 
 ``` ts
-xExpect(object).toMatchObject(expected)
+expect(object).toMatchObject(expected)
 ```
 ::: info
 :rocket: **Supports asymmetric matchers**
@@ -201,11 +201,11 @@ xExpect(object).toMatchObject(expected)
 ### Examples
 ``` ts
 // Basic object matching
-xExpect({ name: 'John', age: 30 }).toMatchObject({ name: 'John' })
-xExpect({ a: 1, b: 2, c: 3 }).toMatchObject({ a: 1, c: 3 })
+expect({ name: 'John', age: 30 }).toMatchObject({ name: 'John' })
+expect({ a: 1, b: 2, c: 3 }).toMatchObject({ a: 1, c: 3 })
 
 // Nested objects
-xExpect({
+expect({
   user: {
     name: 'John',
     profile: { role: 'admin', active: true }
@@ -218,14 +218,14 @@ xExpect({
 })
 
 // With arrays
-xExpect({
+expect({
   users: ['John', 'Jane', 'Bob']
 }).toMatchObject({
   users: ['John', 'Jane']
 })
 
 // With asymmetric matchers
-xExpect({
+expect({
   id: 123,
   user: {
     name: 'John',
@@ -234,9 +234,9 @@ xExpect({
   }
 }).toMatchObject({
   user: {
-    name: xExpect.stringContaining('Jo'),
-    age: xExpect.any(Number),
-    created: xExpect.any(Date)
+    name: expect.stringContaining('Jo'),
+    age: expect.any(Number),
+    created: expect.any(Date)
   }
 })
 ```
@@ -249,7 +249,7 @@ xExpect({
 
 ``` ts
 // This passes because all expected properties match
-xExpect({
+expect({
   name: 'John',
   age: 30,
   address: '123 Main St' // Extra property ignored
@@ -259,7 +259,7 @@ xExpect({
 })
 
 // This fails because expected has more properties than received
-xExpect({
+expect({
   name: 'John'
 }).not.toMatchObject({
   name: 'John',
@@ -274,11 +274,11 @@ xExpect({
 test('API returns correct user data', async () => {
   const response = await fetchUser(123)
   
-  xExpect(response).toMatchObject({
+  expect(response).toMatchObject({
     id: 123,
-    name: xExpect.any(String),
-    email: xExpect.stringMatching(/^.+@.+\..+$/),
-    created: xExpect.any(Date)
+    name: expect.any(String),
+    email: expect.stringMatching(/^.+@.+\..+$/),
+    created: expect.any(Date)
   })
 })
 ```
@@ -288,9 +288,9 @@ test('API returns correct user data', async () => {
 test('config object has required properties', () => {
   const config = loadConfig()
   
-  xExpect(config).toHaveProperty('api.url')
-  xExpect(config).toHaveProperty('api.timeout', 5000)
-  xExpect(config).toHaveProperty('debug', false)
+  expect(config).toHaveProperty('api.url')
+  expect(config).toHaveProperty('api.timeout', 5000)
+  expect(config).toHaveProperty('debug', false)
 })
 ```
 ### Testing Class Instances
@@ -299,11 +299,11 @@ test('factory creates correct instance types', () => {
   const factory = new ShapeFactory()
   
   const circle = factory.create('circle')
-  xExpect(circle).toBeInstanceOf(Circle)
+  expect(circle).toBeInstanceOf(Circle)
   
   const square = factory.create('square')
-  xExpect(square).toBeInstanceOf(Square)
-  xExpect(square).toBeInstanceOf(Shape)  // inheritance
+  expect(square).toBeInstanceOf(Square)
+  expect(square).toBeInstanceOf(Shape)  // inheritance
 })
 ```
 
@@ -319,13 +319,13 @@ test('filter returns matching items', () => {
   const result = filterItems(items, { status: 'active', type: 'admin' })
   
   // Check if the result contains the expected item
-  xExpect(result).toContainEqual(
-    xExpect.objectContaining({ id: 3, status: 'active', type: 'admin' })
+  expect(result).toContainEqual(
+    expect.objectContaining({ id: 3, status: 'active', type: 'admin' })
   )
   
   // Check that we don't have other items
-  xExpect(result).not.toContainEqual(
-    xExpect.objectContaining({ id: 1 })
+  expect(result).not.toContainEqual(
+    expect.objectContaining({ id: 1 })
   )
 })
 ```
@@ -344,15 +344,15 @@ test('user object has correct structure and values', () => {
   }
   
   // Check basic structure
-  xExpect(user).toHaveProperty('id', 123)
-  xExpect(user).toHaveProperty('name')
-  xExpect(user).toHaveProperty('profile.email')
+  expect(user).toHaveProperty('id', 123)
+  expect(user).toHaveProperty('name')
+  expect(user).toHaveProperty('profile.email')
   
   // Check array content
-  xExpect(user.roles).toContain('admin')
+  expect(user.roles).toContain('admin')
   
   // Check nested object partially
-  xExpect(user).toMatchObject({
+  expect(user).toMatchObject({
     profile: {
       settings: { theme: 'dark' }
     }

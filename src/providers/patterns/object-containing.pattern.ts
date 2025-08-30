@@ -20,7 +20,7 @@ import { equals, isAsymmetric, hasKey } from '@components/object.component';
  *
  * @example
  * ```ts
- * expect(value).toEqual(expect.objectContaining({ foo: 'bar' }));
+ * xExpect(value).toEqual(xExpect.objectContaining({ foo: 'bar' }));
  * ```
  *
  * @since 1.0.0

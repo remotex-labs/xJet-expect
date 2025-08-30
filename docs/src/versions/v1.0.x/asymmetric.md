@@ -9,10 +9,10 @@ Asymmetric matchers can be used in any xJet assertion that compares values:
 test('user data has expected structure', () => {
   const user = fetchUser(123);
   
-  xExpect(user).toEqual({
+  expect(user).toEqual({
     id: 123,
-    name: xExpect.any(String),
-    createdAt: xExpect.any(Date),
+    name: expect.any(String),
+    createdAt: expect.any(Date),
     status: 'active'
   });
 });
@@ -24,25 +24,25 @@ Asymmetric matchers work with multiple matchers across the xJet testing framewor
 
 ```ts
 // In equality assertions
-xExpect({ name: 'Alice' }).toEqual({ name: xExpect.any(String) });
+expect({ name: 'Alice' }).toEqual({ name: expect.any(String) });
 
 // In function call assertions
-xExpect(mockFunction).toHaveBeenCalledWith(xExpect.objectContaining({ id: 123 }));
+expect(mockFunction).toHaveBeenCalledWith(expect.objectContaining({ id: 123 }));
 
 // In strict equality checks (only at root level)
-xExpect({ name: 'Alice' }).toBe(xExpect.any(Object));
+expect({ name: 'Alice' }).toBe(expect.any(Object));
 
 // In exception testing
-xExpect(() => validateEmail('')).toThrow(xExpect.objectContaining({ 
+expect(() => validateEmail('')).toThrow(expect.objectContaining({ 
   code: 'VALIDATION_ERROR' 
 }));
 
 // In array content assertions
-xExpect(['apple', 'banana']).toContainEqual(xExpect.stringMatching(/^a/));
+expect(['apple', 'banana']).toContainEqual(expect.stringMatching(/^a/));
 
 // In partial object matching
-xExpect(response).toMatchObject({
-  users: xExpect.arrayContaining([{ role: 'admin' }])
+expect(response).toMatchObject({
+  users: expect.arrayContaining([{ role: 'admin' }])
 });
 
 ```
@@ -59,13 +59,13 @@ Matches any value created by the specified constructor.
 
 ```ts
 test('value type checking', () => {
-    xExpect({ name: 'Alice' }).toEqual({ name: xExpect.any(String) });
-    xExpect(Math.round(2)).toBe(xExpect.any(Number));
+    expect({ name: 'Alice' }).toEqual({ name: expect.any(String) });
+    expect(Math.round(2)).toBe(expect.any(Number));
 
     // With class instances
     class User {}
     const user = new User();
-    xExpect(user).toEqual(xExpect.any(User));
+    expect(user).toEqual(expect.any(User));
 });
 
 ```
@@ -79,9 +79,9 @@ Matches any non-null, non-undefined value.
 test('verifies value exists', () => {
   const response = { data: 'something', timestamp: Date.now() };
   
-  xExpect(response).toEqual({
-    data: xExpect.anything(),
-    timestamp: xExpect.anything()
+  expect(response).toEqual({
+    data: expect.anything(),
+    timestamp: expect.anything()
   });
 });
 
@@ -96,7 +96,7 @@ Matches numbers that are close to a target value within a specified precision.
 test('approximate calculations', () => {
   const result = 0.1 + 0.2; // 0.30000000000000004 due to floating-point
   
-  xExpect(result).toEqual(xExpect.closeTo(0.3, 0.001));
+  expect(result).toEqual(expect.closeTo(0.3, 0.001));
 });
 
 ```
@@ -107,43 +107,43 @@ test('approximate calculations', () => {
 Matches an array where every element matches the specified pattern.
 
 ```ts
-xExpect([ 'apple', 'banana', 'cherry' ]).toEqual(
-    xExpect.arrayOf(xExpect.any(String)),
+expect([ 'apple', 'banana', 'cherry' ]).toEqual(
+    expect.arrayOf(expect.any(String)),
 );
 ```
 
 ## stringMatching
 
-`xExpect.stringMatching(pattern)`
+`expect.stringMatching(pattern)`
 Matches strings against a regular expression pattern.
 
 ```ts
 test('string format validation', () => {
   const email = 'user@example.com';
   
-  xExpect(email).toEqual(
-    xExpect.stringMatching(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i)
+  expect(email).toEqual(
+    expect.stringMatching(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i)
   );
   
   // In objects
   const user = { email: 'admin@company.org', role: 'ADMIN' };
-  xExpect(user).toEqual({
-    email: xExpect.stringMatching(/.+@company\.org$/),
-    role: xExpect.stringMatching(/^[A-Z]+$/)
+  expect(user).toEqual({
+    email: expect.stringMatching(/.+@company\.org$/),
+    role: expect.stringMatching(/^[A-Z]+$/)
   });
 });
 ```
 
 ## arrayContaining
 
-`xExpect.arrayContaining(items)`
+`expect.arrayContaining(items)`
 Matches arrays that contain all the specified items, regardless of order.
 
 ```ts
 test('array includes required elements', () => {
   const fruits = ['apple', 'banana', 'orange', 'grape'];
   
-  xExpect(fruits).toEqual(xExpect.arrayContaining(['banana', 'apple']));
+  expect(fruits).toEqual(expect.arrayContaining(['banana', 'apple']));
   
   // With response data
   const response = {
@@ -151,9 +151,9 @@ test('array includes required elements', () => {
     permissions: ['read', 'write']
   };
   
-  xExpect(response).toEqual({
-    users: xExpect.arrayContaining(['admin']),
-    permissions: xExpect.arrayContaining(['read', 'write'])
+  expect(response).toEqual({
+    users: expect.arrayContaining(['admin']),
+    permissions: expect.arrayContaining(['read', 'write'])
   });
 });
 ```
@@ -175,9 +175,9 @@ test('object structure validation', () => {
         }
     };
 
-    xExpect(user).toEqual(xExpect.objectContaining({
+    expect(user).toEqual(expect.objectContaining({
         name: 'John',
-        preferences: xExpect.objectContaining({
+        preferences: expect.objectContaining({
             theme: 'dark'
         })
     }));
@@ -193,11 +193,11 @@ Matches strings that contain the specified substring.
 test('string content validation', () => {
   const message = 'Operation completed successfully';
   
-  xExpect(message).toEqual(xExpect.stringContaining('completed'));
+  expect(message).toEqual(expect.stringContaining('completed'));
   
   // With error messages
   const error = new Error('Invalid input: missing required field');
-  xExpect(error.message).toEqual(xExpect.stringContaining('missing required'));
+  expect(error.message).toEqual(expect.stringContaining('missing required'));
 });
 
 ```
@@ -214,13 +214,13 @@ test('using negated matchers', () => {
   };
   
   // Value is not close to the specified number
-  xExpect(data.temperature).toEqual(xExpect.not.closeTo(0, 1));
+  expect(data.temperature).toEqual(expect.not.closeTo(0, 1));
   
   // String doesn't match pattern
-  xExpect(data.status).toEqual(xExpect.not.stringMatching(/^error/));
+  expect(data.status).toEqual(expect.not.stringMatching(/^error/));
   
   // Array doesn't contain these elements
-  xExpect(data.tags).toEqual(xExpect.not.arrayContaining(['low-priority']));
+  expect(data.tags).toEqual(expect.not.arrayContaining(['low-priority']));
 });
 
 ```

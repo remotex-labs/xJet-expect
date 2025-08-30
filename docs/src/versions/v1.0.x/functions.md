@@ -5,7 +5,7 @@ Function matchers allow you to test function behavior, particularly for error ha
 Checks if a function throws an error when executed. This matcher can verify that exceptions are properly thrown and that they match expected criteria.
 
 ```ts
-xExpect(fn).toThrow(expected?)
+expect(fn).toThrow(expected?)
 ```
 
 The `expected` parameter is optional and versatile, allowing you to check different aspects of the thrown error.
@@ -26,42 +26,42 @@ The `expected` parameter is optional and versatile, allowing you to check differ
 
 ```ts
 // Test that a function throws any error
-xExpect(() => { throw new Error('oops') }).toThrow()
-xExpect(() => { console.log('ok') }).not.toThrow()
+expect(() => { throw new Error('oops') }).toThrow()
+expect(() => { console.log('ok') }).not.toThrow()
 ```
 
 ### With Error Constructors
 ```ts
 // Test for specific error types
-xExpect(() => { throw new TypeError('invalid type') }).toThrow(TypeError)
-xExpect(() => { throw new RangeError('out of bounds') }).toThrow(RangeError)
-xExpect(() => { throw new Error('oops') }).not.toThrow(SyntaxError)
+expect(() => { throw new TypeError('invalid type') }).toThrow(TypeError)
+expect(() => { throw new RangeError('out of bounds') }).toThrow(RangeError)
+expect(() => { throw new Error('oops') }).not.toThrow(SyntaxError)
 
 // With custom error classes
 class ValidationError extends Error {}
-xExpect(() => { throw new ValidationError('invalid data') }).toThrow(ValidationError)
+expect(() => { throw new ValidationError('invalid data') }).toThrow(ValidationError)
 ```
 
 ### With String Messages
 ```ts
 // Test for error message content
-xExpect(() => { throw new Error('invalid password') }).toThrow('password')
-xExpect(() => { throw new Error('File not found') }).toThrow('not found')
-xExpect(() => { throw new Error('Connection failed') }).not.toThrow('success')
+expect(() => { throw new Error('invalid password') }).toThrow('password')
+expect(() => { throw new Error('File not found') }).toThrow('not found')
+expect(() => { throw new Error('Connection failed') }).not.toThrow('success')
 ```
 
 ### With RegExp Patterns
 ```ts
 // Test error message patterns
-xExpect(() => { throw new Error('invalid email: user@example') }).toThrow(/invalid email/)
-xExpect(() => { throw new Error('Code: 404, Not Found') }).toThrow(/Code: \d+/)
-xExpect(() => { throw new Error('API Error: Rate limit exceeded') }).not.toThrow(/permission denied/i)
+expect(() => { throw new Error('invalid email: user@example') }).toThrow(/invalid email/)
+expect(() => { throw new Error('Code: 404, Not Found') }).toThrow(/Code: \d+/)
+expect(() => { throw new Error('API Error: Rate limit exceeded') }).not.toThrow(/permission denied/i)
 ```
 
 ### With Objects
 ```ts
 // Test for object properties
-xExpect(() => { 
+expect(() => { 
   throw { code: 'AUTH_FAILED', message: 'Invalid credentials' }
 }).toThrow({ 
   code: 'AUTH_FAILED', 
@@ -69,35 +69,35 @@ xExpect(() => {
 })
 
 // Works with Error objects too
-xExpect(() => { 
+expect(() => { 
   const err = new Error('Permission denied')
   err.code = 403
   throw err
-}).toThrow(xExpect.objectContaining({ 
+}).toThrow(expect.objectContaining({ 
   message: 'Permission denied',
   code: 403
 }))
 
-xExpect(() => {
+expect(() => {
     throw new Error('Permission denied');
 }).toThrow({
     message: 'Permission denied',
-    stack: xExpect.any(String),
+    stack: expect.any(String),
     name: 'Error'
 })
 ```
 
 ### With Asymmetric Matchers
 ```ts
-xExpect(() => { 
+expect(() => { 
   throw { 
     status: 404, 
     errors: ['Resource not found', 'Check the URL']
   }
 })
-  .toThrow(xExpect.objectContaining({ 
-    status: xExpect.any(Number),
-    errors: xExpect.arrayContaining(['Resource not found'])
+  .toThrow(expect.objectContaining({ 
+    status: expect.any(Number),
+    errors: expect.arrayContaining(['Resource not found'])
   }))
 ```
 
@@ -106,11 +106,11 @@ When testing async functions and promises, you can combine `toThrow` with the `r
 
 ```ts
 // Testing rejected promises
-await xExpect(Promise.reject(new Error('Failed'))).rejects.toThrow('Failed')
-await xExpect(Promise.reject(new TypeError('Type error'))).rejects.toThrow(TypeError)
+await expect(Promise.reject(new Error('Failed'))).rejects.toThrow('Failed')
+await expect(Promise.reject(new TypeError('Type error'))).rejects.toThrow(TypeError)
 
 // With async functions
-await xExpect(async () => {
+await expect(async () => {
   throw new Error('Async error')
 }).rejects.toThrow('Async error')
 ```
@@ -121,7 +121,7 @@ await xExpect(async () => {
 test('component error boundary catches rendering errors', () => {
   const errorSpy = xJet.spyOn(console, 'error').mockImplementation(() => {})
   
-  xExpect(() => {
+  expect(() => {
     render(<BrokenComponent />)
   }).toThrow('Failed to render')
   
@@ -131,9 +131,9 @@ test('component error boundary catches rendering errors', () => {
 ### Validating Input Parameters
 ``` ts
 test('validateEmail throws for invalid emails', () => {
-  xExpect(() => validateEmail('')).toThrow('Email cannot be empty')
-  xExpect(() => validateEmail('invalid')).toThrow('Invalid email format')
-  xExpect(() => validateEmail('user@example.com')).not.toThrow()
+  expect(() => validateEmail('')).toThrow('Email cannot be empty')
+  expect(() => validateEmail('invalid')).toThrow('Invalid email format')
+  expect(() => validateEmail('user@example.com')).not.toThrow()
 })
 ```
 ### Testing Error States in API Calls
@@ -142,12 +142,12 @@ test('API client throws meaningful errors', async () => {
   // Mock failed network request
   fetchMock.mockRejectedValueOnce(new Error('Network failure'))
   
-  await xExpect(api.getUser(123)).rejects.toThrow('Network failure')
+  await expect(api.getUser(123)).rejects.toThrow('Network failure')
   
   // Mock 404 response
   fetchMock.mockResponseOnce(JSON.stringify({ error: 'Not Found' }), { status: 404 })
   
-  await xExpect(api.getUser(999)).rejects.toThrow(/not found/i)
+  await expect(api.getUser(999)).rejects.toThrow(/not found/i)
 })
 ```
 ### Testing Custom Error Classes
@@ -164,9 +164,9 @@ test('database operations throw specific errors', () => {
     throw new DatabaseError('Connection failed', 'DB_CONN_ERROR')
   }
   
-  xExpect(() => connectToDb({})).toThrow(DatabaseError)
-  xExpect(() => connectToDb({})).toThrow('Connection failed')
-  xExpect(() => connectToDb({})).toThrow(xExpect.objectContaining({ 
+  expect(() => connectToDb({})).toThrow(DatabaseError)
+  expect(() => connectToDb({})).toThrow('Connection failed')
+  expect(() => connectToDb({})).toThrow(expect.objectContaining({ 
     code: 'DB_CONN_ERROR' 
   }))
 })
@@ -187,6 +187,6 @@ test('processPayment forwards underlying errors', () => {
     }
   }
   
-  xExpect(() => processPayment(100)).toThrow('Payment failed: Insufficient funds')
+  expect(() => processPayment(100)).toThrow('Payment failed: Insufficient funds')
 })
 ```

@@ -5,7 +5,7 @@ String matchers help you test string values, allowing you to check string conten
 Checks if a string (or any object with a `length` property) has the expected length.
 
 ```ts
-xExpect(value).toHaveLength(length)
+expect(value).toHaveLength(length)
 ```
 
 ### Parameters
@@ -14,23 +14,23 @@ xExpect(value).toHaveLength(length)
 ### Examples
 ```ts
 // String length
-xExpect('hello').toHaveLength(5)  // Passes
-xExpect('').toHaveLength(0)  // Passes
-xExpect('hi').not.toHaveLength(3)  // Passes
+expect('hello').toHaveLength(5)  // Passes
+expect('').toHaveLength(0)  // Passes
+expect('hi').not.toHaveLength(3)  // Passes
 
 // Works with arrays too
-xExpect(['a', 'b', 'c']).toHaveLength(3)  // Passes
-xExpect(new Array(10)).toHaveLength(10)  // Passes
+expect(['a', 'b', 'c']).toHaveLength(3)  // Passes
+expect(new Array(10)).toHaveLength(10)  // Passes
 
 // Works with any object having a numeric length property
-xExpect({ length: 5 }).toHaveLength(5)  // Passes
+expect({ length: 5 }).toHaveLength(5)  // Passes
 ```
 
 ## toMatch
 Checks if a string matches a substring or regular expression pattern.
 
 ```ts
-xExpect(value).toMatch(expected)
+expect(value).toMatch(expected)
 ```
 
 ### Parameters
@@ -41,28 +41,28 @@ xExpect(value).toMatch(expected)
 #### With String Substring
 ```ts
 // Basic substring matching
-xExpect('hello world').toMatch('world')  // Passes
-xExpect('hello world').toMatch('hello')  // Passes
-xExpect('hello world').not.toMatch('universe')  // Passes
+expect('hello world').toMatch('world')  // Passes
+expect('hello world').toMatch('hello')  // Passes
+expect('hello world').not.toMatch('universe')  // Passes
 
 // Case-sensitive by default
-xExpect('Hello World').not.toMatch('hello')  // Passes
+expect('Hello World').not.toMatch('hello')  // Passes
 ```
 
 #### With Regular Expressions
 ```ts
 // Basic regex matching
-xExpect('hello world').toMatch(/world/)  // Passes
+expect('hello world').toMatch(/world/)  // Passes
 
 // Case-insensitive matching
-xExpect('Hello World').toMatch(/hello/i)  // Passes
+expect('Hello World').toMatch(/hello/i)  // Passes
 
 // Pattern matching
-xExpect('abc123').toMatch(/^[a-z]+\d+$/)  // Passes
-xExpect('user@example.com').toMatch(/^[\w.-]+@[\w.-]+\.\w+$/)  // Passes
+expect('abc123').toMatch(/^[a-z]+\d+$/)  // Passes
+expect('user@example.com').toMatch(/^[\w.-]+@[\w.-]+\.\w+$/)  // Passes
 
 // Negative matching
-xExpect('hello world').not.toMatch(/^goodbye/)  // Passes
+expect('hello world').not.toMatch(/^goodbye/)  // Passes
 ```
 
 ## Common Testing Patterns
@@ -71,7 +71,7 @@ xExpect('hello world').not.toMatch(/^goodbye/)  // Passes
 ```ts
 test('validates email format', () => {
   const email = 'user@example.com'
-  xExpect(email).toMatch(/^[\w.-]+@[\w.-]+\.\w+$/)
+  expect(email).toMatch(/^[\w.-]+@[\w.-]+\.\w+$/)
 })
 ```
 
@@ -79,8 +79,8 @@ test('validates email format', () => {
 ```ts
 test('error message contains relevant information', () => {
   const error = getErrorMessage()
-  xExpect(error).toMatch('invalid input')
-  xExpect(error).toMatch(/at line \d+/)
+  expect(error).toMatch('invalid input')
+  expect(error).toMatch(/at line \d+/)
 })
 ```
 
@@ -88,9 +88,9 @@ test('error message contains relevant information', () => {
 ```ts
 test('username has valid length', () => {
   const username = 'johndoe'
-  xExpect(username).toHaveLength(7)
+  expect(username).toHaveLength(7)
   // Alternative approach using comparison
-  xExpect(username.length).toBeGreaterThanOrEqual(3)
-  xExpect(username.length).toBeLessThanOrEqual(20)
+  expect(username.length).toBeGreaterThanOrEqual(3)
+  expect(username.length).toBeLessThanOrEqual(20)
 })
 ```
