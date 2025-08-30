@@ -18,8 +18,8 @@ import { AbstractPattern } from '@patterns/abstract.pattern';
  *
  * @example
  * ```ts
- * expect(value).toEqual(expect.stringMatching('hello'));
- * expect(value).toEqual(expect.stringMatching(/world$/));
+ * xExpect(value).toEqual(xExpect.stringMatching('hello'));
+ * xExpect(value).toEqual(xExpect.stringMatching(/world$/));
  * ```
  *
  * @since 1.0.0

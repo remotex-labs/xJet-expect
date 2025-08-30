@@ -9,8 +9,8 @@ import type { MatcherService } from '@services/matcher.service';
  */
 
 import { xJetTypeError } from '@errors/type.error';
+import { xExpect } from '@components/expect.component';
 import { xJetExpectError } from '@errors/expect.error';
-import { expect as xJetExpect } from '@components/expect.component';
 import { toBeInstanceOf, toContain, toContainEqual, toHaveProperty, toMatchObject } from './object.matcher';
 
 /**
@@ -63,45 +63,45 @@ describe('toHaveProperty', () => {
 
     test('passes with object property using asymmetric matcher', () => {
         const ms = createMatcherService({ a: 'hello' });
-        expect(() => toHaveProperty.call(ms, 'a', xJetExpect.any(String))).not.toThrow();
+        expect(() => toHaveProperty.call(ms, 'a', xExpect.any(String))).not.toThrow();
     });
 
     test('fails with object property using asymmetric matcher', () => {
         const ms = createMatcherService({ a: 123 });
-        expect(() => toHaveProperty.call(ms, 'a', xJetExpect.any(String))).toThrow(xJetExpectError);
+        expect(() => toHaveProperty.call(ms, 'a', xExpect.any(String))).toThrow(xJetExpectError);
     });
 
     test('passes with nested asymmetric matcher inside object', () => {
         const ms = createMatcherService({ a: { b: 100 } });
-        expect(() => toHaveProperty.call(ms, 'a', { b: xJetExpect.any(Number) })).not.toThrow();
+        expect(() => toHaveProperty.call(ms, 'a', { b: xExpect.any(Number) })).not.toThrow();
     });
 
     test('fails with nested asymmetric matcher inside object', () => {
         const ms = createMatcherService({ a: { b: 'wrong' } });
-        expect(() => toHaveProperty.call(ms, 'a', { b: xJetExpect.any(Number) })).toThrow(xJetExpectError);
+        expect(() => toHaveProperty.call(ms, 'a', { b: xExpect.any(Number) })).toThrow(xJetExpectError);
     });
 
     test('passes with deep nested asymmetric matcher', () => {
         const ms = createMatcherService({ a: { b: { c: true } } });
-        expect(() => toHaveProperty.call(ms, 'a', { b: { c: xJetExpect.any(Boolean) } })).not.toThrow();
+        expect(() => toHaveProperty.call(ms, 'a', { b: { c: xExpect.any(Boolean) } })).not.toThrow();
     });
 
     test('fails with deep nested asymmetric matcher', () => {
         const ms = createMatcherService({ a: { b: { c: 'nope' } } });
-        expect(() => toHaveProperty.call(ms, 'a', { b: { c: xJetExpect.any(Boolean) } })).toThrow(xJetExpectError);
+        expect(() => toHaveProperty.call(ms, 'a', { b: { c: xExpect.any(Boolean) } })).toThrow(xJetExpectError);
     });
 
     test('works with objectContaining + asymmetric nested matcher', () => {
         const ms = createMatcherService({ a: { b: { c: 10, d: 'x' } } });
         expect(() =>
-            toHaveProperty.call(ms, 'a', xJetExpect.objectContaining({ b: xJetExpect.objectContaining({ c: xJetExpect.any(Number) }) }))
+            toHaveProperty.call(ms, 'a', xExpect.objectContaining({ b: xExpect.objectContaining({ c: xExpect.any(Number) }) }))
         ).not.toThrow();
     });
 
     test('fails with objectContaining + asymmetric nested matcher', () => {
         const ms = createMatcherService({ a: { b: { c: 'bad' } } });
         expect(() =>
-            toHaveProperty.call(ms, 'a', xJetExpect.objectContaining({ b: xJetExpect.objectContaining({ c: xJetExpect.any(Number) }) }))
+            toHaveProperty.call(ms, 'a', xExpect.objectContaining({ b: xExpect.objectContaining({ c: xExpect.any(Number) }) }))
         ).toThrow(xJetExpectError);
     });
 });

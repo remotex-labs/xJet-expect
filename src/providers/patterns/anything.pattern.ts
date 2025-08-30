@@ -12,7 +12,7 @@ import { AbstractPattern } from '@patterns/abstract.pattern';
  *
  * @example
  * ```ts
- * expect(value).toEqual(expect.anything());
+ * xExpect(value).toEqual(xExpect.anything());
  * ```
  *
  * @since 1.0.0

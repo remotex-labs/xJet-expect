@@ -17,7 +17,7 @@ import { AbstractPattern } from '@patterns/abstract.pattern';
  *
  * @example
  * ```ts
- * expect(value).toEqual(expect.stringContaining('hello'));
+ * xExpect(value).toEqual(xExpect.stringContaining('hello'));
  * ```
  *
  * @since 1.0.0

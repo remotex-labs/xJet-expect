@@ -18,7 +18,7 @@ import { AbstractPattern } from '@patterns/abstract.pattern';
  *
  * @example
  * ```ts
- * expect(value).toEqual(expect.closeTo(3.14, 2));
+ * xExpect(value).toEqual(xExpect.closeTo(3.14, 2));
  * ```
  *
  * @since 1.0.0

@@ -31,33 +31,33 @@ yarn add @remotex-labs/xjet-expect
 ## Quick Start
 
 ```ts
-import { expect, test } from '@remotex-labs/xjet-expect';
+import { xExpect, test } from '@remotex-labs/xjet-expect';
 
 test('basic assertions', () => {
   // Equality
-  expect(2 + 2).toBe(4);
-  expect({ name: 'test' }).toEqual({ name: 'test' });
+  xExpect(2 + 2).toBe(4);
+  xExpect({ name: 'test' }).toEqual({ name: 'test' });
   
   // Truthiness
-  expect(true).toBeTruthy();
-  expect(null).toBeFalsy();
+  xExpect(true).toBeTruthy();
+  xExpect(null).toBeFalsy();
   
   // Numbers
-  expect(10).toBeGreaterThan(5);
-  expect(5).toBeLessThanOrEqual(5);
+  xExpect(10).toBeGreaterThan(5);
+  xExpect(5).toBeLessThanOrEqual(5);
   
   // Strings
-  expect('hello world').toContain('world');
-  expect('test string').toMatch(/test/);
+  xExpect('hello world').toContain('world');
+  xExpect('test string').toMatch(/test/);
   
   // Objects
-  expect({ user: { name: 'John' } }).toHaveProperty('user.name');
+  xExpect({ user: { name: 'John' } }).toHaveProperty('user.name');
 });
 ```
 
 ## Mock Functions
 ```ts
-import { expect, test, jest } from '@remotex-labs/xjet-expect';
+import { xExpect, test, jest } from '@remotex-labs/xjet-expect';
 
 test('mock function calls', () => {
   const mockFn = jest.fn();
@@ -66,11 +66,11 @@ test('mock function calls', () => {
   mockFn('second call');
   
   // Verify calls
-  expect(mockFn).toHaveBeenCalled();
-  expect(mockFn).toHaveBeenCalledTimes(2);
-  expect(mockFn).toHaveBeenCalledWith('first call');
-  expect(mockFn).toHaveBeenLastCalledWith('second call');
-  expect(mockFn).toHaveBeenNthCalledWith(1, 'first call');
+  xExpect(mockFn).toHaveBeenCalled();
+  xExpect(mockFn).toHaveBeenCalledTimes(2);
+  xExpect(mockFn).toHaveBeenCalledWith('first call');
+  xExpect(mockFn).toHaveBeenLastCalledWith('second call');
+  xExpect(mockFn).toHaveBeenNthCalledWith(1, 'first call');
 });
 
 test('mock return values', () => {
@@ -78,39 +78,39 @@ test('mock return values', () => {
     .mockReturnValueOnce('first')
     .mockReturnValueOnce('second');
   
-  expect(mockFn()).toBe('first');
-  expect(mockFn()).toBe('second');
+  xExpect(mockFn()).toBe('first');
+  xExpect(mockFn()).toBe('second');
   
-  expect(mockFn).toHaveReturned();
-  expect(mockFn).toHaveReturnedTimes(2);
-  expect(mockFn).toHaveLastReturnedWith('second');
-  expect(mockFn).toHaveNthReturnedWith(1, 'first');
+  xExpect(mockFn).toHaveReturned();
+  xExpect(mockFn).toHaveReturnedTimes(2);
+  xExpect(mockFn).toHaveLastReturnedWith('second');
+  xExpect(mockFn).toHaveNthReturnedWith(1, 'first');
 });
 ```
 
 ## Async Testing
 ```ts
-import { expect, test } from '@remotex-labs/xjet-expect';
+import { xExpect, test } from '@remotex-labs/xjet-expect';
 
 test('async functions', async () => {
   // Promise resolution
-  await expect(Promise.resolve('success')).resolves.toBe('success');
-  await expect(Promise.resolve({ id: 123 })).resolves.toHaveProperty('id');
+  await xExpect(Promise.resolve('success')).resolves.toBe('success');
+  await xExpect(Promise.resolve({ id: 123 })).resolves.toHaveProperty('id');
   
   // Promise rejection
-  await expect(Promise.reject(new Error('failed'))).rejects.toThrow('failed');
+  await xExpect(Promise.reject(new Error('failed'))).rejects.toThrow('failed');
   
   // Async functions
   const fetchData = async () => ({ id: 123, name: 'test' });
-  await expect(fetchData()).resolves.toEqual(
-    expect.objectContaining({ id: expect.any(Number) })
+  await xExpect(fetchData()).resolves.toEqual(
+    xExpect.objectContaining({ id: xExpect.any(Number) })
   );
 });
 ```
 
 ## Asymmetric Matchers
 ```ts
-import { expect, test } from '@remotex-labs/xjet-expect';
+import { xExpect, test } from '@remotex-labs/xjet-expect';
 
 test('flexible assertions with asymmetric matchers', () => {
   const user = {
@@ -121,22 +121,22 @@ test('flexible assertions with asymmetric matchers', () => {
     roles: ['user', 'admin']
   };
   
-  expect(user).toEqual(expect.objectContaining({
-    id: expect.any(Number),
-    name: expect.stringContaining('John'),
-    email: expect.stringMatching(/^.+@example\.com$/),
-    createdAt: expect.any(Date),
-    roles: expect.arrayContaining(['admin'])
+  xExpect(user).toEqual(xExpect.objectContaining({
+    id: xExpect.any(Number),
+    name: xExpect.stringContaining('John'),
+    email: xExpect.stringMatching(/^.+@example\.com$/),
+    createdAt: xExpect.any(Date),
+    roles: xExpect.arrayContaining(['admin'])
   }));
 });
 ```
 
 ## Custom Matchers
 ```ts
-import { expect } from '@remotex-labs/xjet-expect';
+import { xExpect } from '@remotex-labs/xjet-expect';
 
 // Define a custom matcher
-expect.extend({
+xExpect.extend({
   toBeEvenNumber(received) {
     const pass = typeof received === 'number' && received % 2 === 0;
     
@@ -149,8 +149,8 @@ expect.extend({
 
 // Use custom matcher
 test('custom matchers', () => {
-  expect(4).toBeEvenNumber();
-  expect(3).not.toBeEvenNumber();
+  xExpect(4).toBeEvenNumber();
+  xExpect(3).not.toBeEvenNumber();
 });
 ```
 

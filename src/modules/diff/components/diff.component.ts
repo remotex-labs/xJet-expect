@@ -116,7 +116,7 @@ export function normalizeStrings(a: string, b: string, clean: boolean = true): [
  *
  * @example
  * ```ts
- * const [a, b] = normalizeArrays([1, 2], [1, expect.any(Number)]);
+ * const [a, b] = normalizeArrays([1, 2], [1, xExpect.any(Number)]);
  * // a: [1, 2]
  * // b: [1, 2]
  * ```
@@ -154,7 +154,7 @@ export function normalizeArrays(a: Array<unknown>, b: Array<unknown>): [ Array<u
  *
  * @example
  * ```ts
- * const objA = { foo: expect.any(String), bar: 42 };
+ * const objA = { foo: xExpect.any(String), bar: 42 };
  * const objB = { foo: "hello", bar: 42 };
  *
  * const [a, b] = normalizeObjects(objA, objB);

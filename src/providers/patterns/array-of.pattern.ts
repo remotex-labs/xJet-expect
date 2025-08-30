@@ -19,7 +19,7 @@ import { equals, isAsymmetric } from '@components/object.component';
  *
  * @example
  * ```ts
- * expect(value).toEqual(expect.arrayOf(42));
+ * xExpect(value).toEqual(xExpect.arrayOf(42));
  * ```
  *
  * @since 1.0.0

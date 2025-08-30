@@ -30,7 +30,7 @@ import { getType } from '@diff/components/diff.component';
  *
  * @example
  * ```ts
- * await expect(promiseValue).resolves.toBe(expectedValue)
+ * await xExpect(promiseValue).resolves.toBe(expectedValue)
  * ```
  *
  * @since 1.0.0

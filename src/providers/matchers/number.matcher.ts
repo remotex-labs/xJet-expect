@@ -25,12 +25,12 @@ import { ensureType, handleFailure, serializeOneLine } from '@handlers/matchers.
  *
  * @example
  * ```ts
- * expect(0.2 + 0.1).toBeCloseTo(0.3, 2); // Passes
+ * xExpect(0.2 + 0.1).toBeCloseTo(0.3, 2); // Passes
  * ```
  *
  * @example
  * ```ts
- * expect(0.2 + 0.1).not.toBeCloseTo(0.3, 5); // Fails
+ * xExpect(0.2 + 0.1).not.toBeCloseTo(0.3, 5); // Fails
  * ```
  *
  * @see handleFailure
@@ -82,12 +82,12 @@ export function toBeCloseTo(this: MatcherService<number>, expected: number, prec
  *
  * @example
  * ```ts
- * expect(10).toBeGreaterThan(5); // Passes
+ * xExpect(10).toBeGreaterThan(5); // Passes
  * ```
  *
  * @example
  * ```ts
- * expect(5).toBeGreaterThan(10); // Fails
+ * xExpect(5).toBeGreaterThan(10); // Fails
  * ```
  *
  * @see handleNumericComparison
@@ -105,12 +105,12 @@ export function toBeGreaterThan(this: MatcherService<NumericType>, expected: Num
  *
  * @example
  * ```ts
- * expect(5).toBeGreaterThanOrEqual(5); // Passes
+ * xExpect(5).toBeGreaterThanOrEqual(5); // Passes
  * ```
  *
  * @example
  * ```ts
- * expect(4).toBeGreaterThanOrEqual(5); // Fails
+ * xExpect(4).toBeGreaterThanOrEqual(5); // Fails
  * ```
  *
  * @see handleNumericComparison
@@ -128,12 +128,12 @@ export function toBeGreaterThanOrEqual(this: MatcherService<NumericType>, expect
  *
  * @example
  * ```ts
- * expect(3).toBeLessThan(5); // Passes
+ * xExpect(3).toBeLessThan(5); // Passes
  * ```
  *
  * @example
  * ```ts
- * expect(6).toBeLessThan(5); // Fails
+ * xExpect(6).toBeLessThan(5); // Fails
  * ```
  *
  * @see handleNumericComparison
@@ -152,12 +152,12 @@ export function toBeLessThan(this: MatcherService<NumericType>, expected: Numeri
  *
  * @example
  * ```ts
- * expect(5).toBeLessThanOrEqual(5); // Passes
+ * xExpect(5).toBeLessThanOrEqual(5); // Passes
  * ```
  *
  * @example
  * ```ts
- * expect(7).toBeLessThanOrEqual(5); // Fails
+ * xExpect(7).toBeLessThanOrEqual(5); // Fails
  * ```
  *
  * @see handleNumericComparison

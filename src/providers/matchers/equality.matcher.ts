@@ -29,8 +29,8 @@ import { handleDiffFailure, handleFailure, serializeOneLine } from '@handlers/ma
  *
  * @example
  * ```ts
- * expect(['hello']).toBe(['hello']); // Fails because arrays differ by reference
- * expect(['hello']).toBe(expect.arrayContaining(['hello'])); // Passes with asymmetric matcher
+ * xExpect(['hello']).toBe(['hello']); // Fails because arrays differ by reference
+ * xExpect(['hello']).toBe(xExpect.arrayContaining(['hello'])); // Passes with asymmetric matcher
  * ```
  *
  * @since 1.0.0
@@ -66,8 +66,8 @@ export function toBe(this: MatcherService, expected: unknown): void {
  *
  * @example
  * ```ts
- * expect({ a: 1 }).toEqual({ a: 1 }); // Passes with deep equality
- * expect({ a: 1 }).toEqual(expect.objectContaining({ a: 1 })); // Passes with asymmetric matcher
+ * xExpect({ a: 1 }).toEqual({ a: 1 }); // Passes with deep equality
+ * xExpect({ a: 1 }).toEqual(xExpect.objectContaining({ a: 1 })); // Passes with asymmetric matcher
  * ```
  *
  * @since 1.0.0
@@ -91,8 +91,8 @@ export function toEqual(this: MatcherService, expected: unknown): void {
  *
  * @example
  * ```ts
- * expect(null).toBeNull(); // Passes
- * expect(undefined).toBeNull(); // Fails
+ * xExpect(null).toBeNull(); // Passes
+ * xExpect(undefined).toBeNull(); // Fails
  * ```
  *
  * @since 1.0.0
@@ -114,8 +114,8 @@ export function toBeNull(this: MatcherService): void {
  *
  * @example
  * ```ts
- * expect(undefined).toBeUndefined(); // Passes
- * expect(null).toBeUndefined(); // Fails
+ * xExpect(undefined).toBeUndefined(); // Passes
+ * xExpect(null).toBeUndefined(); // Fails
  * ```
  *
  * @since 1.0.0
@@ -138,9 +138,9 @@ export function toBeUndefined(this: MatcherService): void {
  *
  * @example
  * ```ts
- * expect(NaN).toBeNaN(); // Passes
- * expect(0 / 0).toBeNaN(); // Passes
- * expect(1).toBeNaN(); // Fails
+ * xExpect(NaN).toBeNaN(); // Passes
+ * xExpect(0 / 0).toBeNaN(); // Passes
+ * xExpect(1).toBeNaN(); // Fails
  * ```
  *
  * @since 1.0.0
@@ -162,9 +162,9 @@ export function toBeNaN(this: MatcherService): void {
  *
  * @example
  * ```ts
- * expect(1).toBeTruthy(); // Passes
- * expect('non-empty string').toBeTruthy(); // Passes
- * expect(false).toBeTruthy(); // Fails
+ * xExpect(1).toBeTruthy(); // Passes
+ * xExpect('non-empty string').toBeTruthy(); // Passes
+ * xExpect(false).toBeTruthy(); // Fails
  * ```
  *
  * @since 1.0.0
@@ -186,9 +186,9 @@ export function toBeTruthy(this: MatcherService): void {
  *
  * @example
  * ```ts
- * expect(0).toBeFalsy(); // Passes
- * expect('').toBeFalsy(); // Passes
- * expect(true).toBeFalsy(); // Fails
+ * xExpect(0).toBeFalsy(); // Passes
+ * xExpect('').toBeFalsy(); // Passes
+ * xExpect(true).toBeFalsy(); // Fails
  * ```
  *
  * @since 1.0.0
@@ -212,8 +212,8 @@ export function toBeFalsy(this: MatcherService): void {
  *
  * @example
  * ```ts
- * expect('value').toBeDefined(); // Passes
- * expect(undefined).toBeDefined(); // Fails
+ * xExpect('value').toBeDefined(); // Passes
+ * xExpect(undefined).toBeDefined(); // Fails
  * ```
  *
  * @since 1.0.0

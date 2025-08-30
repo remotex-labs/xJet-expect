@@ -26,9 +26,9 @@ import { toHaveProperty, toBeInstanceOf, toContain, toContainEqual, toMatchObjec
  *
  * @example
  * ```ts
- * expect(42).toSatisfy(Matchers.number.greaterThan(10));
- * expect('hello').toSatisfy(Matchers.strings.contains('ell'));
- * expect(fn).toSatisfy(Matchers.functions.calledOnce());
+ * xExpect(42).toSatisfy(Matchers.number.greaterThan(10));
+ * xExpect('hello').toSatisfy(Matchers.strings.contains('ell'));
+ * xExpect(fn).toSatisfy(Matchers.functions.calledOnce());
  * ```
  *
  * @since 1.0.0

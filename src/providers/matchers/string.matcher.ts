@@ -24,9 +24,9 @@ import { ensureType, handleFailure, serializeOneLine } from '@handlers/matchers.
  *
  * @example
  * ```ts
- * expect("abc").toHaveLength(3); // Passes
- * expect("abc").toHaveLength(5); // Fails
- * expect("abc").not.toHaveLength(2); // Passes
+ * xExpect("abc").toHaveLength(3); // Passes
+ * xExpect("abc").toHaveLength(5); // Fails
+ * xExpect("abc").not.toHaveLength(2); // Passes
  * ```
  *
  * @since 1.0.0
@@ -75,9 +75,9 @@ export function toHaveLength(this: MatcherService<string>, length: number | bigi
  *
  * @example
  * ```ts
- * expect("Hello World").toMatch("World"); // Passes
- * expect("Hello World").toMatch(/world/i); // Passes (case-insensitive)
- * expect("Hello World").not.toMatch("Earth"); // Passes
+ * xExpect("Hello World").toMatch("World"); // Passes
+ * xExpect("Hello World").toMatch(/world/i); // Passes (case-insensitive)
+ * xExpect("Hello World").not.toMatch("Earth"); // Passes
  * ```
  *
  * @since 1.0.0
