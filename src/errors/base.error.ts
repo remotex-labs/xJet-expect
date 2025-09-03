@@ -22,6 +22,7 @@
  *
  * @since 1.0.0
  */
+import { serializesError } from '@components/object.component';
 
 export abstract class xJetBaseError extends Error {
     /**
@@ -84,19 +85,6 @@ export abstract class xJetBaseError extends Error {
      */
 
     toJSON(): Record<string, unknown> {
-        const json: Record<string, unknown> = {};
-
-        // Copy all own (non-inherited) enumerable properties
-        for (const key of Object.keys(this)) {
-            const value = this[key as keyof this];
-            if(value) json[key] = value;
-        }
-
-        // Ensure `name`, `message`, and `stack` are included
-        json.name = this.name;
-        json.stack = this.stack;
-        json.message = this.message;
-
-        return json;
+        return serializesError(this);
     }
 }
