@@ -233,3 +233,48 @@ export function equals(a: unknown, b: unknown, strictCheck = true): boolean {
 
     return false;
 }
+
+/**
+ * Serializes an {@link Error} object into a generic key-value object.
+ *
+ * @template T - The type of values in the returned record (defaults to `unknown`).
+ * @param error - The error instance to serialize.
+ * @returns A record containing all own enumerable properties of the error,
+ *          including `name`, `message`, and `stack`.
+ *
+ * @remarks
+ * This function ensures that all enumerable properties of the error are preserved,
+ * while always including the standard `name`, `message`, and `stack` properties.
+ * It is useful for structured logging, transmitting errors across process boundaries,
+ * or converting errors to a format suitable for JSON serialization.
+ *
+ * @example
+ * ```ts
+ * try {
+ *   throw new Error("Something went wrong");
+ * } catch (err) {
+ *   const serialized = serializesError<string>(err);
+ *   console.log(serialized.name); // "Error"
+ *   console.log(serialized.message); // "Something went wrong"
+ * }
+ * ```
+ *
+ * @since 2.1.0
+ */
+
+export function serializesError<T = unknown>(error: Error): Record<string, T> {
+    const json: Record<string, unknown> = {};
+
+    // Copy all own (non-inherited) enumerable properties
+    for (const key of Object.keys(error)) {
+        const value = error[key as keyof Error];
+        if(value) json[key] = value;
+    }
+
+    // Ensure `name`, `message`, and `stack` are included
+    json.name = error.name;
+    json.stack = error.stack;
+    json.message = error.message;
+
+    return <Record<string, T>> json;
+}

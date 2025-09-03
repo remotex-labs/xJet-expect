@@ -3,7 +3,7 @@
  */
 
 import { AbstractPattern } from '@patterns/abstract.pattern';
-import { asymmetricMatch, equals, hasKey, isA } from '@components/object.component';
+import { asymmetricMatch, equals, hasKey, isA, serializesError } from '@components/object.component';
 
 /**
  * Mock dependencies
@@ -274,5 +274,67 @@ describe('equals function', () => {
 
         expect(equals(new A(), new A())).toBe(true);
         expect(equals(new A(), new B())).toBe(false);
+    });
+});
+
+describe('serializesError', () => {
+    test('should include name, message, and stack of an Error', () => {
+        const error = new Error('Test error');
+        const result = serializesError(error);
+
+        expect(result.name).toBe('Error');
+        expect(result.message).toBe('Test error');
+        expect(result.stack).toBeDefined();
+    });
+
+    test('should include custom enumerable properties', () => {
+        const error: any = new Error('Custom error');
+        error.code = 500;
+        error.details = { reason: 'Something went wrong' };
+
+        const result = serializesError(error);
+
+        expect(result.code).toBe(500);
+        expect(result.details).toEqual({ reason: 'Something went wrong' });
+        expect(result.name).toBe('Error');
+        expect(result.message).toBe('Custom error');
+    });
+
+    test('should not include non-enumerable properties', () => {
+        const error = new Error('Non-enumerable test');
+        Object.defineProperty(error, 'hidden', {
+            value: 'secret',
+            enumerable: false
+        });
+
+        const result = serializesError(error);
+        expect(result.hidden).toBeUndefined();
+        expect(result.name).toBe('Error');
+        expect(result.message).toBe('Non-enumerable test');
+    });
+
+    test('should work with subclassed Errors', () => {
+        class MyError extends Error {
+            extra = 'extra info';
+            constructor(message: string) {
+                super(message);
+                this.name = 'MyError';
+            }
+        }
+
+        const error = new MyError('Subclassed error');
+        const result = serializesError(error);
+
+        expect(result.name).toBe('MyError');
+        expect(result.message).toBe('Subclassed error');
+        expect(result.extra).toBe('extra info');
+    });
+
+    test('should preserve type parameter T', () => {
+        const error: any = new Error('Typed error');
+        error.code = 123;
+
+        const result = serializesError<number>(error);
+        expect(typeof result.code).toBe('number');
     });
 });
