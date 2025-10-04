@@ -53,6 +53,19 @@ export type FunctionLikeType<Return = unknown, Args extends Array<unknown> = [],
     (this: Context, ...args: Args) => Return;
 
 /**
+ * Represents a constructor function type that can be instantiated to create objects of type T.
+ * Includes built-in JavaScript constructor types as alternatives.
+ *
+ * @template T - The type of object, which will be constructed, defaults to object
+ * @since 1.0.0
+ */
+
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+export type ConstructorType<Return = unknown> = Function & {
+    readonly prototype: Return;
+}
+
+/**
  * A utility type that represents a constructor-like type.
  * This type can be used to define a structure for classes that can be instantiated with the specified arguments `Args`
  * and return an object of type `Return`.
@@ -70,7 +83,7 @@ export type FunctionLikeType<Return = unknown, Args extends Array<unknown> = [],
  */
 
 export type ConstructorLikeType<Return = unknown, Args extends Array<unknown> = []> =
-    new(...args: Args) => Return;
+    abstract new(...args: Args) => Return;
 
 /**
  * Represents a type that resolves to the value type of the provided generic type `T` if it is `PromiseLike`.
@@ -137,23 +150,3 @@ export type PromiseRejectType<T = unknown> = (reason?: T) => void;
 
 export type PromiseResolveType<T = unknown> = (value: T | PromiseLike<T>) => void;
 
-/**
- * Represents a constructor function type that can be instantiated to create objects of type T.
- * Includes built-in JavaScript constructor types as alternatives.
- *
- * @template T - The type of object, which will be constructed, defaults to object
- * @since 1.0.0
- */
-
-export type ConstructorType =
-    | (new (...args: Array<unknown>) => unknown)
-    | (new (...args: [unknown, ...unknown[]]) => unknown)
-    | ConstructorLikeType
-    | ErrorConstructor
-    | DateConstructor
-    | RegExpConstructor
-    | BigIntConstructor
-    | SymbolConstructor
-    | PromiseConstructor
-    | FunctionConstructor
-    | FinalizationRegistryConstructor;
