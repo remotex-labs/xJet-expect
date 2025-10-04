@@ -1,4 +1,5 @@
 # xJet Matcher Utilities
+
 [![npm version](https://img.shields.io/badge/Documentation-orange?logo=typescript&logoColor=f5f5f5)](https://remotex-labs.github.io/xJet-expect/)
 [![npm version](https://img.shields.io/npm/v/@remotex-labs/xjet-expect.svg)](https://www.npmjs.com/package/@remotex-labs/xjet-expect)
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
@@ -10,6 +11,7 @@ A TypeScript-based matcher library for testing mocks and verifying function call
 Inspired by Jest-style assertions with xJet support for extended mock / spy in esm.
 
 ## Installation
+
 Install via npm:
 
 ``` bash
@@ -23,6 +25,7 @@ yarn add @remotex-labs/xjet-expect
 ```
 
 ## Features
+
 - **TypeScript First**: Full TypeScript support with comprehensive type definitions
 - **Modern ESM Support**: Works seamlessly with ES modules
 - **Detailed Error Messages**: Helpful, colorized error output for failed assertions
@@ -58,6 +61,7 @@ test('basic assertions', () => {
 ```
 
 ## Mock Functions
+
 ```ts
 import { xExpect, test, jest } from '@remotex-labs/xjet-expect';
 
@@ -91,6 +95,7 @@ test('mock return values', () => {
 ```
 
 ## Async Testing
+
 ```ts
 import { xExpect, test } from '@remotex-labs/xjet-expect';
 
@@ -111,6 +116,7 @@ test('async functions', async () => {
 ```
 
 ## Asymmetric Matchers
+
 ```ts
 import { xExpect, test } from '@remotex-labs/xjet-expect';
 
@@ -134,6 +140,7 @@ test('flexible assertions with asymmetric matchers', () => {
 ```
 
 ## Custom Matchers
+
 ```ts
 import { xExpect } from '@remotex-labs/xjet-expect';
 
@@ -157,21 +164,26 @@ test('custom matchers', () => {
 ```
 
 ## Documentation
+
 For complete API documentation, examples, and guides, visit: [xJet-expect Documentation](https://remotex-labs.github.io/xJet-expect/)
 
 ## Compatibility
+
 - Node.js 20+
 - All modern browsers (via bundlers)
 - TypeScript 4.5+
 - Compatible with Jest assertions for easy migration
 
 ## Contributing
+
 Contributions are welcome! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
 ## License
+
 This project is licensed under the Mozilla Public License 2.0 - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
+
 - Inspired by Jest's expect API
 - Built with TypeScript
 - Powered by the xJet ecosystem

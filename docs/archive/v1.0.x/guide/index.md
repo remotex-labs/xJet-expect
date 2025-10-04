@@ -4,7 +4,11 @@ outline: deep
 # Guide
 
 ## Expect
-When writing tests, xJet provides a powerful assertion mechanism through the `expect` function. This function gives you access to various "matchers" that let you validate different conditions in your code. With `expect`, you can:
+
+When writing tests, xJet provides a powerful assertion mechanism through the `expect` function.
+This function gives you access to various "matchers" that let you validate different conditions in your code.
+With `expect`, you can:
+
 - Compare values (`toBe`, `toEqual`)
 - Check for truthiness (`toBeTruthy`, `toBeFalsy`)
 - Verify numeric comparisons (`toBeGreaterThan`, `toBeLessThan`)
@@ -15,7 +19,9 @@ When writing tests, xJet provides a powerful assertion mechanism through the `ex
 These matchers make your tests more readable and provide helpful error messages when assertions fail, making it easier to debug your code.
 
 ### expect(`value`)
-The `expect` function forms the foundation of test assertions. You'll typically pair `expect` with a "matcher" function to verify that values meet specific conditions. For example, to test if a function returns the expected string:
+
+The `expect` function forms the foundation of test assertions. You'll typically pair `expect` with a "matcher" function to verify that values meet specific conditions.
+For example, to test if a function returns the expected string:
 
 ```ts
 test('serializes simple values', () => {
@@ -24,7 +30,9 @@ test('serializes simple values', () => {
 ```
 
 ### Matcher Groups
+
 xJet provides several categories of matchers for different testing needs:
+
 - **Equality Matchers** - Compare values with different levels of strictness
 - **Number Matchers** - Validate numeric comparisons and ranges
 - **String Matchers** - Test string content and patterns
@@ -33,9 +41,11 @@ xJet provides several categories of matchers for different testing needs:
 - **Mock Matchers** - Validate mock function calls and return values
 
 ## Basic Assertions
+
 Here are some common assertions you'll use frequently in your tests:
 
 ### Strict Equality
+
 ```ts
 // Check for exact equality (same value and type)
 expect(2 + 2).toBe(4);
@@ -48,6 +58,7 @@ expect(obj).not.toBe({ a: 1 }); // Passes - different reference
 ```
 
 ### Deep Equality
+
 ``` ts
 // Deep equality comparison (recursive value equality)
 expect({ name: 'John', age: 30 }).toEqual({ name: 'John', age: 30 });
@@ -68,6 +79,7 @@ expect({
 ```
 
 ### Truthiness
+
 ``` ts
 // Check for truthy/falsy values
 expect(true).toBeTruthy();
@@ -82,6 +94,7 @@ expect(undefined).toBeFalsy();
 ```
 
 ### Presence Testing
+
 ``` ts
 // Check for null/undefined
 expect(null).toBeNull();
@@ -95,8 +108,11 @@ expect(1).not.toBeNaN();
 ```
 
 ## Modifiers
+
 ### .not
+
 The modifier inverts the expectation, allowing you to assert that something is not true: `.not`
+
 ``` ts
 expect(42).not.toBeNull();
 expect('hello').not.toBe('world');
@@ -104,6 +120,7 @@ expect([1, 2, 3]).not.toContain(4);
 ```
 
 ### .resolves and .rejects
+
 When working with Promises, use the and modifiers: `.resolves``.rejects`
 
 ``` ts
@@ -117,6 +134,7 @@ await expect(fetchInvalidData()).rejects.toThrow();
 ```
 
 ## Asymmetric Matchers
+
 Asymmetric matchers provide more flexible matching options when exact values aren't known or needed:
 
 ``` ts
@@ -141,7 +159,9 @@ expect({ id: 1, name: 'John', age: 30 }).toEqual(
 ```
 
 ## Best Practices
+
 ### Be Specific
+
 Choose the most specific matcher for your assertions:
 
 ``` ts
@@ -153,6 +173,7 @@ expect(value > 0).toBe(true);
 ```
 
 ### Test Behavior, Not Implementation
+
 Focus on testing what your code does, not how it does it:
 
 ``` ts
@@ -164,6 +185,7 @@ expect(calculateTotal.calls).toHaveLength(1);
 ```
 
 ### Clear Failure Messages
+
 Write assertions that provide clear failure messages:
 
 ``` ts
@@ -174,6 +196,7 @@ test('returns 200 status code for valid requests', () => {
 ```
 
 ### Keep Tests Independent
+
 Each test should be independent and not rely on state from other tests:
 
 ``` ts
@@ -194,6 +217,7 @@ test('can update email', () => {
 ```
 
 ## Debugging Failed Tests
+
 When a test fails, xJet provides detailed error messages to help identify the issue:
 
 ```bash
@@ -210,8 +234,10 @@ Expected: Object {
 These detailed diffs make it easier to spot differences between expected and actual values.
 
 ## Conclusion
-The `expect` function is the cornerstone of effective testing with xJet. 
+
+The `expect` function is the cornerstone of effective testing with xJet.
 By combining it with the right matchers and following best practices, you can write tests that are:
+
 - Easy to read and understand
 - Focused on behavior
 - Resilient to implementation changes
