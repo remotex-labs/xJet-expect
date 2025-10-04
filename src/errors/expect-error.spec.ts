@@ -1,18 +1,16 @@
 /**
- * Imports
+ * Import will remove at compile time
  */
 
 import type { OptionsExpectErrorInterface } from '@errors/interfaces/expect-error.interface';
+
+/**
+ * Imports
+ */
+
 import { xJetExpectError } from '@errors/expect.error';
 import { composeStatement } from '@components/format.component';
 
-/**
- * Mock dependencies
- */
-
-jest.mock('@components/format.component', () => ({
-    composeStatement: jest.fn()
-}));
 
 /**
  * Tests
@@ -20,11 +18,11 @@ jest.mock('@components/format.component', () => ({
 
 describe('xJetExpectError', () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        xJet.clearAllMocks();
     });
 
     test('constructs with message from composeStatement and info lines', () => {
-        (composeStatement as jest.Mock).mockReturnValue('formatted statement');
+        xJet.mock(composeStatement).mockReturnValue('formatted statement');
 
         const options: OptionsExpectErrorInterface = {
             info: [ 'additional info line 1', 'additional info line 2' ],
@@ -50,7 +48,7 @@ describe('xJetExpectError', () => {
     });
 
     test('constructs without info lines', () => {
-        (composeStatement as jest.Mock).mockReturnValue('formatted statement');
+        xJet.mock(composeStatement).mockReturnValue('formatted statement');
 
         const options: OptionsExpectErrorInterface = {
             assertionChain: [],
@@ -71,7 +69,7 @@ describe('xJetExpectError', () => {
     });
 
     test('constructs without assertion property', () => {
-        (composeStatement as jest.Mock).mockReturnValue('formatted statement');
+        xJet.mock(composeStatement).mockReturnValue('formatted statement');
 
         const options: OptionsExpectErrorInterface = {
             info: [ 'info line' ],

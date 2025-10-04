@@ -3,39 +3,26 @@
  */
 
 import { xJetTypeError } from '@errors/type.error';
-import { RECEIVED } from '@components/color.component';
 import { diffArgs } from '@diff/components/diff.component';
 import { serializeList, serializeReturnList } from '@handlers/mock.handler';
+import { CYAN, DIM, EXPECTED, INVERSE, RECEIVED } from '@components/color.component';
 import { ensureMock, serializeCallList, serializeHighlightedCalls } from '@handlers/mock.handler';
 
 /**
- * Mock dependencies
+ * Tests
  */
 
-jest.mock('@diff/components/diff.component', () => ({
-    ...jest.requireActual('@diff/components/diff.component'),
-    diffArgs: jest.fn()
-}));
-
-jest.mock('@diff/components/semantic.component', () => ({
-    cleanupSemantic: jest.fn(diffs => diffs)
-}));
-
-jest.mock('@components/serialize.component', () => ({
-    serialize: jest.fn().mockReturnValue([])
-}));
-
-jest.mock('@components/color.component', () => ({
-    DIM: jest.fn(str => `DIM(${ str })`),
-    CYAN: jest.fn(str => `CYAN(${ str })`),
-    EXPECTED: jest.fn(str => `EXPECTED(${ str })`),
-    INVERSE: jest.fn(str => `INVERSE(${ str })`),
-    RECEIVED: jest.fn(str => `RECEIVED(${ str })`)
-}));
+beforeAll(() => {
+    xJet.mock(DIM, str => `DIM(${ str })`);
+    xJet.mock(CYAN, str => `CYAN(${ str })`);
+    xJet.mock(INVERSE, str => `INVERSE(${ str })`);
+    xJet.mock(EXPECTED, str => `EXPECTED(${ str })`);
+    xJet.mock(RECEIVED, str => `RECEIVED(${ str })`);
+});
 
 describe('ensureMock', () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        xJet.clearAllMocks();
     });
 
     test('does not throw if received has xJetMock and mock', () => {
@@ -96,8 +83,8 @@ describe('ensureMock', () => {
 
 describe('serializeList variants', () => {
     beforeEach(() => {
-        jest.clearAllMocks();
-        (diffArgs as jest.Mock).mockImplementation(() => [ 'start', 'diffed', 'end' ]);
+        xJet.clearAllMocks();
+        xJet.mock(diffArgs).mockImplementation(() => [ 'start', 'diffed', 'end' ]);
     });
 
     test('serializeList returns formatted string with default values', () => {

@@ -7,23 +7,6 @@ import { Matchers } from '@providers/matchers.provider';
 import { MatcherService } from '@services/matcher.service';
 
 /**
- * Mock dependencies
- */
-
-jest.mock('@providers/matchers.provider', () => {
-    return {
-        Matchers: {
-            // Provide mocked matcher functions here
-            toBe: jest.fn(function (this: any, expected: unknown) {
-                // You can simulate the behavior or just a placeholder
-                return this.invoke('toBe', (actual: unknown) => actual === expected, [ expected ]);
-            })
-            // Add other matcher mocks if needed
-        }
-    };
-});
-
-/**
  * Tests
  */
 
@@ -54,7 +37,7 @@ describe('coreExpect function', () => {
 
         // Spy on invoke method of MatcherService
         const result = xExpect(received);
-        const invokeSpy = jest.spyOn(result as any, 'invoke');
+        const invokeSpy = xJet.spyOn(result as any, 'invoke');
 
         // Call the matcher method dynamically added
         (result as any)[matcherName]('arg1', 'arg2');

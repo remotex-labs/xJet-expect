@@ -2,18 +2,18 @@
  * Imports
  */
 
-import { DIM } from '@components/color.component';
 import { composeStatement } from '@components/format.component';
+import { DIM, RECEIVED, EXPECTED } from '@components/color.component';
 
 /**
  * Mock dependencies
  */
 
-jest.mock('@components/color.component', () => ({
-    DIM: (str: string) => `DIM(${ str })`,
-    RECEIVED: (str: string) => `RECEIVED(${ str })`,
-    EXPECTED: (str: string) => `EXPECTED(${ str })`
-}));
+xJet.mock<any, any, any>(DIM).mockImplementation((str: string) => `DIM(${ str })`);
+xJet.mock<any, any, any>(RECEIVED).mockImplementation((str: string) => `RECEIVED(${ str })`);
+xJet.mock<any, any, any>(EXPECTED).mockImplementation((str: string) => `EXPECTED(${ str })`);
+
+console.log(globalThis);
 
 /**
  * Tests
@@ -21,7 +21,7 @@ jest.mock('@components/color.component', () => ({
 
 describe('composeStatement', () => {
     afterAll(() => {
-        jest.restoreAllMocks();
+        xJet.restoreAllMocks();
     });
 
     test('throws an error when assertionChain is empty', () => {

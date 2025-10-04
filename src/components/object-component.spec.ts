@@ -2,6 +2,7 @@
  * Imports
  */
 
+import { URL } from 'url';
 import { AbstractPattern } from '@patterns/abstract.pattern';
 import { asymmetricMatch, equals, hasKey, isA, serializesError } from '@components/object.component';
 
@@ -78,8 +79,8 @@ describe('isA function', () => {
         expect(isA(Animal, dog)).toBe(false);
     });
 
-    test('should return true for jest.fn mock functions when checking for Function', () => {
-        const mockFn = jest.fn(() => true);
+    test('should return true for xJet.fn mock functions when checking for Function', () => {
+        const mockFn = xJet.fn(() => true);
         expect(isA(Function, mockFn)).toBe(true);
     });
 
@@ -219,6 +220,7 @@ describe('equals function', () => {
     });
 
     test('should handle URLs', () => {
+        (<any> globalThis).URL = URL;
         const url1 = new URL('https://example.com/path');
         const url2 = new URL('https://example.com/path');
         const url3 = new URL('https://example.com/other');

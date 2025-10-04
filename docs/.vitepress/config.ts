@@ -1,15 +1,8 @@
 /**
- * Import will remove at compile time
- */
-
-import type { UserConfig } from 'vitepress';
-
-/**
  * Imports
  */
 
-import { join } from 'path';
-import defineVersionedConfig from 'vitepress-versioning-plugin';
+import { defineVersionedConfig } from '@viteplus/versions';
 
 /**
  * Doc config
@@ -18,10 +11,9 @@ import defineVersionedConfig from 'vitepress-versioning-plugin';
 export default defineVersionedConfig({
     title: 'xJet-expect',
     base: '/xJet-expect/',
-    srcDir: 'src',
     description: 'xJet-Expect: Powerful Assertions for Seamless xJet Testing',
     head: [
-        [ 'link', { rel: 'icon', type: 'image/png', href: '/xJet-expect/xjet-expect2.png' }],
+        [ 'link', { rel: 'icon', type: 'image/png', href: '/xJet-expect/logo.png' }],
         [ 'meta', { name: 'theme-color', content: '#ff7e17' }],
         [ 'script', { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-LZ4KRNH629' }],
         [
@@ -29,40 +21,40 @@ export default defineVersionedConfig({
             'window.dataLayer = window.dataLayer || [];function gtag(){ dataLayer.push(arguments); }gtag(\'js\', new Date());gtag(\'config\', \'G-LZ4KRNH629\');'
         ]
     ],
+    versionsConfig: {
+        current: 'v2.0.x',
+        versionSwitcher: false
+    },
     themeConfig: {
-        logo: '/xjet-expect2.png',
-        versionSwitcher: false,
+        logo: '/logo.png',
 
         search: {
             provider: 'local'
         },
 
         nav: [
-            { text: 'Home', link: '.' },
-            {
-                component: 'VersionSwitcher'
-            }
+            { text: 'Home', link: '/' },
+            { text: 'Guide', link: '/guide' },
+            { component: 'VersionSwitcher' }
         ],
 
-        sidebar: {
-            '/': [
-                { text: 'Guide', link: '.' },
-                { text: 'Modifiers', link: './modifiers' },
-                { text: 'Asymmetric', link: './asymmetric' },
-                {
-                    text: 'Matchers',
-                    collapsed: false,
-                    items: [
-                        { text: 'Mock', link: './mock' },
-                        { text: 'Number', link: './number' },
-                        { text: 'Object', link: './object' },
-                        { text: 'String', link: './string' },
-                        { text: 'Equality', link: './equality' },
-                        { text: 'Functions', link: './functions' }
-                    ]
-                }
-            ]
-        },
+        sidebar: [
+            { text: 'Modifiers', link: '/guide/modifiers' },
+            { text: 'Asymmetric', link: '/guide/asymmetric' },
+            {
+                text: 'Matchers',
+                collapsed: false,
+                base: '/guide/',
+                items: [
+                    { text: 'Mock', link: 'mock' },
+                    { text: 'Number', link: 'number' },
+                    { text: 'Object', link: 'object' },
+                    { text: 'String', link: 'string' },
+                    { text: 'Equality', link: 'equality' },
+                    { text: 'Functions', link: 'functions' }
+                ]
+            }
+        ],
 
         socialLinks: [
             { icon: 'github', link: 'https://github.com/remotex-labs/xJet-expect' },
@@ -72,9 +64,11 @@ export default defineVersionedConfig({
         docFooter: {
             prev: false,
             next: false
+        },
+
+        footer: {
+            message: 'Released under the Mozilla Public License 2.0',
+            copyright: `Copyright © ${ new Date().getFullYear() } @remotex-labs/xjet Contributors`
         }
-    },
-    versioning: {
-        latestVersion: 'v2.0.x'
     }
-}, join(__dirname, '../src', 'versions')) as UserConfig;
+});

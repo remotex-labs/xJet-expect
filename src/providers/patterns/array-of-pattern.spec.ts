@@ -6,21 +6,12 @@ import { ArrayOfPattern } from '@patterns/array-of.pattern';
 import { equals, isAsymmetric } from '@components/object.component';
 
 /**
- * Mock dependencies
- */
-
-jest.mock('@components/object.component', () => ({
-    equals: jest.fn(),
-    isAsymmetric: jest.fn()
-}));
-
-/**
  * Tests
  */
 
 describe('ArrayOfPattern', () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        xJet.clearAllMocks();
     });
 
     describe('create()', () => {
@@ -51,9 +42,9 @@ describe('ArrayOfPattern', () => {
         });
 
         test('returns expectedLabel from asymmetric matcher', () => {
-            const asymmetric = { expectedLabel: 'AsymmetricLabel', matches: jest.fn() };
+            const asymmetric = { expectedLabel: 'AsymmetricLabel', matches: xJet.fn() };
 
-            (isAsymmetric as unknown as jest.Mock).mockImplementation((val) => val === asymmetric);
+            xJet.mock(isAsymmetric).mockImplementation((val) => val === asymmetric);
 
             const matcher = ArrayOfPattern.create(false, asymmetric);
             expect(matcher.expectedLabel).toContain('AsymmetricLabel');
@@ -71,8 +62,8 @@ describe('ArrayOfPattern', () => {
         test('returns true if every element matches expected value using equals', () => {
             const matcher = ArrayOfPattern.create(false, 42);
 
-            (isAsymmetric as unknown as jest.Mock).mockReturnValue(false);
-            (equals as jest.Mock).mockImplementation((a, b) => a === b);
+            xJet.mock(isAsymmetric).mockReturnValue(false);
+            xJet.mock(equals).mockImplementation((a, b) => a === b);
 
             expect(matcher.matches([ 42, 42, 42 ])).toBe(true);
             expect(matcher.matches([ 42, 41 ])).toBe(false);
@@ -82,17 +73,17 @@ describe('ArrayOfPattern', () => {
         test('returns false if any element does not match', () => {
             const matcher = ArrayOfPattern.create(false, 42);
 
-            (isAsymmetric as unknown as jest.Mock).mockReturnValue(false);
-            (equals as jest.Mock).mockImplementation((a, b) => a === b);
+            xJet.mock(isAsymmetric).mockReturnValue(false);
+            xJet.mock(equals).mockImplementation((a, b) => a === b);
 
             expect(matcher.matches([ 42, 43, 42 ])).toBe(false);
         });
 
         test('uses asymmetric matcher if expected is asymmetric', () => {
-            const asymmetric = { matches: jest.fn() };
+            const asymmetric = { matches: xJet.fn() };
 
-            (isAsymmetric as unknown as jest.Mock).mockImplementation((val) => val === asymmetric);
-            (equals as jest.Mock).mockReturnValue(false);
+            xJet.mock(isAsymmetric).mockImplementation((val) => val === asymmetric);
+            xJet.mock(equals).mockReturnValue(false);
 
             asymmetric.matches.mockReturnValue(true);
 
@@ -106,8 +97,8 @@ describe('ArrayOfPattern', () => {
         test('applies inversion correctly', () => {
             const matcher = ArrayOfPattern.create(true, 42);
 
-            (isAsymmetric as unknown as jest.Mock).mockReturnValue(false);
-            (equals as jest.Mock).mockImplementation((a, b) => a === b);
+            xJet.mock(isAsymmetric).mockReturnValue(false);
+            xJet.mock(equals).mockImplementation((a, b) => a === b);
 
             expect(matcher.matches([ 42, 42 ])).toBe(false); // normally true, inverted false
             expect(matcher.matches([ 42, 43 ])).toBe(true);  // normally false, inverted true
