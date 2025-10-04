@@ -1715,6 +1715,7 @@ describe('serializeError', () => {
 
         expect(result).toEqual({
             name: 'ErrorName',
+            stack: undefined,
             message: 'ErrorMessage'
         });
     });

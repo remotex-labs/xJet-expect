@@ -108,7 +108,7 @@ describe('toBe matcher - edge cases', () => {
     test('passes when asymmetric matcher matches', () => {
         const asymmetric = {
             expectedLabel: 'custom',
-            matches: jest.fn(() => true)
+            matches: xJet.fn(() => true)
         };
 
         expect(() => toBe.call(createMatcherService('foo'), asymmetric)).not.toThrow();
@@ -118,7 +118,7 @@ describe('toBe matcher - edge cases', () => {
     test('throws when asymmetric matcher does not match', () => {
         const asymmetric = {
             expectedLabel: 'custom',
-            matches: jest.fn(() => false)
+            matches: xJet.fn(() => false)
         };
 
         try {

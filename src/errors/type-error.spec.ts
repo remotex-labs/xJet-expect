@@ -14,38 +14,22 @@ import { composeStatement } from '@components/format.component';
 import { EXPECTED, RECEIVED } from '@components/color.component';
 
 /**
- * Mock dependencies
- */
-
-jest.mock('@components/format.component', () => ({
-    composeStatement: jest.fn()
-}));
-
-jest.mock('@components/color.component', () => ({
-    EXPECTED: jest.fn(),
-    RECEIVED: jest.fn()
-}));
-
-jest.mock('@components/serialize.component', () => ({
-    serialize: jest.fn()
-}));
-
-/**
  * Tests
  */
 
 describe('xJetTypeError', () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        xJet.clearAllMocks();
     });
 
     test('constructs message with both expected and received type/value', () => {
-        (composeStatement as jest.Mock).mockReturnValue('formatted statement');
-        (serialize as jest.Mock)
+        xJet.mock(composeStatement).mockReturnValue('formatted statement');
+        xJet.mock(serialize)
             .mockReturnValueOnce([ 'expected serialized' ])
             .mockReturnValueOnce([ 'received serialized' ]);
-        (EXPECTED as jest.Mock).mockImplementation((str) => `<E:${ str }>`);
-        (RECEIVED as jest.Mock).mockImplementation((str) => `<R:${ str }>`);
+
+        xJet.mock(EXPECTED).mockImplementation((str) => `<E:${ str }>`);
+        xJet.mock(RECEIVED).mockImplementation((str) => `<R:${ str }>`);
 
         const options: OptionsTypeErrorInterface = {
             assertionChain: [ 'toBeType' ],
@@ -76,9 +60,9 @@ describe('xJetTypeError', () => {
     });
 
     test('constructs message with only expected', () => {
-        (composeStatement as jest.Mock).mockReturnValue('stmt');
-        (serialize as jest.Mock).mockReturnValue([ 'expected only' ]);
-        (EXPECTED as jest.Mock).mockReturnValue('<E:expected only>');
+        xJet.mock(composeStatement).mockReturnValue('stmt');
+        xJet.mock(serialize).mockReturnValue([ 'expected only' ]);
+        xJet.mock(EXPECTED).mockReturnValue('<E:expected only>');
 
         const options: OptionsTypeErrorInterface = {
             assertionChain: [ 'toBeType' ],
@@ -95,9 +79,9 @@ describe('xJetTypeError', () => {
     });
 
     test('constructs message with only received', () => {
-        (composeStatement as jest.Mock).mockReturnValue('stmt');
-        (serialize as jest.Mock).mockReturnValue([ 'received only' ]);
-        (RECEIVED as jest.Mock).mockReturnValue('<R:received only>');
+        xJet.mock(composeStatement).mockReturnValue('stmt');
+        xJet.mock(serialize).mockReturnValue([ 'received only' ]);
+        xJet.mock(RECEIVED).mockReturnValue('<R:received only>');
 
         const options: OptionsTypeErrorInterface = {
             assertionChain: [ 'toBeType' ],

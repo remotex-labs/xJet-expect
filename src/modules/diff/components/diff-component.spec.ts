@@ -4,39 +4,9 @@
 
 import { serialize } from '@components/serialize.component';
 import { cleanupSemantic } from '@diff/components/semantic.component';
-import { CYAN, DIM, EXPECTED, RECEIVED } from '@components/color.component';
+import { CYAN, DIM, EXPECTED, INVERSE, RECEIVED } from '@components/color.component';
 import { diffLinesRaw, diffStringsRaw, DiffTypes } from '@diff/providers/string.provider';
 import { diffArgs, diffComponent, diffStrings, getType, normalizeAsymmetric } from '@diff/components/diff.component';
-
-/**
- * Mock dependencies
- */
-
-jest.mock('@diff/providers/string.provider', () => ({
-    diffLinesRaw: jest.fn(),
-    diffStringsRaw: jest.fn(),
-    DiffTypes: {
-        EQUAL: 0,
-        DELETE: -1,
-        INSERT: 1
-    }
-}));
-
-jest.mock('@diff/components/semantic.component', () => ({
-    cleanupSemantic: jest.fn(diffs => diffs)
-}));
-
-jest.mock('@components/serialize.component', () => ({
-    serialize: jest.fn().mockReturnValue([])
-}));
-
-jest.mock('@components/color.component', () => ({
-    DIM: jest.fn(str => `DIM(${ str })`),
-    CYAN: jest.fn(str => `CYAN(${ str })`),
-    EXPECTED: jest.fn(str => `EXPECTED(${ str })`),
-    INVERSE: jest.fn(str => `INVERSE(${ str })`),
-    RECEIVED: jest.fn(str => `RECEIVED(${ str })`)
-}));
 
 /**
  * DummyPattern
@@ -56,6 +26,16 @@ class DummyPattern {
 /**
  * Tests
  */
+
+beforeAll(() => {
+    xJet.mock(DIM, str => `DIM(${ str })`);
+    xJet.mock(CYAN, str => `CYAN(${ str })`);
+    xJet.mock(INVERSE, str => `INVERSE(${ str })`);
+    xJet.mock(EXPECTED, str => `EXPECTED(${ str })`);
+    xJet.mock(RECEIVED, str => `RECEIVED(${ str })`);
+    xJet.mock(cleanupSemantic);
+});
+
 
 describe('getType', () => {
     test('should return "null" for null values', () => {
@@ -89,7 +69,7 @@ describe('getType', () => {
 
 describe('diffStrings', () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        xJet.clearAllMocks();
     });
 
     test('should handle identical strings', () => {
@@ -112,7 +92,7 @@ describe('diffStrings', () => {
         const result: string[] = [];
 
         // Mock the diff result for the changed line
-        (diffStringsRaw as jest.Mock).mockImplementation((lineA, lineB) => {
+        xJet.mock(diffStringsRaw).mockImplementation((lineA, lineB) => {
             if (lineA === 'line two' && lineB === 'changed line') {
                 return [
                     [ DiffTypes.DELETE, 'line ' ],
@@ -139,7 +119,7 @@ describe('diffStrings', () => {
         const b = 'modified';
         const result: string[] = [];
 
-        (diffStringsRaw as jest.Mock).mockReturnValue([
+        xJet.mock(diffStringsRaw).mockReturnValue([
             [ DiffTypes.DELETE, 'line' ],
             [ DiffTypes.INSERT, 'modified' ]
         ]);
@@ -154,7 +134,7 @@ describe('diffStrings', () => {
         const b = 'modified';
         const result: string[] = [];
 
-        (diffStringsRaw as jest.Mock).mockReturnValue([
+        xJet.mock(diffStringsRaw).mockReturnValue([
             [ DiffTypes.DELETE, 'line' ],
             [ DiffTypes.INSERT, 'modified' ]
         ]);
@@ -170,7 +150,7 @@ describe('diffStrings', () => {
         const b = 'line one\nline two\nline three';
         const result: string[] = [];
 
-        (diffStringsRaw as jest.Mock).mockReturnValue([
+        xJet.mock(diffStringsRaw).mockReturnValue([
             [ DiffTypes.EQUAL, '' ],
             [ DiffTypes.INSERT, 'line two' ]
         ]);
@@ -186,7 +166,7 @@ describe('diffStrings', () => {
         const b = 'line one\nline two\nline three';
         const result: string[] = [];
 
-        (diffStringsRaw as jest.Mock).mockReturnValue([[ DiffTypes.EQUAL, 'line three' ]]);
+        xJet.mock(diffStringsRaw).mockReturnValue([[ DiffTypes.EQUAL, 'line three' ]]);
 
         diffStrings(a, b, result);
 
@@ -199,7 +179,7 @@ describe('diffStrings', () => {
         const b = 'line two';
         const result: string[] = [];
 
-        (diffStringsRaw as jest.Mock).mockReturnValue([
+        xJet.mock(diffStringsRaw).mockReturnValue([
             [ DiffTypes.DELETE, 'line one' ],
             [ DiffTypes.INSERT, 'line two' ]
         ]);
@@ -213,12 +193,12 @@ describe('diffStrings', () => {
 
 describe('diffComponent', () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        xJet.clearAllMocks();
     });
 
     test('should display type differences when types are different', () => {
-        (serialize as jest.Mock).mockReturnValue([]);
-        (diffLinesRaw as jest.Mock).mockReturnValue([]);
+        xJet.mock(serialize).mockReturnValue([]);
+        xJet.mock(diffLinesRaw).mockReturnValue([]);
         diffComponent(42, 'string value');
 
         expect(EXPECTED).toHaveBeenCalledWith('number');
@@ -245,11 +225,11 @@ describe('diffComponent', () => {
         const serializedA = [ 'Object {', '  name: "test",', '  value: 123', '}' ];
         const serializedB = [ 'Object {', '  name: "test",', '  value: 456', '}' ];
 
-        (serialize as jest.Mock)
+        xJet.mock(serialize)
             .mockReturnValueOnce(serializedA)
             .mockReturnValueOnce(serializedB);
 
-        (diffLinesRaw as jest.Mock).mockReturnValue([
+        xJet.mock(diffLinesRaw).mockReturnValue([
             [ DiffTypes.EQUAL, 'Object {' ],
             [ DiffTypes.EQUAL, '  name: "test",' ],
             [ DiffTypes.DELETE, '  value: 123' ],
@@ -286,11 +266,11 @@ describe('diffComponent', () => {
         const serializedA = [ 'Array [', '  1,', '  2,', '  3', ']' ];
         const serializedB = [ 'Array [', '  1,', '  2,', '  4', ']' ];
 
-        (serialize as jest.Mock)
+        xJet.mock(serialize)
             .mockReturnValueOnce(serializedA)
             .mockReturnValueOnce(serializedB);
 
-        (diffLinesRaw as jest.Mock).mockReturnValue([
+        xJet.mock(diffLinesRaw).mockReturnValue([
             [ DiffTypes.EQUAL, 'Array [' ],
             [ DiffTypes.EQUAL, '  1,' ],
             [ DiffTypes.EQUAL, '  2,' ],
@@ -315,11 +295,11 @@ describe('diffComponent', () => {
         const serializedA = [ 'Object {', '  nested: Object {', '    value: 1', '  }', '}' ];
         const serializedB = [ 'Object {', '  nested: Object {', '    value: 2', '  }', '}' ];
 
-        (serialize as jest.Mock)
+        xJet.mock(serialize)
             .mockReturnValueOnce(serializedA)
             .mockReturnValueOnce(serializedB);
 
-        (diffLinesRaw as jest.Mock).mockReturnValue([
+        xJet.mock(diffLinesRaw).mockReturnValue([
             [ DiffTypes.EQUAL, 'Object {' ],
             [ DiffTypes.EQUAL, '  nested: Object {' ],
             [ DiffTypes.DELETE, '    value: 1' ],
@@ -362,11 +342,11 @@ describe('diffComponent', () => {
         const serializedA = [ 'true' ];
         const serializedB = [ 'false' ];
 
-        (serialize as jest.Mock)
+        xJet.mock(serialize)
             .mockReturnValueOnce(serializedA)
             .mockReturnValueOnce(serializedB);
 
-        (diffLinesRaw as jest.Mock).mockReturnValue([
+        xJet.mock(diffLinesRaw).mockReturnValue([
             [ DiffTypes.DELETE, 'true' ],
             [ DiffTypes.INSERT, 'false' ]
         ]);
@@ -383,11 +363,11 @@ describe('diffComponent', () => {
         const serializedA = [ 'Date "2023-01-01T00:00:00.000Z"' ];
         const serializedB = [ 'Date "2023-02-01T00:00:00.000Z"' ];
 
-        (serialize as jest.Mock)
+        xJet.mock(serialize)
             .mockReturnValueOnce(serializedA)
             .mockReturnValueOnce(serializedB);
 
-        (diffLinesRaw as jest.Mock).mockReturnValue([
+        xJet.mock(diffLinesRaw).mockReturnValue([
             [ DiffTypes.DELETE, 'Date "2023-01-01T00:00:00.000Z"' ],
             [ DiffTypes.INSERT, 'Date "2023-02-01T00:00:00.000Z"' ]
         ]);
@@ -416,11 +396,11 @@ describe('diffComponent', () => {
         const serializedA = [ 'Array [', '  Object {', '    id: 1,', '    name: "item1"', '  }', ']' ];
         const serializedB = [ 'Array [', '  Object {', '    id: 1,', '    name: "modified"', '  }', ']' ];
 
-        (serialize as jest.Mock)
+        xJet.mock(serialize)
             .mockReturnValueOnce(serializedA)
             .mockReturnValueOnce(serializedB);
 
-        (diffLinesRaw as jest.Mock).mockReturnValue([
+        xJet.mock(diffLinesRaw).mockReturnValue([
             [ DiffTypes.EQUAL, 'Array [' ],
             [ DiffTypes.EQUAL, '  Object {' ],
             [ DiffTypes.EQUAL, '    id: 1,' ],
@@ -442,11 +422,11 @@ describe('diffComponent', () => {
         const serializedA = [ 'Object {', '  id: 1', '}' ];
         const serializedB = [ 'Object {', '  id: 1,', '  name: "new property"', '}' ];
 
-        (serialize as jest.Mock)
+        xJet.mock(serialize)
             .mockReturnValueOnce(serializedA)
             .mockReturnValueOnce(serializedB);
 
-        (diffLinesRaw as jest.Mock).mockReturnValue([
+        xJet.mock(diffLinesRaw).mockReturnValue([
             [ DiffTypes.EQUAL, 'Object {' ],
             [ DiffTypes.DELETE, '  id: 1' ],
             [ DiffTypes.INSERT, '  id: 1,' ],
@@ -536,12 +516,12 @@ describe('normalizeAsymmetric', () => {
 
 describe('diffArgs', () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        xJet.clearAllMocks();
     });
 
     test('returns DIM for equal values', () => {
-        (serialize as jest.Mock).mockReturnValueOnce([ '1' ]).mockReturnValueOnce([ '1' ]);
-        (diffLinesRaw as jest.Mock).mockReturnValue([[ DiffTypes.EQUAL, '1' ]]);
+        xJet.mock(serialize).mockReturnValueOnce([ '1' ]).mockReturnValueOnce([ '1' ]);
+        xJet.mock(diffLinesRaw).mockReturnValue([[ DiffTypes.EQUAL, '1' ]]);
 
         const result = diffArgs([ 1 ], [ 1 ]);
 
@@ -550,8 +530,8 @@ describe('diffArgs', () => {
     });
 
     test('returns RECEIVED for inserted values', () => {
-        (serialize as jest.Mock).mockReturnValueOnce([ '1' ]).mockReturnValueOnce([ '1', '2' ]);
-        (diffLinesRaw as jest.Mock).mockReturnValue([
+        xJet.mock(serialize).mockReturnValueOnce([ '1' ]).mockReturnValueOnce([ '1', '2' ]);
+        xJet.mock(diffLinesRaw).mockReturnValue([
             [ DiffTypes.EQUAL, '1' ],
             [ DiffTypes.INSERT, '2' ]
         ]);
@@ -563,8 +543,8 @@ describe('diffArgs', () => {
     });
 
     test('preserves trailing commas correctly', () => {
-        (serialize as jest.Mock).mockReturnValueOnce([ 'a' ]).mockReturnValueOnce([ 'a', 'b' ]);
-        (diffLinesRaw as jest.Mock).mockReturnValue([
+        xJet.mock(serialize).mockReturnValueOnce([ 'a' ]).mockReturnValueOnce([ 'a', 'b' ]);
+        xJet.mock(diffLinesRaw).mockReturnValue([
             [ DiffTypes.EQUAL, 'a,' ],
             [ DiffTypes.INSERT, 'b,' ]
         ]);
@@ -577,8 +557,8 @@ describe('diffArgs', () => {
     });
 
     test('returns empty array when no diffs', () => {
-        (serialize as jest.Mock).mockReturnValueOnce([]).mockReturnValueOnce([]);
-        (diffLinesRaw as jest.Mock).mockReturnValue([]);
+        xJet.mock(serialize).mockReturnValueOnce([]).mockReturnValueOnce([]);
+        xJet.mock(diffLinesRaw).mockReturnValue([]);
 
         const result = diffArgs([], []);
 

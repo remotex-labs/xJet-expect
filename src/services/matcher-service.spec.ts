@@ -12,7 +12,7 @@ import { MatcherService } from '@services/matcher.service';
  */
 
 describe('MatcherService', () => {
-    const dummyMatcher = jest.fn();
+    const dummyMatcher = xJet.fn();
     globalThis.NO_COLOR = true;
 
     beforeEach(() => {
@@ -96,7 +96,7 @@ describe('MatcherService', () => {
 
         test('awaits function that returns a promise', async () => {
             const promise = Promise.resolve('resolved-value');
-            const fn = jest.fn(() => promise);
+            const fn = xJet.fn(() => promise);
 
             const matcher = new MatcherService(fn);
             matcher['resolvesModifier'] = true;
@@ -111,7 +111,7 @@ describe('MatcherService', () => {
 
         test('throws xJetPromiseError if resolvesModifier and promise rejects', async () => {
             const promise = Promise.reject('error-value');
-            const fn = jest.fn(() => promise);
+            const fn = xJet.fn(() => promise);
 
             const matcher = new MatcherService(fn);
             matcher['assertionChain'] = [ 'rejects', 'toThrow' ];
@@ -141,7 +141,7 @@ describe('MatcherService', () => {
             const matcher = new MatcherService(promise);
             matcher['rejectsModifier'] = true;
 
-            const dummyMatcher = jest.fn().mockReturnValue(undefined);
+            const dummyMatcher = xJet.fn().mockReturnValue(undefined);
             await expect(matcher['invokeAsync'](dummyMatcher, [])).resolves.toBeUndefined();
 
             expect(matcher['received']).toBe(errorValue);

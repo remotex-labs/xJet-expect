@@ -14,34 +14,18 @@ import { serialize } from '@components/serialize.component';
 import { composeStatement } from '@components/format.component';
 
 /**
- * Mock dependencies
- */
-
-jest.mock('@components/format.component', () => ({
-    composeStatement: jest.fn()
-}));
-
-jest.mock('@components/color.component', () => ({
-    RECEIVED: jest.fn()
-}));
-
-jest.mock('@components/serialize.component', () => ({
-    serialize: jest.fn()
-}));
-
-/**
  * Tests
  */
 
 describe('xJetPromiseError', () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        xJet.clearAllMocks();
     });
 
     test('constructs with full formatted message', () => {
-        (composeStatement as jest.Mock).mockReturnValue('formatted statement');
-        (serialize as jest.Mock).mockReturnValue([ 'serialized', 'value' ]);
-        (RECEIVED as jest.Mock).mockImplementation((str) => `<colored:${ str }>`);
+        xJet.mock(serialize).mockReturnValue([ 'serialized', 'value' ]);
+        xJet.mock(composeStatement).mockReturnValue('formatted statement');
+        xJet.mock(RECEIVED).mockImplementation((str) => `<colored:${ str }>`);
 
         const options: OptionsPromiseErrorInterface = {
             assertionChain: [ 'rejects', 'toThrow' ],
@@ -62,9 +46,9 @@ describe('xJetPromiseError', () => {
     });
 
     test('handles Rejected promise kind', () => {
-        (composeStatement as jest.Mock).mockReturnValue('stmt');
-        (serialize as jest.Mock).mockReturnValue([ 'x' ]);
-        (RECEIVED as jest.Mock).mockReturnValue('<c:x>');
+        xJet.mock(serialize).mockReturnValue([ 'x' ]);
+        xJet.mock(composeStatement).mockReturnValue('stmt');
+        xJet.mock(RECEIVED).mockReturnValue('<c:x>');
 
         const options: OptionsPromiseErrorInterface = {
             assertionChain: [ 'resolves', 'toBe' ],

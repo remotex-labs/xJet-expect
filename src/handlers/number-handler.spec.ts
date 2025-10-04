@@ -13,15 +13,6 @@ import { handleComparisonFailure } from '@handlers/matchers.handler';
 import { ensurePositiveNumber, handleNumericComparison } from '@handlers/number.handler';
 
 /**
- * Mock dependencies
- */
-
-jest.mock('@handlers/matchers.handler', () => ({
-    ...jest.requireActual('@handlers/matchers.handler'),
-    handleComparisonFailure: jest.fn()
-}));
-
-/**
  * Tests
  */
 
@@ -30,7 +21,8 @@ describe('Numeric matcher utilities', () => {
 
     describe('handleNumericComparison', () => {
         beforeEach(() => {
-            jest.clearAllMocks();
+            xJet.clearAllMocks();
+            xJet.mock(handleComparisonFailure);
         });
 
         function createMatcherService(received: unknown, notModifier = false, macherName: string = '') {

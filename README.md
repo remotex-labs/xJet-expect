@@ -62,7 +62,7 @@ test('basic assertions', () => {
 import { xExpect, test, jest } from '@remotex-labs/xjet-expect';
 
 test('mock function calls', () => {
-  const mockFn = jest.fn();
+  const mockFn = xJet.fn();
   
   mockFn('first call');
   mockFn('second call');
@@ -76,7 +76,7 @@ test('mock function calls', () => {
 });
 
 test('mock return values', () => {
-  const mockFn = jest.fn()
+  const mockFn = xJet.fn()
     .mockReturnValueOnce('first')
     .mockReturnValueOnce('second');
   

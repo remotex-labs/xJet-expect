@@ -48,7 +48,7 @@ describe('xJetBaseError', () => {
 
         test('should capture stack trace if available', () => {
             const originalCaptureStackTrace = Error.captureStackTrace;
-            const mockCaptureStackTrace = jest.fn();
+            const mockCaptureStackTrace = xJet.fn();
             Error.captureStackTrace = mockCaptureStackTrace;
 
             new TestError('Test error');
