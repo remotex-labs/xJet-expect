@@ -83,7 +83,7 @@ export type ConstructorType<Return = unknown> = Function & {
  */
 
 export type ConstructorLikeType<Return = unknown, Args extends Array<unknown> = []> =
-    abstract new(...args: Args) => Return;
+    new(...args: Args) => Return;
 
 /**
  * Represents a type that resolves to the value type of the provided generic type `T` if it is `PromiseLike`.
