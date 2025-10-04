@@ -1,17 +1,19 @@
 # String Matchers
+
 String matchers help you test string values, allowing you to check string content, patterns, and properties.
 
 ## toHaveLength
+
 Checks if a string (or any object with a `length` property) has the expected length.
 
 ```ts
 expect(value).toHaveLength(length)
 ```
 
-### Parameters
+*Parameters:*
+
 - `length`: The expected length as a number or bigint
 
-### Examples
 ```ts
 // String length
 expect('hello').toHaveLength(5)  // Passes
@@ -27,6 +29,7 @@ expect({ length: 5 }).toHaveLength(5)  // Passes
 ```
 
 ## toMatch
+
 Checks if a string matches a substring or regular expression pattern.
 
 ```ts
@@ -34,11 +37,13 @@ expect(value).toMatch(expected)
 ```
 
 ### Parameters
+
 - `expected`: A string substring or RegExp pattern to match against
 
 ### Examples
 
 #### With String Substring
+
 ```ts
 // Basic substring matching
 expect('hello world').toMatch('world')  // Passes
@@ -50,6 +55,7 @@ expect('Hello World').not.toMatch('hello')  // Passes
 ```
 
 #### With Regular Expressions
+
 ```ts
 // Basic regex matching
 expect('hello world').toMatch(/world/)  // Passes
@@ -66,6 +72,7 @@ expect('hello world').not.toMatch(/^goodbye/)  // Passes
 ```
 
 ## Common Testing Patterns
+
 ### Format Validation
 
 ```ts
@@ -76,6 +83,7 @@ test('validates email format', () => {
 ```
 
 ### Content Verification
+
 ```ts
 test('error message contains relevant information', () => {
   const error = getErrorMessage()
@@ -85,6 +93,7 @@ test('error message contains relevant information', () => {
 ```
 
 ### Length Constraints
+
 ```ts
 test('username has valid length', () => {
   const username = 'johndoe'
