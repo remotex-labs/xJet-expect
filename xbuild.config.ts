@@ -20,15 +20,18 @@ const config: Array<xBuildConfig> = [
         bundleDeclaration: true,
         esbuild: {
             bundle: true,
-            minify: true,
+            minify: false,
             format: 'esm',
             outdir: 'dist/esm',
             target: [ `node${ version.slice(1) }` ],
             platform: 'browser',
             packages: 'external',
-            keepNames: true,
             sourcemap: true,
             sourceRoot: `https://github.com/remotex-labs/xjet-expect/tree/v${ pkg.version }/`,
+            minifySyntax: true,
+            preserveSymlinks: true,
+            minifyWhitespace: true,
+            minifyIdentifiers: false,
             entryPoints: {
                 'index': 'src/index.ts'
             }
