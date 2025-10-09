@@ -37,7 +37,10 @@ describe('AnyPattern', () => {
                 Symbol,
                 Array,
                 Object,
+                class {
+                },
                 class MyClass {
+                    name = 'MyClass';
                 }
             ];
 

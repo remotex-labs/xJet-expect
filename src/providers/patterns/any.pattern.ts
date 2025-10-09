@@ -60,7 +60,7 @@ export class AnyPattern extends AbstractPattern {
      */
 
     private constructor(public readonly expected: ConstructorType) {
-        super(`Any<${ expected.name }>`);
+        super(`Any<${ expected.name || 'Anonymous' }>`);
     }
 
     /**
@@ -99,7 +99,7 @@ export class AnyPattern extends AbstractPattern {
      */
 
     get expectedLabel(): string {
-        return `Any<${ this.expected.name }>`;
+        return this.name ?? 'Any<Anonymous>';
     }
 
     /**
