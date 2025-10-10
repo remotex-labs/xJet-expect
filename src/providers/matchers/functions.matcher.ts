@@ -237,6 +237,8 @@ export function toThrow(this: MatcherService, expected?: RegExp | string | Const
 
     if (this.rejectsModifier) {
         thrown = getThrown(this.received);
+    } else if (this.resolvesModifier) {
+        thrown = null;
     } else if (typeof this.received === 'function') {
         try {
             this.received();
