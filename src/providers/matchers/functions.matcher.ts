@@ -198,6 +198,56 @@ export function toThrowExpectedObject(this: MatcherService, expected: object, th
     return [ pass, handleNot, handleInfo ];
 }
 
+/**
+ * Captures any error thrown by the provided function or returns a formatted error from a rejection.
+ *
+ * @returns A normalized {@link ThrownType} object containing the thrown error details, or `null` if nothing was thrown.
+ *
+ * @remarks
+ * This helper function processes errors from different sources:
+ * - When `rejectsModifier` is active, formats the already-rejected value in `received`.
+ * - When `received` is a function, executes it and captures any thrown errors.
+ * - Otherwise returns `null` to indicate no error was thrown/captured.
+ *
+ * The returned {@link ThrownType} normalizes both Error instances and arbitrary values
+ * into a consistent structure with type information, message extraction, and serialized form.
+ *
+ * @example
+ * ```ts
+ * // With a throwing function:
+ * const thrown = captureThrown.call({ received: () => { throw new Error('Test error') } });
+ * // Returns a ThrownType with the message "Test error" and isError=true
+ *
+ * // With a non-throwing function:
+ * const thrown = captureThrown.call({ received: () => {} });
+ * // Returns null
+ *
+ * // With a rejection:
+ * const thrown = captureThrown.call({
+ *   received: new Error('Rejected'),
+ *   rejectsModifier: true
+ * });
+ * // Returns a ThrownType for the rejection
+ * ```
+ *
+ * @see getThrown
+ * @see ThrownType
+ *
+ * @since 2.1.3
+ */
+
+export function captureThrown(this: MatcherService): ThrownType | null {
+    if (this.rejectsModifier) return getThrown(this.received);
+    if (typeof this.received === 'function') {
+        try {
+            this.received();
+        } catch (error) {
+            return getThrown(error);
+        }
+    }
+
+    return null;
+}
 
 /**
  * Asserts that a function or promise throws a value that matches the expected criteria.
@@ -232,25 +282,16 @@ export function toThrowExpectedObject(this: MatcherService, expected: object, th
  */
 
 export function toThrow(this: MatcherService, expected?: RegExp | string | ConstructorLikeType | object): void {
-    let thrown: ThrownType | null = null;
+    const thrown = captureThrown.call(this);
     const expectedLabels = expected ? [ 'expected' ] : [];
 
-    if (this.rejectsModifier) {
-        thrown = getThrown(this.received);
-    } else if (typeof this.received === 'function') {
-        try {
-            this.received();
-        } catch (error) {
-            thrown = getThrown(error);
-        }
-    } else {
-        ensureType.call(this, this.received, [ 'function' ], 'Received', expectedLabels);
+    if (!this.rejectsModifier && !this.resolvesModifier && typeof this.received !== 'function') {
+        return ensureType.call(this, this.received, [ 'function' ], 'Received', expectedLabels);
     }
 
     let pass = false;
     let handleNot: HandleNotType;
     let handleInfo: HandleInfoType;
-
     if (!expected) {
         pass = thrown != null;
         handleNot = (info: Array<string>): void => {
@@ -264,10 +305,13 @@ export function toThrow(this: MatcherService, expected?: RegExp | string | Const
     } else if (typeof expected === 'function') {
         [ pass, handleNot, handleInfo ] = toThrowExpectedClass.call(this, <ConstructorLikeType> expected, thrown);
     } else if (typeof expected === 'string') {
+        expectedLabels[0] = expected;
         [ pass, handleNot, handleInfo ] = toThrowExpectedString.call(this, expected, thrown);
     } else if (expected instanceof RegExp) {
+        expectedLabels[0] = String(expected);
         [ pass, handleNot, handleInfo ] = toThrowExpectedRegExp.call(this, expected, thrown);
     } else if (isAsymmetric(expected)) {
+        expectedLabels[0] = String(expected.name);
         [ pass, handleNot, handleInfo ] = toThrowExpectedAsymmetric.call(this, expected, thrown);
     } else if (thrown !== null && typeof expected === 'object') {
         [ pass, handleNot, handleInfo ] = toThrowExpectedObject.call(this, expected, thrown);
