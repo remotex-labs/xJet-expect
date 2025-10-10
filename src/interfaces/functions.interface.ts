@@ -86,38 +86,6 @@ export type ConstructorLikeType<Return = unknown, Args extends Array<unknown> = 
     new(...args: Args) => Return;
 
 /**
- * Represents a type that resolves to the value type of the provided generic type `T` if it is `PromiseLike`.
- * If `T` is `PromiseLike`, it infers the resolved type `U` and assigns `U | T`.
- * If `T` is not `PromiseLike`, the resulting type is `never`.
- *
- * @template T The type to evaluate for `PromiseLike` resolution.
- *
- * @param T - The input type to determine its resolved value type.
- *
- * @remarks This type is particularly useful for extracting both the resolved value of a `PromiseLike`
- * type and the type itself if needed.
- *
- * @since 1.0.0
- */
-
-export type ResolvedValueType<T> = T extends PromiseLike<infer U> ? U | T : never;
-
-/**
- * Represents a conditional type that evaluates to `unknown` if the specified type `T`
- * extends a `PromiseLike` type, otherwise evaluates to `never`.
- *
- * @template T The type to evaluate against the conditional type.
- *
- * @remarks
- * This utility type is useful in scenarios where you need to determine if a given
- * type is promise-like and handle rejected values accordingly.
- *
- * @since 1.0.0
- */
-
-export type RejectedValueType<T> = T extends PromiseLike<unknown> ? unknown : never;
-
-/**
  * Represents a utility type that transforms all properties of a given type `T`
  * into required (non-optional) properties.
  *
