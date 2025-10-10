@@ -27,7 +27,7 @@ const config: Array<xBuildConfig> = [
             platform: 'browser',
             packages: 'external',
             sourcemap: true,
-            sourceRoot: `https://github.com/remotex-labs/xjet-expect/tree/v${ pkg.version }/`,
+            sourceRoot: `https://github.com/remotex-labs/xjet-expect/tree/v${ pkg.version }///`,
             minifySyntax: true,
             preserveSymlinks: true,
             minifyWhitespace: true,
