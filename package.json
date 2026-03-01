@@ -71,7 +71,7 @@
         "@types/node": "^24.7.0",
         "@viteplus/versions": "^2.0.2",
         "@remotex-labs/xjet": "^1.2.1",
-        "@remotex-labs/xbuild": "1.6.0"
+        "@remotex-labs/xbuild": "2.1.6"
     },
     "dependencies": {
         "@remotex-labs/xansi": "^1.3.3"
