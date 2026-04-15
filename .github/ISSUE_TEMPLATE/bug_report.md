@@ -1,34 +1,43 @@
 ---
-name: Bug reports
-about: Create a reports to help us improve
-title: ''
-labels: ''
-assignees: ''
-
+name: 🐞 Bug Report
+title: 🐞 Bug Report
+about: Something is broken
+labels: [ "bug", "needs triage" ]
 ---
 
-### This is a...
+**Describe the bug**
+A clear and concise description of what the bug is.
 
-* [ ] feature request
-* [ ] bug report
-* [ ] usage question
+**Reproduction**
 
-### Environment
+```typescript
+// Minimal code that reproduces the issue
+import {} from '@remotex-labs/xjet-expect';
+```
 
-NodeJS Version:
-Typescript Version:
-OS:
+**Expected behavior**
+What you expected to happen.
 
-### Link to repo showing the issue
+**Actual behavior**
+What actually happened. 
+Include the full error message and stack trace if applicable.
 
-(optional, but helps _a lot_)
+```
+Error: ...
+    at ...
+```
 
-### Expected Behaviour:
+**Environment**
 
-### Actual Behaviour:
+|                                     | |
+|-------------------------------------|-|
+| `@remotex-labs/xjet-expect` version | |
+| OS                                  | |
+| Bundler                             | |
+| Node.js version                     | |
 
-### Stack Trace/Error Message:
+**Checklist**
 
-### Additional Notes:
-
-(optional)
+- [ ] I have searched for existing issues, and this is not a duplicate
+- [ ] I am using the latest published version
+- [ ] I have included a minimal reproduction above
