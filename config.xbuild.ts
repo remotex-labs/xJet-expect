@@ -19,15 +19,12 @@ export const config: xBuildConfig = {
     common: {
         esbuild: {
             bundle: true,
-            minify: false,
+            minify: true,
             target: [ `node${ version.slice(1) }` ],
             platform: 'browser',
             packages: 'external',
             sourcemap: true,
             sourceRoot: `https://github.com/remotex-labs/xjet-expect/tree/v${ pkg.version }/`,
-            minifySyntax: true,
-            minifyWhitespace: true,
-            minifyIdentifiers: false,
             entryPoints: {
                 'index': 'src/index.ts'
             }
