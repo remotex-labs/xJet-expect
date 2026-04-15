@@ -1,10 +1,11 @@
 # xJet Matcher Utilities
 
-[![npm version](https://img.shields.io/badge/Documentation-orange?logo=typescript&logoColor=f5f5f5)](https://remotex-labs.github.io/xJet-expect/)
+[![Documentation](https://img.shields.io/badge/Documentation-orange?logo=typescript&logoColor=f5f5f5)](https://remotex-labs.github.io/xJet-expect/)
 [![npm version](https://img.shields.io/npm/v/@remotex-labs/xjet-expect.svg)](https://www.npmjs.com/package/@remotex-labs/xjet-expect)
+[![downloads](https://img.shields.io/npm/dm/@remotex-labs/xjet-expect?label=npm%20downloads)](https://www.npmjs.com/package/@remotex-labs/xjet-expect)
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
-[![Node.js CI](https://github.com/remotex-labs/xJet-expect/actions/workflows/node.js.yml/badge.svg)](https://github.com/remotex-labs/xJet-expect/actions/workflows/node.js.yml)
-[![Discord](https://img.shields.io/discord/1364348850696884234?logo=Discord&label=Discord)](https://discord.gg/BnEUkXJC)
+[![Test CI](https://github.com/remotex-labs/xjet-expect/actions/workflows/test.yml/badge.svg)](https://github.com/remotex-labs/xJet-expect/actions/workflows/test.yml)
+[![Discord](https://img.shields.io/discord/1364348850696884234?logo=Discord&label=Discord)](https://discord.gg/psV9grS9th)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/remotex-labs/xJet-expect)
 
 A TypeScript-based matcher library for testing mocks and verifying function calls, thrown errors, and returned values.  
