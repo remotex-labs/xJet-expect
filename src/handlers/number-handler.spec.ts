@@ -22,7 +22,7 @@ describe('Numeric matcher utilities', () => {
     describe('handleNumericComparison', () => {
         beforeEach(() => {
             xJet.clearAllMocks();
-            xJet.mock(handleComparisonFailure);
+            xJet.mock(handleComparisonFailure).mockImplementation(xJet.fn());
         });
 
         function createMatcherService(received: unknown, notModifier = false, macherName: string = '') {
@@ -120,7 +120,7 @@ describe('ensurePositiveNumber', () => {
     test('should throw xJetTypeError for negative number with label "Expected" and include correct details', () => {
         try {
             ensurePositiveNumber.call(matcherServiceMock as MatcherService, -1, 'Expected', [ 'MyLabel' ]);
-            fail('Expected error was not thrown');
+            throw new Error('Expected error was not thrown');
         } catch (err: any) {
             expect(err).toBeInstanceOf(xJetTypeError);
 

@@ -38,6 +38,7 @@ describe('coreExpect function', () => {
         // Spy on invoke method of MatcherService
         const result = xExpect(received);
         const invokeSpy = xJet.spyOn(result as any, 'invoke');
+        invokeSpy.mockImplementation(xJet.fn());
 
         // Call the matcher method dynamically added
         (result as any)[matcherName]('arg1', 'arg2');
