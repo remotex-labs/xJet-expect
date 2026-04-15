@@ -8,7 +8,7 @@
     },
     "include": [
         "**/*.ts",
-        "includes/*.d.ts"
+        "**/*.spec.ts"
     ],
     "exclude": [
         "dist",

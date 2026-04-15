@@ -3,7 +3,6 @@
         "strict": true,
         "target": "ESNext",
         "module": "ESNext",
-        "baseUrl": ".",
         "outDir": "dist",
         "rootDir": "src",
         "declaration": true,
@@ -55,8 +54,7 @@
     },
     "include": [
         "src/index.ts",
-        "includes/*.d.ts",
-        "xbuild.config.ts"
+        "includes/*.d.ts"
     ],
     "exclude": [
         "dist",
