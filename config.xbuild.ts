@@ -15,21 +15,17 @@ import pkg from './package.json' with { type: 'json' };
  * Config build
  */
 
-const config: Array<xBuildConfig> = [
-    {
-        bundleDeclaration: true,
+export const config: xBuildConfig = {
+    common: {
         esbuild: {
             bundle: true,
             minify: false,
-            format: 'esm',
-            outdir: 'dist/esm',
             target: [ `node${ version.slice(1) }` ],
             platform: 'browser',
             packages: 'external',
             sourcemap: true,
-            sourceRoot: `https://github.com/remotex-labs/xjet-expect/tree/v${ pkg.version }///`,
+            sourceRoot: `https://github.com/remotex-labs/xjet-expect/tree/v${ pkg.version }/`,
             minifySyntax: true,
-            preserveSymlinks: true,
             minifyWhitespace: true,
             minifyIdentifiers: false,
             entryPoints: {
@@ -37,15 +33,18 @@ const config: Array<xBuildConfig> = [
             }
         }
     },
-    {
-        noTypeChecker: true,
-        bundleDeclaration: false,
-        esbuild: {
-            bundle: true,
-            format: 'cjs',
-            outdir: 'dist/cjs'
+    variants: {
+        esm: {
+            esbuild: {
+                format: 'esm',
+                outdir: 'dist/esm'
+            }
+        },
+        cjs: {
+            esbuild: {
+                format: 'cjs',
+                outdir: 'dist/cjs'
+            }
         }
     }
-];
-
-export default config;
+};
