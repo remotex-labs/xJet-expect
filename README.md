@@ -4,7 +4,7 @@
 [![npm version](https://img.shields.io/npm/v/@remotex-labs/xjet-expect.svg)](https://www.npmjs.com/package/@remotex-labs/xjet-expect)
 [![downloads](https://img.shields.io/npm/dm/@remotex-labs/xjet-expect?label=npm%20downloads)](https://www.npmjs.com/package/@remotex-labs/xjet-expect)
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
-[![Test CI](https://github.com/remotex-labs/xjet-expect/actions/workflows/test.yml/badge.svg)](https://github.com/remotex-labs/xJet-expect/actions/workflows/test.yml)
+[![Test CI](https://github.com/remotex-labs/xJet-expect/actions/workflows/ci.yml/badge.svg)](https://github.com/remotex-labs/xJet-expect/actions/workflows/ci.yml)
 [![Discord](https://img.shields.io/discord/1364348850696884234?logo=Discord&label=Discord)](https://discord.gg/psV9grS9th)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/remotex-labs/xJet-expect)
 
@@ -13,19 +13,17 @@ Inspired by Jest-style assertions with xJet support for extended mock / spy in e
 
 ## Installation
 
-Install via npm:
-
-``` bash
+```bash
 npm install --save-dev @remotex-labs/xjet-expect
+# or
+pnpm add -D @remotex-labs/xjet-expect
+# or
+yarn add --dev @remotex-labs/xjet-expect
 ```
 
-Or using yarn:
+xJet-Expect requires Node.js 20 or later.
 
-``` bash
-yarn add @remotex-labs/xjet-expect
-```
-
-## Features
+## Key Features
 
 - **TypeScript First**: Full TypeScript support with comprehensive type definitions
 - **Modern ESM Support**: Works seamlessly with ES modules
@@ -168,23 +166,18 @@ test('custom matchers', () => {
 
 For complete API documentation, examples, and guides, visit: [xJet-expect Documentation](https://remotex-labs.github.io/xJet-expect/)
 
-## Compatibility
-
-- Node.js 20+
-- All modern browsers (via bundlers)
-- TypeScript 4.5+
-- Compatible with Jest assertions for easy migration
-
 ## Contributing
 
-Contributions are welcome! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+Contributions are welcome!\
+Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+## Links
+
+[Documentation](https://remotex-labs.github.io/xJet-expect/),
+[GitHub Repository](https://github.com/remotex-labs/xJet-expect),
+[Issue Tracker](https://github.com/remotex-labs/xJet-expect/issues),
+[npm Package](https://www.npmjs.com/package/@remotex-labs/xjet-expect)
 
 ## License
 
 This project is licensed under the Mozilla Public License 2.0 - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- Inspired by Jest's expect API
-- Built with TypeScript
-- Powered by the xJet ecosystem
