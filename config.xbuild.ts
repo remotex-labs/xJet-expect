@@ -25,6 +25,7 @@ export const config: xBuildConfig = {
             packages: 'external',
             sourcemap: true,
             sourceRoot: `https://github.com/remotex-labs/xjet-expect/tree/v${ pkg.version }/`,
+            legalComments: 'none',
             entryPoints: {
                 'index': 'src/index.ts'
             }
