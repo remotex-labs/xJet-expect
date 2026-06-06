@@ -1,6 +1,7 @@
 {
     "extends": "./tsconfig.json",
     "compilerOptions": {
+        "composite": true,
         "types": [
             "node",
             "@remotex-labs/xjet"
@@ -12,6 +13,7 @@
     ],
     "exclude": [
         "dist",
-        "node_modules"
+        "node_modules",
+        "config.xbuild.ts"
     ]
 }
