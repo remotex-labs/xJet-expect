@@ -190,7 +190,7 @@ export function toHaveBeenCalledWith(this: MatcherService<MockStateInterface>, .
  * This matcher validates that the mock function represented by `this.received`
  * was invoked last with arguments exactly matching `args`. It performs the following:
  * 1. Ensures that `this.received` is a mock function via {@link ensureMock}.
- * 2. Retrieves the last call from the mock’s call history.
+ * 2. Retrieves the last call from the mock's call history.
  * 3. Compares the last call arguments with the expected arguments using {@link equals}.
  * 4. Reports assertion results and detailed call differences using {@link handleFailure},
  *    {@link serializeCallArgs}, and {@link serializeCallList}.
@@ -253,7 +253,7 @@ export function toHaveBeenLastCalledWith(this: MatcherService<MockStateInterface
  * This matcher performs the following steps:
  * 1. Validates that `this.received` is a mock function using {@link ensureMock}.
  * 2. Ensures that `nthCall` is a positive number via {@link ensurePositiveNumber}.
- * 3. Retrieves the N-th call from the mock’s call history.
+ * 3. Retrieves the N-th call from the mock's call history.
  * 4. Compares the N-th call arguments to the expected `args` using {@link equals}.
  * 5. Reports assertion results and detailed call differences using {@link handleFailure},
  *    {@link serializeCallArgs}, and {@link serializeCallList}.
@@ -316,7 +316,7 @@ export function toHaveBeenNthCalledWith(this: MatcherService<MockStateInterface>
  * @remarks
  * This matcher performs the following steps:
  * 1. Validates that `this.received` is a mock function using {@link ensureMock}.
- * 2. Iterates over the mock’s results to count how many invocations returned a value.
+ * 2. Iterates over the mock's results to count how many invocations returned a value.
  * 3. Collects all returned values for reporting.
  * 4. Delegates assertion reporting to {@link handleFailure}, including a summary of returned values
  *    and total calls using {@link serializeReturnList}.

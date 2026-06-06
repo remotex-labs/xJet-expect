@@ -30,7 +30,7 @@ describe('ArrayContainingPattern', () => {
     describe('expectedLabel', () => {
         test('returns correct label without inversion', () => {
             const matcher = ArrayContainingPattern.create(false, [ 1, 2 ]);
-            // Default serialize returns a string joined by space — this may vary by your serialize implementation
+            // Default serialize returns a string joined by space - this may vary by your serialize implementation
             expect(matcher.expectedLabel).toContain('ArrayContaining');
             expect(matcher.expectedLabel).toContain('1');
             expect(matcher.expectedLabel).toContain('2');
