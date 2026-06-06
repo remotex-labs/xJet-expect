@@ -1,229 +1,184 @@
 # Asymmetric Matchers
 
-Asymmetric matchers provide flexible ways to verify that values meet certain conditions without requiring exact equality.
-They're especially useful when only certain aspects of an object need validation or when dealing with dynamic data.
+Asymmetric matchers verify that a value meets a *condition* instead of equalling an exact value. They are
+indispensable when only part of a value matters, or when data is dynamic - timestamps, generated ids, or
+floating-point results.
 
-## Basic Usage
+They are accessed off `xExpect` and dropped in wherever a concrete value would go.
 
-Asymmetric matchers can be used in any xJet assertion that compares values:
+| Matcher                       | Matches                                        |
+|-------------------------------|------------------------------------------------|
+| `xExpect.any(Ctor)`           | Any value produced by the constructor `Ctor`   |
+| `xExpect.anything()`          | Any value except `null` and `undefined`        |
+| `xExpect.closeTo(n, p?)`      | A number within precision `p` of `n`           |
+| `xExpect.arrayOf(pattern)`    | An array whose every element matches `pattern` |
+| `xExpect.arrayContaining(xs)` | An array containing all of `xs`, in any order  |
+| `xExpect.objectContaining(o)` | An object with at least the properties of `o`  |
+| `xExpect.stringContaining(s)` | A string containing the substring `s`          |
+| `xExpect.stringMatching(re)`  | A string matching the `RegExp` `re`            |
+
+## Basic usage
+
+Drop an asymmetric matcher anywhere a value would normally go:
 
 ```ts
 test('user data has expected structure', () => {
-  const user = fetchUser(123);
-  
-  xExpect(user).toEqual({
-    id: 123,
-    name: xExpect.any(String),
-    createdAt: xExpect.any(Date),
-    status: 'active'
-  });
-});
+    const user = fetchUser(123);
 
+    xExpect(user).toEqual({
+        id: 123,
+        name: xExpect.any(String),
+        createdAt: xExpect.any(Date),
+        status: 'active'
+    });
+});
 ```
 
-## Where Asymmetric Matchers Can Be Used
+## Where they can be used
 
-Asymmetric matchers work with multiple matchers across the xJet testing framework:
+They work in any matcher that compares values - equality, mock arguments, thrown errors, and array membership:
 
 ```ts
-// In equality assertions
+// Equality
 xExpect({ name: 'Alice' }).toEqual({ name: xExpect.any(String) });
 
-// In function call assertions
+// Mock call arguments
 xExpect(mockFunction).toHaveBeenCalledWith(xExpect.objectContaining({ id: 123 }));
 
-// In strict equality checks (only at root level)
-xExpect({ name: 'Alice' }).toBe(xExpect.any(Object));
+// Thrown errors
+xExpect(() => validateEmail('')).toThrow(xExpect.objectContaining({ code: 'VALIDATION_ERROR' }));
 
-// In exception testing
-xExpect(() => validateEmail('')).toThrow(xExpect.objectContaining({ 
-  code: 'VALIDATION_ERROR' 
-}));
+// Array membership
+xExpect([ 'apple', 'banana' ]).toContainEqual(xExpect.stringMatching(/^a/));
 
-// In array content assertions
-xExpect(['apple', 'banana']).toContainEqual(xExpect.stringMatching(/^a/));
-
-// In partial object matching
-xExpect(response).toMatchObject({
-  users: xExpect.arrayContaining([{ role: 'admin' }])
-});
-
+// Partial object matching
+xExpect(response).toMatchObject({ users: xExpect.arrayContaining([ { role: 'admin' } ]) });
 ```
 
 ::: tip
-Each matcher includes information about whether it supports **Asymmetric Matchers**.
+Each matcher page marks the matchers that accept asymmetric values with a **Supports asymmetric matchers** callout.
 :::
 
 ## any
 
-`.any(constructor)`
-Matches any value created by the specified constructor.
+`xExpect.any(constructor)` - matches any value created by the given constructor, including custom classes.
 
 ```ts
 test('value type checking', () => {
     xExpect({ name: 'Alice' }).toEqual({ name: xExpect.any(String) });
-    xExpect(Math.round(2)).toBe(xExpect.any(Number));
+    xExpect(Math.round(2)).toEqual(xExpect.any(Number));
 
-    // With class instances
     class User {}
-    const user = new User();
-    xExpect(user).toEqual(xExpect.any(User));
+    xExpect(new User()).toEqual(xExpect.any(User));
 });
-
 ```
 
 ## anything
 
-`.anything()`
-Matches any non-null, non-undefined value.
+`xExpect.anything()` - matches any value that is not `null` or `undefined`.
 
 ```ts
 test('verifies value exists', () => {
-  const response = { data: 'something', timestamp: Date.now() };
-  
-  xExpect(response).toEqual({
-    data: xExpect.anything(),
-    timestamp: xExpect.anything()
-  });
-});
+    const response = { data: 'something', timestamp: 1700000000000 };
 
+    xExpect(response).toEqual({
+        data: xExpect.anything(),
+        timestamp: xExpect.anything()
+    });
+});
 ```
 
 ## closeTo
 
-`.closeTo(value, precision)`
-Matches numbers that are close to a target value within a specified precision.
+`xExpect.closeTo(value, precision?)` - matches a number within a tolerance of the target, for use inside larger
+structures. Use [`toBeCloseTo`](/matchers/numbers#tobecloseto) for a bare number.
 
 ```ts
-test('approximate calculations', () => {
-  const result = 0.1 + 0.2; // 0.30000000000000004 due to floating-point
-  
-  xExpect(result).toEqual(xExpect.closeTo(0.3, 0.001));
-});
+test('approximate value inside an object', () => {
+    const point = { x: 0.1 + 0.2, y: 1 };
 
+    xExpect(point).toEqual({ x: xExpect.closeTo(0.3, 5), y: 1 });
+});
 ```
 
 ## arrayOf
 
-`.arrayOf(pattern)`
-Matches an array where every element matches the specified pattern.
+`xExpect.arrayOf(pattern)` - matches an array in which **every** element matches the pattern.
 
 ```ts
-xExpect([ 'apple', 'banana', 'cherry' ]).toEqual(
-    xExpect.arrayOf(xExpect.any(String)),
-);
-```
-
-## stringMatching
-
-`xExpect.stringMatching(pattern)`
-Matches strings against a regular expression pattern.
-
-```ts
-test('string format validation', () => {
-  const email = 'user@example.com';
-  
-  xExpect(email).toEqual(
-    xExpect.stringMatching(/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i)
-  );
-  
-  // In objects
-  const user = { email: 'admin@company.org', role: 'ADMIN' };
-  xExpect(user).toEqual({
-    email: xExpect.stringMatching(/.+@company\.org$/),
-    role: xExpect.stringMatching(/^[A-Z]+$/)
-  });
-});
+xExpect([ 'apple', 'banana', 'cherry' ]).toEqual(xExpect.arrayOf(xExpect.any(String)));
 ```
 
 ## arrayContaining
 
-`xExpect.arrayContaining(items)`
-Matches arrays that contain all the specified items, regardless of order.
+`xExpect.arrayContaining(items)` - matches an array that contains all the given items, in any order.
 
 ```ts
 test('array includes required elements', () => {
-  const fruits = ['apple', 'banana', 'orange', 'grape'];
-  
-  xExpect(fruits).toEqual(xExpect.arrayContaining(['banana', 'apple']));
-  
-  // With response data
-  const response = {
-    users: ['admin', 'user1', 'user2'],
-    permissions: ['read', 'write']
-  };
-  
-  xExpect(response).toEqual({
-    users: xExpect.arrayContaining(['admin']),
-    permissions: xExpect.arrayContaining(['read', 'write'])
-  });
+    const fruits = [ 'apple', 'banana', 'orange', 'grape' ];
+    xExpect(fruits).toEqual(xExpect.arrayContaining([ 'banana', 'apple' ]));
 });
 ```
 
 ## objectContaining
 
-`.objectContaining(object)`
-Matches objects that have at least the specified properties with matching values.
+`xExpect.objectContaining(object)` - matches an object that has at least the given properties with matching
+values. Extra properties are ignored, and it nests.
 
 ```ts
 test('object structure validation', () => {
     const user = {
         id: 1,
         name: 'John',
-        email: 'john@example.com',
-        preferences: {
-            theme: 'dark',
-            notifications: true
-        }
+        preferences: { theme: 'dark', notifications: true }
     };
 
     xExpect(user).toEqual(xExpect.objectContaining({
         name: 'John',
-        preferences: xExpect.objectContaining({
-            theme: 'dark'
-        })
+        preferences: xExpect.objectContaining({ theme: 'dark' })
     }));
 });
 ```
 
 ## stringContaining
 
-`.stringContaining(substring)`
-Matches strings that contain the specified substring.
+`xExpect.stringContaining(substring)` - matches a string that contains the substring.
 
 ```ts
-test('string content validation', () => {
-  const message = 'Operation completed successfully';
-  
-  xExpect(message).toEqual(xExpect.stringContaining('completed'));
-  
-  // With error messages
-  const error = new Error('Invalid input: missing required field');
-  xExpect(error.message).toEqual(xExpect.stringContaining('missing required'));
-});
-
+xExpect('Operation completed successfully').toEqual(xExpect.stringContaining('completed'));
 ```
 
-## Negated Matchers with `.not`
+## stringMatching
 
-Use the namespace to negate any matcher's behavior: `.not`
+`xExpect.stringMatching(pattern)` - matches a string against a regular expression.
+
+```ts
+test('string format validation', () => {
+    const user = { email: 'admin@company.org', role: 'ADMIN' };
+
+    xExpect(user).toEqual({
+        email: xExpect.stringMatching(/.+@company\.org$/),
+        role: xExpect.stringMatching(/^[A-Z]+$/)
+    });
+});
+```
+
+## Negating with .not
+
+`xExpect.not` negates any of the matchers above - the value passes when it does **not** match.
 
 ```ts
 test('using negated matchers', () => {
-  const data = {
-    temperature: 25.2,
-    status: 'warning',
-    tags: ['important', 'urgent']
-  };
-  
-  // Value is not close to the specified number
-  xExpect(data.temperature).toEqual(xExpect.not.closeTo(0, 1));
-  
-  // String doesn't match pattern
-  xExpect(data.status).toEqual(xExpect.not.stringMatching(/^error/));
-  
-  // Array doesn't contain these elements
-  xExpect(data.tags).toEqual(xExpect.not.arrayContaining(['low-priority']));
-});
+    const data = { temperature: 25.2, status: 'warning', tags: [ 'important', 'urgent' ] };
 
+    xExpect(data.temperature).toEqual(xExpect.not.closeTo(0, 1));
+    xExpect(data.status).toEqual(xExpect.not.stringMatching(/^error/));
+    xExpect(data.tags).toEqual(xExpect.not.arrayContaining([ 'low-priority' ]));
+});
 ```
+
+## See also
+
+- [Equality matchers](/matchers/equality)
+- [Objects & Arrays](/matchers/objects)
+- [Modifiers](/guide/modifiers)

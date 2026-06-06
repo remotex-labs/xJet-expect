@@ -1,128 +1,102 @@
 # Modifiers
 
-Modifiers enhance your test assertions by adapting matcher behavior for different scenarios. T
-hey connect your `xExpect()` statement to the actual matcher, allowing for more flexible and powerful tests in your xJet test suites.
+Modifiers adapt a matcher before it runs. They sit between `xExpect()` and the matcher, letting you negate an
+assertion or unwrap a Promise. They also chain, so `.resolves.not` and `.rejects.not` are valid.
 
-## not
+| Modifier    | Effect                                                     |
+|-------------|------------------------------------------------------------|
+| `.not`      | Inverts the matcher - passes when it would otherwise fail. |
+| `.resolves` | Waits for a Promise to fulfill, then matches its value.    |
+| `.rejects`  | Waits for a Promise to reject, then matches the reason.    |
 
-Inverts your assertion to verify that something is false rather than true.
+## .not
+
+Inverts the assertion, so it passes when the underlying matcher would fail.
 
 ```ts
 test('verifies incorrect password is rejected', () => {
-    // Check authentication fails with wrong credentials
     xExpect(authenticate('user', 'wrong_password')).not.toBeTruthy();
-
-    // Verify element is not in the expected state
     xExpect(component.getStatus()).not.toBe('ready');
 });
-
 ```
 
-## resolves
+## .resolves
 
-Unwraps a fulfilled promise's value so you can test the resolved result directly.
+Unwraps a fulfilled Promise so you can assert on its resolved value. Always `await` (or `return`) the assertion so
+the test waits for it.
 
 ```ts
 test('API request completes successfully', async () => {
-    // Using async/await - recommended approach
     await xExpect(api.fetchData('/users')).resolves.toMatchObject({
         success: true,
         count: xExpect.any(Number)
     });
-
-    // Alternative approach with Promise.then()
-    return xExpect(api.fetchConfig()).resolves.toHaveProperty('version');
 });
-
 ```
 
-::: tip
-**Best Practice:** The async/await syntax is generally more readable than the return approach.
-It allows for cleaner test organization, especially when you need to perform additional assertions after the promise resolves.
+::: tip Prefer async/await
+The `await` form reads more clearly than returning the assertion, and it lets you run further checks after the
+Promise resolves. Reach for `return xExpect(...).resolves...` only when the test body is a single expression.
 :::
 
-## rejects
+## .rejects
 
-Tests that a promise rejects and allow you to verify the rejection reason.
-The modifier works with both promises that explicitly call `reject()` and those that throw exceptions inside the promise executor. `.rejects`
-
-### Promise rejection patterns
-
-xJet treats these rejection patterns equivalently with : `.rejects`
+Asserts that a Promise rejects, and matches the rejection reason. It treats an explicit `reject(...)` and a `throw`
+inside the executor the same way.
 
 ```ts
-// Pattern 1: Explicit rejection with reject()
-function explicitReject(): Promise<any> {
+// Explicit rejection
+function explicitReject(): Promise<unknown> {
     return new Promise((resolve, reject) => {
         reject('error message');
     });
 }
 
-// Pattern 2: Throwing inside promise executor
-function throwInPromise(): Promise<any> {
-    return new Promise((resolve, reject) => {
+// Throwing inside the executor
+function throwInPromise(): Promise<unknown> {
+    return new Promise(() => {
         throw 'error message';
     });
 }
 
-// Both can be tested the same way
 test('promise rejection patterns', async () => {
     await xExpect(explicitReject()).rejects.toBe('error message');
     await xExpect(throwInPromise()).rejects.toBe('error message');
 });
-
 ```
 
-You can use either `toBe()` to match the exact rejection value or for error-like objects: `toThrow()`
+Match the reason with `toBe` for an exact value, or `toThrow` for an error message or type.
 
 ```ts
-test('different assertion styles with rejects', async () => {
-  // When rejecting with a string
-  function rejectWithString(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      reject('validation failed');
-    });
-  }
-  
-  // These assertions are equivalent
-  await xExpect(rejectWithString()).rejects.toBe('validation failed');
-  await xExpect(rejectWithString()).rejects.toThrow('validation failed');
-  
-  // When rejecting with an Error object
-  function rejectWithError(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      reject(new Error('network error'));
-    });
-  }
-  
-  // These assertions work for Error objects
-  await xExpect(rejectWithError()).rejects.toThrow('network error');
-  await xExpect(rejectWithError()).rejects.toBeInstanceOf(Error);
+test('asserting on the rejection reason', async () => {
+    await xExpect(Promise.reject('validation failed')).rejects.toBe('validation failed');
+    await xExpect(Promise.reject(new Error('network error'))).rejects.toThrow('network error');
+    await xExpect(Promise.reject(new Error('network error'))).rejects.toBeInstanceOf(Error);
 });
-
 ```
 
-::: info
-While both `toBe` and can be used with,
-using is generally preferred when testing Error objects as it provides better error messages and can check error types `toThrow()`, `.rejects`, `toThrow()`
+::: info When to use toThrow
+For `Error` objects, prefer `toThrow` over `toBe`: it matches by message or constructor and produces clearer
+failure output than comparing the whole object. See [Functions & Errors](/matchers/functions).
 :::
 
-## Combining Modifiers
-
-You can use modifiers together with various matchers to create powerful assertions:
+## Combining modifiers
 
 ```ts
-test('demonstrates advanced modifier usage', async () => {
-  // Verify a promise resolves to a non-null value
-  await xExpect(storage.getSettings()).resolves.not.toBeNull();
-  
-  // Verify a function doesn't throw under valid conditions
-  xExpect(() => parser.parseConfig('{"valid": true}')).not.toThrow();
-  
-  // Verify an async operation doesn't resolve with a specific error state
-  await xExpect(permissions.check('admin')).resolves.not.toEqual({
-    denied: true
-  });
-});
+test('combined modifiers', async () => {
+    // Resolves to a non-null value
+    await xExpect(storage.getSettings()).resolves.not.toBeNull();
 
+    // Does not throw on valid input
+    xExpect(() => parser.parseConfig('{"valid": true}')).not.toThrow();
+
+    // Does not resolve to a specific error state
+    await xExpect(permissions.check('admin')).resolves.not.toEqual({ denied: true });
+});
 ```
+
+## See also
+
+- [Functions & Errors](/matchers/functions) - `toThrow` pairs with `.rejects`
+- [Asymmetric matchers](/guide/asymmetric)
+- [Getting Started](/guide/)
