@@ -1,9 +1,9 @@
 /**
  * Represents the possible outcomes of a mock function invocation.
  *
- * - `'return'` — The mock function returned a value.
- * - `'throw'` — The mock function threw an error.
- * - `'incomplete'` — The mock function call has not yet completed.
+ * - `'return'` - The mock function returned a value.
+ * - `'throw'` - The mock function threw an error.
+ * - `'incomplete'` - The mock function call has not yet completed.
  *
  * @remarks
  * Indicates whether a mock function call returned a value, threw an error,
@@ -120,7 +120,7 @@ export interface MocksStateInterface<ReturnType, Args extends Array<unknown>, Co
  * @property mock - The internal state tracking all invocations and results.
  *
  * @remarks
- * Stores the mock’s display name, a flag indicating whether it is an `xJet` mock,
+ * Stores the mock's display name, a flag indicating whether it is an `xJet` mock,
  * and its associated invocation history and results.
  *
  * @since 1.0.0
