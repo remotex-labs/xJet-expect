@@ -34,24 +34,41 @@ export default defineVersionedConfig({
 
         nav: [
             { text: 'Home', link: '/' },
-            { text: 'Guide', link: '/guide' },
+            { text: 'Guide', link: '/guide/' },
+            {
+                text: 'Matchers',
+                items: [
+                    { text: 'Equality', link: '/matchers/equality' },
+                    { text: 'Numbers', link: '/matchers/numbers' },
+                    { text: 'Strings', link: '/matchers/strings' },
+                    { text: 'Objects & Arrays', link: '/matchers/objects' },
+                    { text: 'Functions & Errors', link: '/matchers/functions' },
+                    { text: 'Mocks & Spies', link: '/matchers/mocks' }
+                ]
+            },
             { component: 'VersionSwitcher' }
         ],
 
         sidebar: [
-            { text: 'Modifiers', link: '/guide/modifiers' },
-            { text: 'Asymmetric', link: '/guide/asymmetric' },
+            {
+                text: 'Introduction',
+                items: [
+                    { text: 'Getting Started', link: '/guide/' },
+                    { text: 'Modifiers', link: '/guide/modifiers' },
+                    { text: 'Asymmetric Matchers', link: '/guide/asymmetric' }
+                ]
+            },
             {
                 text: 'Matchers',
                 collapsed: false,
-                base: '/guide/',
+                base: '/matchers/',
                 items: [
-                    { text: 'Mock', link: 'mock' },
-                    { text: 'Number', link: 'number' },
-                    { text: 'Object', link: 'object' },
-                    { text: 'String', link: 'string' },
                     { text: 'Equality', link: 'equality' },
-                    { text: 'Functions', link: 'functions' }
+                    { text: 'Numbers', link: 'numbers' },
+                    { text: 'Strings', link: 'strings' },
+                    { text: 'Objects & Arrays', link: 'objects' },
+                    { text: 'Functions & Errors', link: 'functions' },
+                    { text: 'Mocks & Spies', link: 'mocks' }
                 ]
             }
         ],
@@ -62,8 +79,8 @@ export default defineVersionedConfig({
         ],
 
         docFooter: {
-            prev: false,
-            next: false
+            prev: true,
+            next: true
         },
 
         footer: {
